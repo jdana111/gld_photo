@@ -69,9 +69,7 @@ function App() {
             Selected property is = { selectedProperty.attributes.propertyName }
           </p>
         }
-        {/* <img src="" id="test"></img> */}
-        { (pictures && pictures.length > 0) && pictures.map((p, i) => <PhotoPreview picture={p} index={i}/>)}
-        {/* <div onClick={ () => scanStuff() }>MEMEMEM</div> */}
+        { (pictures && pictures.length > 0) && pictures.map((p, i) => <PhotoPreview picture={p} index={i} key={i}/>)}
         <div>
           <ImageUploader
             withIcon={true}

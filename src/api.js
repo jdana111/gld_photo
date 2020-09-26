@@ -75,3 +75,23 @@ export const getCity = (headers) => {
         console.log(response)
     })
 }
+
+export const submitPhoto = (data) => {
+    const config = {
+        headers: {
+            'accept': 'application/json',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+        }
+    }
+    return new Promise(function(resolve, reject) {
+        getClient().post('http://localhost:3000/api/CHANGETHISURLPLEASE/', data, config)
+            .then(response => {
+                resolve(response.data.data)
+            })
+            .catch(error => {
+                console.warn(error)
+                reject(error)
+            })
+    })
+}
