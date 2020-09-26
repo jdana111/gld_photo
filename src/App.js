@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ImageUploader from "react-images-upload";
 import { Form, Dropdown, Button } from 'react-bootstrap'
-import EXIF from 'exif-js'
+import exifr from 'exifr'
+
 import LoginModal from './components/LoginModal'
 import PropertyFinderModal from './components/PropertyFinderModal'
+import PhotoPreview from './components/PhotoPreview';
 
 import { getCity, getPrograms } from './api'
 import logo from './logo.svg';
@@ -45,13 +47,16 @@ function App() {
   };
 
 
-  const scanStuff = () => {
-    console.log('start scan')
-    EXIF.getData(pictures[0], function() {
-        // var allofit = EXIF.getAllTags(this);
-        console.log(this.exifdata)
-    });
-  }
+  // const scanStuff = () => {
+  //   console.log('start scan')
+  //   exifr.parse(pictures[0]).then(r => {
+  //     console.log(r)
+  //   })
+  //   // const buffer = exifr.thumbnail(pictures[0])
+  //   const objectURL = window.URL.createObjectURL(pictures[0]);
+  //   const img = document.getElementById('test')
+  //   img.src = objectURL
+  // }
   
   return (
     <div className="App">
@@ -64,18 +69,14 @@ function App() {
             Selected property is = { selectedProperty.attributes.propertyName }
           </p>
         }
-        { (pictures && pictures.length) && pictures.map((p, i) => (
-          <p key={i}>
-            {p.name}
-            <input type='text' className="form-control"/>
-          </p>
-        ))}
-        <div onClick={ () => scanStuff() }>MEMEMEM</div>
+        {/* <img src="" id="test"></img> */}
+        { (pictures && pictures.length > 0) && pictures.map((p, i) => <PhotoPreview picture={p} index={i}/>)}
+        {/* <div onClick={ () => scanStuff() }>MEMEMEM</div> */}
         <div>
           <ImageUploader
             withIcon={true}
             onChange={onDrop}
-            imgExtension={[".jpg", ".jpeg", ".png", ".HEIC"]}
+            imgExtension={[".jpg", ".jpeg", ".png"]}
             maxFileSize={5242880}
           />
         </div>
