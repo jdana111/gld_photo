@@ -16,6 +16,7 @@ const PhotoPreview = ({ picture, index, phoneGps }) => {
         return () => {
             URL.revokeObjectURL(imageUrl)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [picture.name])
 
     useEffect(() => {
@@ -26,6 +27,7 @@ const PhotoPreview = ({ picture, index, phoneGps }) => {
                 setCoords([latitude, longitude])
             }
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const submit = () => {
@@ -42,7 +44,7 @@ const PhotoPreview = ({ picture, index, phoneGps }) => {
         <div key={index}>
             { picture.name }
             <input type='text' className="form-control" onChange={ e => setCaption(e.target.value) }/>
-            <img src={ "" } className="photo-preview" id={picture.name}></img>
+            <img src={ "" } alt="" className="photo-preview" id={picture.name}></img>
             <div>latitude: {coords[0]}</div>
             <div>longitude: {coords[1]}</div>
             <button type="button" onClick={ submit }class="btn btn-primary">Submit</button>
