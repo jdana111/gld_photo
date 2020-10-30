@@ -32,7 +32,8 @@ const PhotoPreview = ({ picture, index, phoneGps }) => {
         let data = new FormData();
         data.append('file', picture, picture.name);
         data.append('caption', caption)
-        data.append('coords', coords)
+        data.append('latitude', coords[0])
+        data.append('longitude', coords[1])
 
         submitPhoto(data)
     }

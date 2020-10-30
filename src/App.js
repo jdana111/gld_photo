@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ImageUploader from "react-images-upload";
-import { Form, Dropdown, Button } from 'react-bootstrap'
-import exifr from 'exifr'
+import { Button } from 'react-bootstrap'
+// import exifr from 'exifr'
 
 import LoginModal from './components/LoginModal'
 import PropertyFinderModal from './components/PropertyFinderModal'
 import PhotoPreview from './components/PhotoPreview';
 
-import { getCity, getPrograms } from './api'
-import logo from './logo.svg';
-import { usePosition } from './utils';
+import { getCity } from './api'
+// import logo from './logo.svg';
+// import { usePosition } from './utils';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,7 +22,7 @@ function App() {
   const [selectedProperty, setSelectedProperty] = useState(null)
   const [finderModalOpen, setFinderModalOpen] = useState(false)
 
-  const position = usePosition()
+  // const position = usePosition()
 
   const grabStuff = () => {
     console.log('GRAB')
