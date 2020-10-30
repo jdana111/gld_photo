@@ -1,11 +1,14 @@
 import applyCaseMiddleware from 'axios-case-converter';
 import axios from 'axios'
 
+
+
 const axiosOptions = {
     headers: {
         'Content-Type': 'application/json',
         'Accept': '*/*'
-    }
+    },
+    baseURL: process.env.REACT_APP_API_URL,
 }
 
 const middlewareOptions = {
@@ -22,7 +25,7 @@ export const login = (loginName, password) => {
         }
     }
     return new Promise(function(resolve, reject) {
-        getClient().post('http://localhost:3000/api/login/', data)
+        getClient().post('/api/login/', data)
             .then(response => {
                 resolve(response)
             })
@@ -35,7 +38,7 @@ export const login = (loginName, password) => {
 
 export const getPrograms = (authHeader) => {
     return new Promise(function(resolve, reject) {
-        getClient().get('http://localhost:3000/api/programs/', { headers: { 'Authorization': authHeader } })
+        getClient().get('/api/programs/', { headers: { 'Authorization': authHeader } })
             .then(response => {
                 resolve(response.data.data)
             })
@@ -58,7 +61,7 @@ export const getProperties = (authHeader, searchString, programId) => {
         }
     }
     return new Promise(function(resolve, reject) {
-        getClient().get('http://localhost:3000/api/properties/', config)
+        getClient().get('/api/properties/', config)
             .then(response => {
                 resolve(response.data.data)
             })
@@ -71,7 +74,7 @@ export const getProperties = (authHeader, searchString, programId) => {
 
 
 export const getCity = (headers) => {
-    axios.get('http://localhost:3000/api/cities/1/', {headers}).then(response => {
+    axios.get('/api/cities/1/', {headers}).then(response => {
         console.log(response)
     })
 }
@@ -85,7 +88,7 @@ export const submitPhoto = (data) => {
         }
     }
     return new Promise(function(resolve, reject) {
-        getClient().post('http://localhost:3000/api/CHANGETHISURLPLEASE/', data, config)
+        getClient().post('/api/CHANGETHISURLPLEASE/', data, config)
             .then(response => {
                 resolve(response.data.data)
             })
