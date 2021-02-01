@@ -20,9 +20,6 @@ function PropertyFinderModal({ modalOpen, authHeader, onClose, onSelectProperty 
       setPrograms(programs)
     })
   }, [authHeader, modalOpen])
-
-  // useEffect(() => {
-  // }, [authHeader, searchTerm, selectedProgram.id])
   
   const onSearch = (event) => {
     event.preventDefault()

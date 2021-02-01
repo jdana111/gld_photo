@@ -46,18 +46,6 @@ function App() {
     console.log(dataUrls)
   };
 
-
-  // const scanStuff = () => {
-  //   console.log('start scan')
-  //   exifr.parse(pictures[0]).then(r => {
-  //     console.log(r)
-  //   })
-  //   // const buffer = exifr.thumbnail(pictures[0])
-  //   const objectURL = window.URL.createObjectURL(pictures[0]);
-  //   const img = document.getElementById('test')
-  //   img.src = objectURL
-  // }
-  
   return (
     <div className="App">
       <header className="App-header">
