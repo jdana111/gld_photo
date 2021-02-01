@@ -88,7 +88,7 @@ export const submitPhoto = (data) => {
         }
     }
     return new Promise(function(resolve, reject) {
-        getClient().post('/api/CHANGETHISURLPLEASE/', data, config)
+        getClient().post('/api/photo/', data, config)
             .then(response => {
                 resolve(response.data.data)
             })
