@@ -88,7 +88,7 @@ export const submitPhoto = (data) => {
         }
     }
     return new Promise(function(resolve, reject) {
-        getClient().post('/api/photo/', data, config)
+        getClient().post('/api/photos/', data, config)
             .then(response => {
                 resolve(response.data.data)
             })
