@@ -79,12 +79,13 @@ export const getCity = (headers) => {
     })
 }
 
-export const submitPhoto = (data) => {
+export const submitPhoto = (data, authHeader) => {
     const config = {
         headers: {
             'accept': 'application/json',
             'Accept-Language': 'en-US,en;q=0.8',
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+            'Authorization': authHeader
         }
     }
     return new Promise(function(resolve, reject) {

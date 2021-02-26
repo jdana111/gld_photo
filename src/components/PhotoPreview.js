@@ -4,7 +4,7 @@ import exifr from 'exifr'
 
 import { submitPhoto } from '../api'
 
-const PhotoPreview = ({ picture, index, phoneGps }) => {
+const PhotoPreview = ({ picture, index, phoneGps, authHeader }) => {
 
     const [coords, setCoords] = useState([])
     const [caption, setCaption] = useState("")
@@ -37,7 +37,7 @@ const PhotoPreview = ({ picture, index, phoneGps }) => {
         data.append('latitude', coords[0])
         data.append('longitude', coords[1])
 
-        submitPhoto(data)
+        submitPhoto(data, authHeader)
     }
  
     return (

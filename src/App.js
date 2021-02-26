@@ -57,7 +57,7 @@ function App() {
             Selected property is = { selectedProperty.attributes.propertyName }
           </p>
         }
-        { (pictures && pictures.length > 0) && pictures.map((p, i) => <PhotoPreview picture={p} index={i} key={i}/>)}
+        { (pictures && pictures.length > 0) && pictures.map((p, i) => <PhotoPreview picture={p} index={i} key={i} authHeader={authHeader}/>)}
         <div>
           <ImageUploader
             withIcon={true}
