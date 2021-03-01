@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FormData from 'form-data'
 import exifr from 'exifr'
 
-import { submitPhoto } from '../api'
-
-const PhotoPreview = ({ picture, index, phoneGps, authHeader, property, onSubmit, caption, setCaption, onMatch }) => {
+const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch }) => {
 
     const [coords, setCoords] = useState([])
     // const [caption, setCaption] = useState("")
@@ -29,23 +27,6 @@ const PhotoPreview = ({ picture, index, phoneGps, authHeader, property, onSubmit
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    const submit = () => {
-        if (!property) {
-            alert("No property selected")
-            return
-        }
-
-        let data = new FormData();
-        data.append('file', picture, picture.name);
-        data.append('caption', caption)
-        data.append('latitude', coords[0])
-        data.append('longitude', coords[1])
-        data.append('property_id', property.id)
-
-        submitPhoto(data, authHeader)
-        onSubmit(index)
-    }
  
     return (
         <div key={index}>
@@ -54,7 +35,6 @@ const PhotoPreview = ({ picture, index, phoneGps, authHeader, property, onSubmit
             <img src={ "" } alt="" className="photo-preview" id={picture.name}></img>
             <div>latitude: {coords[0]}, longitude: {coords[1]}</div>
             <button type="button" onClick={ onMatch } className="btn btn-primary">Caption Revolution</button>
-            <button type="button" onClick={ submit } className="btn btn-primary">Submit</button>
         </div>
     )
 }
