@@ -10,7 +10,7 @@ import PhotoPreview from './components/PhotoPreview';
 
 import { getCity, submitPhoto } from './api'
 // import logo from './logo.svg';
-// import { usePosition } from './utils';
+import { usePosition } from './utils';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,13 +24,14 @@ function App() {
     const [finderModalOpen, setFinderModalOpen] = useState(false)
     const [captions, setCaptions] = useState({})
 
-    // const position = usePosition()
+    const position = usePosition()
 
     const grabStuff = () => {
         console.log('GRAB')
         if (!authHeader) {
             return
         }
+        console.log(position)
         getCity({ 'Authorization': authHeader })
     }
 
@@ -109,15 +110,17 @@ function App() {
                             })
                         }} />
                 )}
-                <button type="button" onClick={submit} className="btn btn-primary">Submit</button>
-                <div>
-                    <ImageUploader
-                        withIcon={true}
-                        onChange={onDrop}
-                        imgExtension={[".jpg", ".jpeg", ".png"]}
-                        maxFileSize={5242880}
-                    />
-                </div>
+                { Boolean(selectedProperty) && (
+                    <div>
+                        <ImageUploader
+                            withIcon={true}
+                            onChange={onDrop}
+                            imgExtension={[".jpg", ".jpeg", ".png"]}
+                            maxFileSize={5242880}
+                        />
+                        <button type="button" onClick={submit} className="btn btn-primary">Submit</button>
+                    </div>
+                )}
                 <div>
                     <Button onClick={onOpenFinder}>Find Property</Button>
                 </div>

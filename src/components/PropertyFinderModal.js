@@ -3,6 +3,8 @@ import { Form, Dropdown, Modal, Button, ListGroup } from 'react-bootstrap'
 
 import { getPrograms, getProperties } from '../api'
 
+const ALLOWED_PROGRAM_IDS = [1,2,3,4]
+
 function PropertyFinderModal({ modalOpen, authHeader, onClose, onSelectProperty }) {
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,7 +19,7 @@ function PropertyFinderModal({ modalOpen, authHeader, onClose, onSelectProperty 
     }
     getPrograms(authHeader).then(programs => {
       console.log(programs)
-      setPrograms(programs)
+      setPrograms(programs.filter(p => ALLOWED_PROGRAM_IDS.includes(parseInt(p.id))))
     })
   }, [authHeader, modalOpen])
   
