@@ -4,10 +4,10 @@ import exifr from 'exifr'
 
 import { submitPhoto } from '../api'
 
-const PhotoPreview = ({ picture, index, phoneGps, authHeader }) => {
+const PhotoPreview = ({ picture, index, phoneGps, authHeader, property, onSubmit, caption, setCaption, onMatch }) => {
 
     const [coords, setCoords] = useState([])
-    const [caption, setCaption] = useState("")
+    // const [caption, setCaption] = useState("")
 
     useEffect(() => {
         const imageUrl = window.URL.createObjectURL(picture);
@@ -31,22 +31,29 @@ const PhotoPreview = ({ picture, index, phoneGps, authHeader }) => {
     }, [])
 
     const submit = () => {
+        if (!property) {
+            alert("No property selected")
+            return
+        }
+
         let data = new FormData();
         data.append('file', picture, picture.name);
         data.append('caption', caption)
         data.append('latitude', coords[0])
         data.append('longitude', coords[1])
+        data.append('property_id', property.id)
 
         submitPhoto(data, authHeader)
+        onSubmit(index)
     }
  
     return (
         <div key={index}>
             { picture.name }
-            <input type='text' className="form-control" onChange={ e => setCaption(e.target.value) }/>
+            <input type='text' className="form-control" onChange={ e => setCaption(e.target.value) } value={caption}/>
             <img src={ "" } alt="" className="photo-preview" id={picture.name}></img>
-            <div>latitude: {coords[0]}</div>
-            <div>longitude: {coords[1]}</div>
+            <div>latitude: {coords[0]}, longitude: {coords[1]}</div>
+            <button type="button" onClick={ onMatch } className="btn btn-primary">Caption Revolution</button>
             <button type="button" onClick={ submit } className="btn btn-primary">Submit</button>
         </div>
     )

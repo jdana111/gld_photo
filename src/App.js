@@ -21,6 +21,7 @@ function App() {
   const [user, setUser] = useState(null)
   const [selectedProperty, setSelectedProperty] = useState(null)
   const [finderModalOpen, setFinderModalOpen] = useState(false)
+  const [captions, setCaptions] = useState({})
 
   // const position = usePosition()
 
@@ -40,24 +41,55 @@ function App() {
     setFinderModalOpen(true)
   }
 
-
   const onDrop = (newPictures, dataUrls) => {
     setPictures(newPictures);
     console.log(dataUrls)
   };
 
+  const onSubmit = (index) => {
+    setPictures(photos => photos.filter((p, i) => i !== index))
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <p onClick={ () => grabStuff() }>
+        <p onClick={() => grabStuff()}>
           Golden Upload Photo
         </p>
-        { selectedProperty && 
+        {selectedProperty &&
           <p>
-            Selected property is = { selectedProperty.attributes.propertyName }
+            Selected property is = {selectedProperty.attributes.propertyName}
           </p>
         }
-        { (pictures && pictures.length > 0) && pictures.map((p, i) => <PhotoPreview picture={p} index={i} key={i} authHeader={authHeader}/>)}
+        {(pictures && pictures.length > 0) && pictures.map((p, i) =>
+          <PhotoPreview
+            picture={p}
+            index={i}
+            key={i}
+            authHeader={authHeader}
+            property={selectedProperty}
+            onSubmit={onSubmit}
+            caption={captions[i]}
+            setCaption={(newCaption) => {
+              setCaptions(old => ({
+                ...old,
+                [i]: newCaption
+              }))
+            }} 
+            onMatch={() => {
+              console.log('match')
+              setCaptions(old => {
+                const val = old[i]
+                console.log('val', val)
+                const newCaptions = {}
+                Object.keys(old).forEach(key => {
+                  newCaptions[key] = val
+                })
+                console.log('nc', newCaptions)
+                return newCaptions
+              })
+            }}/>
+        )}
         <div>
           <ImageUploader
             withIcon={true}
@@ -67,11 +99,11 @@ function App() {
           />
         </div>
         <div>
-          <Button onClick={ onOpenFinder }>Find Property</Button>
+          <Button onClick={onOpenFinder}>Find Property</Button>
         </div>
       </header>
-      <PropertyFinderModal modalOpen={ finderModalOpen } onClose={ () => setFinderModalOpen(false) } authHeader={authHeader} onSelectProperty={ onChooseProprety }/>
-      <LoginModal modalOpen={ !Boolean(user) } onClose={ () => setUser(null) } setUser={ setUser } setAuthHeader={ setAuthHeader }/>
+      <PropertyFinderModal modalOpen={finderModalOpen} onClose={() => setFinderModalOpen(false)} authHeader={authHeader} onSelectProperty={onChooseProprety} />
+      <LoginModal modalOpen={!Boolean(user)} onClose={() => setUser(null)} setUser={setUser} setAuthHeader={setAuthHeader} />
     </div>
   );
 }

@@ -72,7 +72,6 @@ export const getProperties = (authHeader, searchString, programId) => {
     })
 }
 
-
 export const getCity = (headers) => {
     axios.get('/api/cities/1/', {headers}).then(response => {
         console.log(response)
