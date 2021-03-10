@@ -49,11 +49,24 @@ export const getPrograms = (authHeader) => {
     })
 }
 
-export const getProperties = (authHeader, searchString, programId) => {
+export const getCity = (authHeader, cityId) => {
+    return new Promise(function(resolve, reject) {
+        getClient().get(`/api/cities/${cityId}/`, { headers: { 'Authorization': authHeader } })
+            .then(response => {
+                resolve(response.data.data)
+            })
+            .catch(error => {
+                console.warn(error)
+                reject(error)
+            })
+    })
+}
+
+export const getProperties = (authHeader, searchString, programId, activeOnly) => {
     const config = {
         params: {
             'filter[search][searchString]': searchString,
-            'filter[search][activeOnly]': true,
+            'filter[search][activeOnly]': activeOnly,
             'filter[search][programId]': programId
         },
         headers: {
@@ -72,11 +85,6 @@ export const getProperties = (authHeader, searchString, programId) => {
     })
 }
 
-export const getCity = (headers) => {
-    axios.get('/api/cities/1/', {headers}).then(response => {
-        console.log(response)
-    })
-}
 
 export const submitPhoto = (data, authHeader) => {
     const config = {
