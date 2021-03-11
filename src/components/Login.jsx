@@ -1,28 +1,39 @@
 import React, { useState } from 'react';
-import { Form, Button, Modal } from 'react-bootstrap'
+import { Form, Button, Container, Row } from 'react-bootstrap'
 
-import { login } from '../api'
+import { login, getCity } from '../api'
+import logo from '../blank.jpeg';
 
-function LoginModal({ modalOpen, onClose, setUser, setAuthHeader }) {
+const CHANGE_THIS_CITY_ID = 1
+
+function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
     
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        const response = await login(username, password)
-        setUser(response.data)
-        console.log(response.headers)
-        setAuthHeader(response.headers.authorization)
+        try {
+            const response = await login(username, password)
+            const city = await getCity(response.headers.authorization, CHANGE_THIS_CITY_ID)
+            setCity(city)
+            setUser(response.data)
+            setAuthHeader(response.headers.authorization)
+            onLogin(true)
+        } catch (error) {
+            onLogin(false)
+        }
     }
 
     return (
-        <Modal show={ modalOpen } onHide={ onClose }>
-            <Modal.Header closeButton>
-                <Modal.Title>Login</Modal.Title>
-            </Modal.Header>
-
-            <Modal.Body>
+        <Container>
+            <Row className="justify-content-md-center">
+                <img src={logo} width={100} height={150}/>
+            </Row>
+            <Row className="justify-content-md-center">
+                <h3>Login</h3>
+            </Row>
+            <Row className="justify-content-md-center">
                 <Form onSubmit={ handleSubmit }>
                     <Form.Group>
                         <Form.Label>Login</Form.Label>
@@ -39,13 +50,8 @@ function LoginModal({ modalOpen, onClose, setUser, setAuthHeader }) {
                         Submit
                     </Button>
                 </Form>
-            </Modal.Body>
-
-            {/* <Modal.Footer>
-                <Button variant="secondary">Close</Button>
-                <Button variant="primary">Save changes</Button>
-            </Modal.Footer> */}
-        </Modal>
+            </Row>
+        </Container>
     );
 }
 
