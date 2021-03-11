@@ -89,7 +89,6 @@ function PhotoUpload({ property, authHeader }) {
                     <button type="button" onClick={submit} className="btn btn-primary">Submit</button>
                 </div>
             )}
-            <div onClick={() => console.log(pictures)}>HI THERE</div>
         </div>
     );
 }
