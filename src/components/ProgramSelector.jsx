@@ -15,8 +15,8 @@ function ProgramSelector({ authHeader, setProgram, city }) {
         if (!authHeader) {
             history.replace('login')
         }
-        // eslint-disable-line
-    }, [authHeader, history])
+        // eslint-disable-next-line
+    }, [])
 
     useEffect(() => {
         if (!authHeader) {
