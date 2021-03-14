@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form, Dropdown, Modal, Button, ListGroup, InputGroup, FormControl } from 'react-bootstrap'
+import { Button, ListGroup, InputGroup, FormControl } from 'react-bootstrap'
 
-import { getPrograms, getProperties } from '../api'
+import { getProperties } from '../api'
 
 function PropertySelector({ authHeader, setProperty, program }) {
 
@@ -16,6 +16,7 @@ function PropertySelector({ authHeader, setProperty, program }) {
         if (!program) {
             history.replace('login')
         }
+        // eslint-disable-next-line
     }, [])
 
     const onSearch = (event) => {

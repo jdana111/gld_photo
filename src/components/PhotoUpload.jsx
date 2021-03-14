@@ -18,6 +18,7 @@ function PhotoUpload({ property, authHeader }) {
         if (!property) {
             history.replace('login')
         }
+        // eslint-disable-next-line
     }, [])
 
 
@@ -89,6 +90,7 @@ function PhotoUpload({ property, authHeader }) {
                     <button type="button" onClick={submit} className="btn btn-primary">Submit</button>
                 </div>
             )}
+            <div onClick={() => console.log(pictures)}>HI THERE</div>
         </div>
     );
 }

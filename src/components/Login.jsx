@@ -28,7 +28,7 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
     return (
         <Container>
             <Row className="justify-content-md-center">
-                <img src={logo} width={100} height={150}/>
+                <img src={logo} width={100} height={150} alt=""/>
             </Row>
             <Row className="justify-content-md-center">
                 <h3>Login</h3>
