@@ -15,7 +15,8 @@ function ProgramSelector({ authHeader, setProgram, city }) {
         if (!authHeader) {
             history.replace('login')
         }
-    }, [])
+        // eslint-disable-line
+    }, [authHeader, history])
 
     useEffect(() => {
         if (!authHeader) {
@@ -31,7 +32,7 @@ function ProgramSelector({ authHeader, setProgram, city }) {
 
     return (
         <div>
-            { city && <img src={city.attributes.logoMain}/> }
+            { city && <img src={city.attributes.logoMain} alt="City logo"/> }
             <h3>
                 Select Program
             </h3>

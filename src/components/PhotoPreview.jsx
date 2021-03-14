@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import FormData from 'form-data'
 import exifr from 'exifr'
 
 const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch }) => {

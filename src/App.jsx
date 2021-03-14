@@ -6,7 +6,7 @@ import ProgramSelector from './components/ProgramSelector'
 import PropertySelector from './components/PropertySelector'
 import PhotoUpload from './components/PhotoUpload'
 
-import { getCity, submitPhoto } from './api'
+import { getCity } from './api'
 import { usePosition } from './utils';
 
 import './App.css';
@@ -26,6 +26,7 @@ function App() {
 
     const grabStuff = () => {
         console.log('GRAB')
+        console.log(user)
         if (!authHeader) {
             return
         }
@@ -67,6 +68,7 @@ function App() {
                     <PhotoUpload authHeader={authHeader} property={property}/>
                 </Route>
             </Switch>
+            <div onClick={grabStuff}/>
         </div>
     );
 }
