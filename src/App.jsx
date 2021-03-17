@@ -49,6 +49,7 @@ function App() {
         if (!authHeader) {
             return
         }
+        console.log(user)
         console.log(position)
         getCity({ 'Authorization': authHeader })
     }
