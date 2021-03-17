@@ -16,6 +16,7 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
         try {
             const response = await login(username, password)
             const city = await getCity(response.headers.authorization, CHANGE_THIS_CITY_ID)
+            localStorage.setItem('authToken', response.headers.authorization)
             setCity(city)
             setUser(response.data)
             setAuthHeader(response.headers.authorization)
