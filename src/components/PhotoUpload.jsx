@@ -15,7 +15,7 @@ function PhotoUpload({ property, authHeader }) {
     const history = useHistory()
 
     useEffect(() => {
-        if (!property) {
+        if (!authHeader) {
             history.replace('login')
         }
         // eslint-disable-next-line

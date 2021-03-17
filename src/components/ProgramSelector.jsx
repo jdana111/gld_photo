@@ -28,8 +28,6 @@ function ProgramSelector({ authHeader, setProgram, city }) {
         })
     }, [authHeader])
 
-    console.log(city)
-
     return (
         <div>
             { city && <img src={city.attributes.logoMain} alt="City logo"/> }
