@@ -36,6 +36,8 @@ function App() {
                     setAuthHeader(localToken)
                     setLoading(false)
                     return
+                } else {
+                    setLoading(false)
                 }
             } catch (error) {
                 
