@@ -46,8 +46,6 @@ function App() {
     }, [])
 
     const grabStuff = () => {
-        console.log('GRAB')
-        console.log(user)
         if (!authHeader) {
             return
         }
