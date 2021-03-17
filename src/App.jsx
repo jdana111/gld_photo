@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
 
 import Login from './components/Login'
 import ProgramSelector from './components/ProgramSelector'
@@ -67,6 +67,7 @@ function App() {
                 <Route path="/upload" >
                     <PhotoUpload authHeader={authHeader} property={property}/>
                 </Route>
+                <Redirect to="/login"/>
             </Switch>
             <div onClick={grabStuff}/>
         </div>
