@@ -33,7 +33,7 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch }
             <input type='text' className="form-control" onChange={ e => setCaption(e.target.value) } value={caption}/>
             <img src={ "" } alt="" className="photo-preview" id={picture.name}></img>
             <div>latitude: {coords[0]}, longitude: {coords[1]}</div>
-            <button type="button" onClick={ onMatch } className="btn btn-primary">Caption Revolution</button>
+            <button type="button" onClick={ onMatch } className="btn btn-primary">Duplicate Caption</button>
         </div>
     )
 }

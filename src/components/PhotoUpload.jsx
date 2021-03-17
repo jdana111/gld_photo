@@ -24,7 +24,6 @@ function PhotoUpload({ property, authHeader }) {
 
     const onDrop = (newPictures, dataUrls) => {
         setPictures(newPictures);
-        console.log(dataUrls)
     };
 
     const submit = () => {

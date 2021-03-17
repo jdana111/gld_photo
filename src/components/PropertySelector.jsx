@@ -15,7 +15,7 @@ function PropertySelector({ authHeader, setProperty, program }) {
     useEffect(() => {
         if (!authHeader) {
             history.replace('login')
-        }
+        } 
         // eslint-disable-next-line
     }, [])
 
