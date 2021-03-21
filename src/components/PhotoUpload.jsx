@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ImageUploader from "react-images-upload";
 import { useHistory } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
 import exifr from 'exifr'
 import FormData from 'form-data'
 
@@ -11,6 +12,7 @@ function PhotoUpload({ property, authHeader }) {
 
     const [pictures, setPictures] = useState([]);
     const [batchCount, setBatchCount] = useState(0);
+    const [loading, setLoading] = useState(false);
     const [captions, setCaptions] = useState({});
 
     const history = useHistory()
@@ -33,7 +35,7 @@ function PhotoUpload({ property, authHeader }) {
             return
         }
 
-
+        setLoading(true)
         Promise.all(pictures.map(exifr.gps))
             .then((exifDatas) => {
                 const promises = []
@@ -52,11 +54,12 @@ function PhotoUpload({ property, authHeader }) {
                 return Promise.all(promises)
             })
             .then(results => {
-                console.log(results)
+                setLoading(false)
                 setPictures([])
                 setBatchCount(old => old + 1)
             })
             .catch(err => {
+                setLoading(false)
                 console.log("ERROR WITH GPS PARSE OR UPLOAD", err)
             })
     }
@@ -100,6 +103,11 @@ function PhotoUpload({ property, authHeader }) {
                     />
                     <button type="button" onClick={submit} className="btn btn-primary">Submit</button>
                 </div>
+            )}
+            { loading &&  (
+                <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </Spinner>
             )}
             <div onClick={() => console.log(pictures)}>HI THERE</div>
         </div>
