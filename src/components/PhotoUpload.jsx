@@ -10,7 +10,8 @@ import { submitPhoto } from '../api'
 function PhotoUpload({ property, authHeader }) {
 
     const [pictures, setPictures] = useState([]);
-    const [captions, setCaptions] = useState({})
+    const [batchCount, setBatchCount] = useState(0);
+    const [captions, setCaptions] = useState({});
 
     const history = useHistory()
 
@@ -32,22 +33,32 @@ function PhotoUpload({ property, authHeader }) {
             return
         }
 
-        pictures.forEach((pic, index) => {
-            console.log('pre parse', pic)
-            exifr.gps(pic).then(exifdata => {
-               
-                let data = new FormData();
-                data.append('file', pic, pic.name);
-                data.append('caption', captions[index] || '')
-                data.append('latitude', exifdata.latitude)
-                data.append('longitude', exifdata.longitude)
-                data.append('property_id', property.id)
 
-                submitPhoto(data, authHeader)
-            }).catch((err) => {
-                console.log("ERROR WITH GPS PARSE", err)
+        Promise.all(pictures.map(exifr.gps))
+            .then((exifDatas) => {
+                const promises = []
+                exifDatas.forEach((exifData, index) => {
+                    const pic = pictures[index]
+                    let data = new FormData();
+                    data.append('file', pic, pic.name);
+                    data.append('caption', captions[index] || '')
+                    data.append('latitude', exifData.latitude)
+                    data.append('longitude', exifData.longitude)
+                    data.append('property_id', property.id)
+            
+                    const p = submitPhoto(data, authHeader)
+                    promises.push(p)
+                })
+                return Promise.all(promises)
             })
-        })
+            .then(results => {
+                console.log(results)
+                setPictures([])
+                setBatchCount(old => old + 1)
+            })
+            .catch(err => {
+                console.log("ERROR WITH GPS PARSE OR UPLOAD", err)
+            })
     }
 
     return (
@@ -81,6 +92,7 @@ function PhotoUpload({ property, authHeader }) {
             { Boolean(property) && (
                 <div>
                     <ImageUploader
+                        key={batchCount}
                         withIcon={true}
                         onChange={onDrop}
                         imgExtension={[".jpg", ".jpeg"]}
