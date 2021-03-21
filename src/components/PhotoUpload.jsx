@@ -101,7 +101,7 @@ function PhotoUpload({ property, authHeader }) {
                         imgExtension={[".jpg", ".jpeg"]}
                         maxFileSize={5242880}
                     />
-                    <button type="button" onClick={submit} className="btn btn-primary">Submit</button>
+                    <button type="button" onClick={submit} disabled={pictures.length === 0} className='btn btn-primary'>Submit</button>
                 </div>
             )}
             { loading &&  (
