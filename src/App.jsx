@@ -40,7 +40,7 @@ function App() {
                     setLoading(false)
                 }
             } catch (error) {
-                
+                setLoading(false)
             }
         }
 
@@ -75,28 +75,29 @@ function App() {
     }
 
     if (loading) {
-        return <p>loading</p>
+        return <p onClick={() => console.log(loading)}>loading</p>
+    } else {
+        return (
+            <div className="App">
+                <Switch>
+                    <Route path="/login" component={Login}>
+                        <Login setUser={setUser} setAuthHeader={setAuthHeader} onLogin={onLogin} setCity={setCity}/>
+                    </Route>
+                    <Route path="/program">
+                        <ProgramSelector authHeader={authHeader} setProgram={onSelectProgram} city={city}/>
+                    </Route>
+                    <Route path="/property" >
+                        <PropertySelector authHeader={authHeader} setProperty={onSelectProperty} program={program}/>
+                    </Route>
+                    <Route path="/upload" >
+                        <PhotoUpload authHeader={authHeader} property={property}/>
+                    </Route>
+                    <Redirect to="/login"/>
+                </Switch>
+                <div onClick={grabStuff}/>
+            </div>
+        );
     }
-    return (
-        <div className="App">
-            <Switch>
-                <Route path="/login" component={Login}>
-                    <Login setUser={setUser} setAuthHeader={setAuthHeader} onLogin={onLogin} setCity={setCity}/>
-                </Route>
-                <Route path="/program">
-                    <ProgramSelector authHeader={authHeader} setProgram={onSelectProgram} city={city}/>
-                </Route>
-                <Route path="/property" >
-                    <PropertySelector authHeader={authHeader} setProperty={onSelectProperty} program={program}/>
-                </Route>
-                <Route path="/upload" >
-                    <PhotoUpload authHeader={authHeader} property={property}/>
-                </Route>
-                <Redirect to="/login"/>
-            </Switch>
-            <div onClick={grabStuff}/>
-        </div>
-    );
 }
 
 export default App;

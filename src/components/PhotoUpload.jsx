@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ImageUploader from "react-images-upload";
 import { useHistory } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
 import exifr from 'exifr'
 import FormData from 'form-data'
 
@@ -10,7 +11,9 @@ import { submitPhoto } from '../api'
 function PhotoUpload({ property, authHeader }) {
 
     const [pictures, setPictures] = useState([]);
-    const [captions, setCaptions] = useState({})
+    const [batchCount, setBatchCount] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [captions, setCaptions] = useState({});
 
     const history = useHistory()
 
@@ -32,22 +35,33 @@ function PhotoUpload({ property, authHeader }) {
             return
         }
 
-        pictures.forEach((pic, index) => {
-            console.log('pre parse', pic)
-            exifr.gps(pic).then(exifdata => {
-               
-                let data = new FormData();
-                data.append('file', pic, pic.name);
-                data.append('caption', captions[index] || '')
-                data.append('latitude', exifdata.latitude)
-                data.append('longitude', exifdata.longitude)
-                data.append('property_id', property.id)
-
-                submitPhoto(data, authHeader)
-            }).catch((err) => {
-                console.log("ERROR WITH GPS PARSE", err)
+        setLoading(true)
+        Promise.all(pictures.map(exifr.gps))
+            .then((exifDatas) => {
+                const promises = []
+                exifDatas.forEach((exifData, index) => {
+                    const pic = pictures[index]
+                    let data = new FormData();
+                    data.append('file', pic, pic.name);
+                    data.append('caption', captions[index] || '')
+                    data.append('latitude', exifData.latitude)
+                    data.append('longitude', exifData.longitude)
+                    data.append('property_id', property.id)
+            
+                    const p = submitPhoto(data, authHeader)
+                    promises.push(p)
+                })
+                return Promise.all(promises)
             })
-        })
+            .then(results => {
+                setLoading(false)
+                setPictures([])
+                setBatchCount(old => old + 1)
+            })
+            .catch(err => {
+                setLoading(false)
+                console.log("ERROR WITH GPS PARSE OR UPLOAD", err)
+            })
     }
 
     return (
@@ -81,13 +95,19 @@ function PhotoUpload({ property, authHeader }) {
             { Boolean(property) && (
                 <div>
                     <ImageUploader
+                        key={batchCount}
                         withIcon={true}
                         onChange={onDrop}
                         imgExtension={[".jpg", ".jpeg"]}
                         maxFileSize={5242880}
                     />
-                    <button type="button" onClick={submit} className="btn btn-primary">Submit</button>
+                    <button type="button" onClick={submit} disabled={pictures.length === 0} className='btn btn-primary'>Submit</button>
                 </div>
+            )}
+            { loading &&  (
+                <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </Spinner>
             )}
             <div onClick={() => console.log(pictures)}>HI THERE</div>
         </div>
