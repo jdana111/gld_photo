@@ -28,6 +28,16 @@ function App() {
     useEffect(() => {
         const init = async () => {
             try {
+                // const program = localStorage.getItem('program')
+                // if (program) {
+                //     console.log(program)
+                //     setProgram(program)
+                // }
+                // const property = localStorage.getItem('property')
+                // if (property) {
+                //     console.log(property)
+                //     setProperty(property)
+                // }
                 const localToken = localStorage.getItem('authToken')
                 if (localToken) {
                     setLoading(true)
@@ -45,6 +55,11 @@ function App() {
         }
 
         init()
+
+        return () => {
+            localStorage.setItem('program', program)
+            localStorage.setItem('property', property)
+        }
     }, [])
 
     const grabStuff = () => {
