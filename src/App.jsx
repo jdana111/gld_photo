@@ -60,6 +60,7 @@ function App() {
             localStorage.setItem('program', program)
             localStorage.setItem('property', property)
         }
+        // eslint-disable-next-line
     }, [])
 
     const grabStuff = () => {
