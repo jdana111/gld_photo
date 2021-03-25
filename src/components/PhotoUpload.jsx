@@ -7,6 +7,7 @@ import FormData from 'form-data'
 
 import PhotoPreview from './PhotoPreview'
 import { submitPhoto } from '../api'
+import { usePosition } from '../utils'
 
 function PhotoUpload({ property, authHeader }) {
 
@@ -14,6 +15,9 @@ function PhotoUpload({ property, authHeader }) {
     const [batchCount, setBatchCount] = useState(0);
     const [loading, setLoading] = useState(false);
     const [captions, setCaptions] = useState({});
+    const [debugString, setDebugString] = useState('');
+
+    const {position, testOnChange, loadTestData, getCoordsForTime} = usePosition()
 
     const history = useHistory()
 
@@ -23,7 +27,6 @@ function PhotoUpload({ property, authHeader }) {
         }
         // eslint-disable-next-line
     }, [])
-
 
     const onDrop = (newPictures, dataUrls) => {
         setPictures(newPictures);
@@ -36,7 +39,7 @@ function PhotoUpload({ property, authHeader }) {
         }
 
         setLoading(true)
-        Promise.all(pictures.map(exifr.gps))
+        Promise.all(pictures.map(pic => exifr.parse(pic)))
             .then((exifDatas) => {
                 const promises = []
                 exifDatas.forEach((exifData, index) => {
@@ -44,8 +47,16 @@ function PhotoUpload({ property, authHeader }) {
                     let data = new FormData();
                     data.append('file', pic, pic.name);
                     data.append('caption', captions[index] || '')
-                    data.append('latitude', exifData.latitude)
-                    data.append('longitude', exifData.longitude)
+                    if (exifData && exifData.GPSLatitude && exifData.GPSLongitude) {
+                        data.append('latitude', exifData.GPSLatitude)
+                        data.append('longitude', exifData.GPSLongitude)
+                    } else if (exifData.CreateDate) {
+                        // set phone gps here
+                        const coords = getCoordsForTime(exifData.CreateDate)
+                        console.log(coords)
+                        data.append('latitude', undefined)
+                        data.append('longitude', undefined)
+                    }
                     data.append('property_id', property.id)
             
                     const p = submitPhoto(data, authHeader)
@@ -64,33 +75,47 @@ function PhotoUpload({ property, authHeader }) {
             })
     }
 
+    if (!property || property === 'null') {
+        return <div></div>
+    }
+
     return (
         <div className="PhotoUpload">
             {property && <h4>{property.attributes.propertyName}</h4>}
             {(pictures && pictures.length > 0) && pictures.map((p, i) =>
-                <PhotoPreview
-                    picture={p}
-                    index={i}
-                    key={i}
-                    authHeader={authHeader}
-                    property={property}
-                    caption={captions[i] || ''}
-                    setCaption={(newCaption) => {
-                        setCaptions(old => ({
-                            ...old,
-                            [i]: newCaption
-                        }))
-                    }}
-                    onMatch={() => {
-                        setCaptions(old => {
-                            const val = old[i]
-                            const newCaptions = {}
-                            pictures.forEach((p, index) => {
-                                newCaptions[index] = val
+                <div key={i}> 
+                    <PhotoPreview
+                        picture={p}
+                        index={i}
+                        key={i}
+                        authHeader={authHeader}
+                        property={property}
+                        caption={captions[i] || ''}
+                        setCaption={(newCaption) => {
+                            setCaptions(old => ({
+                                ...old,
+                                [i]: newCaption
+                            }))
+                        }}
+                        onMatch={() => {
+                            setCaptions(old => {
+                                const val = old[i]
+                                const newCaptions = {}
+                                pictures.forEach((p, index) => {
+                                    newCaptions[index] = val
+                                })
+                                return newCaptions
                             })
-                            return newCaptions
-                        })
-                    }} />
+                        }} />
+                    <button onClick={() => {
+                      exifr.parse(p).then(exifdata => {
+                          if (exifdata.CreateDate) {
+                            const coords = getCoordsForTime(exifdata.CreateDate)
+                            setDebugString(JSON.stringify(coords))
+                          }
+                      })
+                    }}>MATCH COORDS</button>
+                </div>
             )}
             { Boolean(property) && (
                 <div>
@@ -109,7 +134,15 @@ function PhotoUpload({ property, authHeader }) {
                     <span className="sr-only">Loading...</span>
                 </Spinner>
             )}
-            <div onClick={() => console.log(pictures)}>HI THERE</div>
+            <button onClick={() => console.log(pictures)}>HI THERE</button>
+            <button onClick={() => testOnChange()}>ADD SHTUFF</button>
+            <button onClick={() => loadTestData()}>SET DATA</button>
+            <button onClick={() => {
+                console.log(position)
+                setDebugString(JSON.stringify(position))
+            }}>LOG POSITION STACK</button>
+            DEBUG HERE
+            <div>{debugString}</div>
         </div>
     );
 }

@@ -1,18 +1,73 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
 export const usePosition = () => {
-  const [position, setPosition] = useState({});
+  const [position, setPosition] = useState([]);
   const [error, setError] = useState(null);
-  
-  const onChange = ({coords}) => {
-    setPosition({
+
+  const onChange = ({ coords, time }) => {
+    setPosition(old => [...old, {
       latitude: coords.latitude,
       longitude: coords.longitude,
-    });
+      time: time || new Date()
+    }]);
   };
+
+  const loadTestData = () => {
+    const data = []
+    const numDays = 7
+    const nowDate = (new Date()).getDate()
+    let day = nowDate - numDays
+    let hours = 0
+    let latitude, longitude, dt
+    while (true) {
+      latitude = hours
+      longitude = day
+      dt = new Date()
+      dt.setDate(day)
+      dt.setHours(hours)
+      data.push({
+        coords: {
+          latitude, longitude
+        },
+        time: dt
+      })
+      if (day === nowDate) {
+        break
+      } if (hours < 23) {
+        hours += 1
+      } else {
+        hours = 0
+        day += 1
+      }
+    }
+    setPosition(data)
+  }
+
+  const testOnChange = () => {
+    onChange({
+      coords: {
+        latitude: Math.random() * 80,
+        longitude: Math.random() * 170
+      }
+    })
+  }
+
   const onError = (error) => {
     setError(error.message);
   };
+
+  const getCoordsForTime = (dt) => {
+    let bestDelta = 10000000000
+    let bestDeltaCoords = null
+    position.forEach(pos => {
+      if (Math.abs(dt - pos.time) < bestDelta) {
+        bestDelta = Math.abs(dt - pos.time)
+        bestDeltaCoords = pos
+      }
+    })
+    return bestDeltaCoords
+  }
+
   useEffect(() => {
     const geo = navigator.geolocation;
     if (!geo) {
@@ -22,5 +77,6 @@ export const usePosition = () => {
     const watcher = geo.watchPosition(onChange, onError);
     return () => geo.clearWatch(watcher);
   }, []);
-  return {...position, error};
+
+  return { position, error, testOnChange, loadTestData, getCoordsForTime };
 }

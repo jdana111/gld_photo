@@ -18,10 +18,11 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch }
 
     useEffect(() => {
         exifr.parse(picture).then(exifdata => {
+            console.log(exifdata)
             if (exifdata && exifdata.GPSLongitude && exifdata.GPSLatitude) {
                 const latitude = exifdata.GPSLatitude[0] + (exifdata.GPSLatitude[1] / 60) + (exifdata.GPSLatitude[2] / 3600)
                 const longitude = exifdata.GPSLongitude[0] + (exifdata.GPSLongitude[1] / 60) + (exifdata.GPSLongitude[2] / 3600)
-                setCoords([latitude, longitude])
+                setCoords([latitude.toFixed(3), longitude.toFixed(3)])
             }
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
