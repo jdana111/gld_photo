@@ -147,7 +147,9 @@ function PhotoUpload({ property, authHeader }) {
                 console.log(position)
                 setDebugString(JSON.stringify(position))
             }}>LOG POSITION STACK</button>
-            DEBUG HERE
+            <div>
+                DEBUG HERE
+            </div>
             <div>{debugString}</div>
         </div>
     );
