@@ -71,6 +71,7 @@ function PhotoUpload({ property, authHeader }) {
             })
             .catch(err => {
                 setLoading(false)
+                setDebugString(err)
                 console.log("ERROR WITH GPS PARSE OR UPLOAD", err)
             })
     }
@@ -141,7 +142,9 @@ function PhotoUpload({ property, authHeader }) {
                 console.log(position)
                 setDebugString(JSON.stringify(position))
             }}>LOG POSITION STACK</button>
-            DEBUG HERE
+            <div>
+                DEBUG HERE
+            </div>
             <div>{debugString}</div>
         </div>
     );
