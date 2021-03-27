@@ -50,10 +50,13 @@ function PhotoUpload({ property, authHeader }) {
                     if (exifData && exifData.GPSLatitude && exifData.GPSLongitude) {
                         data.append('latitude', exifData.GPSLatitude)
                         data.append('longitude', exifData.GPSLongitude)
-                    } else if (exifData.CreateDate) {
+                    } else if (exifData && exifData.CreateDate) {
                         // set phone gps here
                         const coords = getCoordsForTime(exifData.CreateDate)
                         console.log(coords)
+                        data.append('latitude', undefined)
+                        data.append('longitude', undefined)
+                    } else {
                         data.append('latitude', undefined)
                         data.append('longitude', undefined)
                     }
@@ -71,6 +74,7 @@ function PhotoUpload({ property, authHeader }) {
             })
             .catch(err => {
                 setLoading(false)
+                setDebugString(JSON.stringify(err))
                 console.log("ERROR WITH GPS PARSE OR UPLOAD", err)
             })
     }
@@ -130,9 +134,11 @@ function PhotoUpload({ property, authHeader }) {
                 </div>
             )}
             { loading &&  (
-                <Spinner animation="border" role="status">
-                    <span className="sr-only">Loading...</span>
-                </Spinner>
+                <div>
+                    <Spinner animation="border" role="status" style={{width: '100px', height: '100px'}}>
+                        <span className="sr-only">Loading...</span>
+                    </Spinner>
+                </div>
             )}
             <button onClick={() => console.log(pictures)}>HI THERE</button>
             <button onClick={() => testOnChange()}>ADD SHTUFF</button>
