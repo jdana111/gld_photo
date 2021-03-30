@@ -10,6 +10,7 @@ import { getCity } from './api'
 import { usePosition } from './utils';
 
 import './App.scss';
+import './Styling/Login.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {

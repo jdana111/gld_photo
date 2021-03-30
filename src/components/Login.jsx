@@ -32,7 +32,7 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
                 <img src={logo} width={100} height={150} alt=""/>
             </Row>
             <Row className="justify-content-md-center">
-                <h3>Login</h3>
+                <h3 >Login</h3>
             </Row>
             <Row className="justify-content-md-center">
                 <Form onSubmit={ handleSubmit }>
