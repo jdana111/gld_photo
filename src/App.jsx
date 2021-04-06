@@ -9,9 +9,11 @@ import PhotoUpload from './components/PhotoUpload'
 import { getCity } from './api'
 import { usePosition } from './utils';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 import './Styling/Login.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './Styling/FormElement.scss';
+import './Styling/Foundation.scss';
 
 function App() {
 
