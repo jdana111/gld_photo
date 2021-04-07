@@ -40,7 +40,7 @@ function ProgramSelector({ authHeader, setProgram, city }) {
                 <div className="col-9 col-sm-7 col-md-6">
                     <br>
                     </br>
-                        <ListGroup className="ev-list-program-select ev-clickable">
+                        <ListGroup className="ev-list-program-select ev-clickable ev-light-table">
                             {programs.map((p, i) => (
                                 <ListGroup.Item key={p.id} onClick={() => setProgram(p)}>{p.attributes.programName}</ListGroup.Item>
                             ))}

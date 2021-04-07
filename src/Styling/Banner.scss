@@ -1,0 +1,93 @@
+/*----------------------------------------------------------------------------------------------------------*\
+  #BANNERS
+\*----------------------------------------------------------------------------------------------------------*/
+// temporarily ev-banner
+
+.ev-banner {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  height: 39px;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;;
+  .ev-banner-title {
+    font-size: 18px;
+    font-weight: 700;
+    cursor: default;
+    padding: 0 0 0 0.5rem;
+  }
+  .ev-banner-clickable-title {
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0 0 0 0.5rem;
+  }
+  a {
+    text-decoration: none;
+  }
+  /* align-content: center; */
+}
+
+
+
+// was .action-buttons-report also swapped out .action-button/.action-buttons
+.ev-banner-menu-items {
+  padding: 0 0.5rem 0 0;
+  a {
+    font-size: 1rem;
+    height: fit-content;
+    padding-right: 4px;
+    @media (max-width: 991px) {
+      padding: 6px;
+      min-width: 40px;
+      text-align:center;
+      margin-top: -6px;
+      display: inline-block;
+      position: relative;
+      height: 35px;
+      vertical-align: top;
+    }
+    i {
+      @media (min-width: 992px) {
+        padding-left: 8px;
+        padding-right: 4px;
+      }
+      @media (max-width: 991px) {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+        // position: absolute;
+        left: 50%;
+        top: 50%;
+        // transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
+
+.ev-banner-title-search {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-color: #e4e1d1;
+  padding: 6px 20px;
+  height: 38px;
+  border: 0;
+  border-radius: 0 !important;
+  cursor: default;
+  font-size: 16px;
+}
+
+.nav-tabs {
+  border-width: 0;
+}
+
+.accordion-header {
+  &.-is-open > .accordion-body {
+    /* Transitioning max-height becuase you can't transition height */
+    max-height: 2000px;
+  }
+  &.-is-closed > .accordion-body {
+    max-height: 0;
+  }
+}
+

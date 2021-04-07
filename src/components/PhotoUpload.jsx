@@ -85,6 +85,7 @@ function PhotoUpload({ property, authHeader }) {
 
     return (
         <div className="PhotoUpload">
+            <br></br>
             {property && <h4>{property.attributes.propertyName}</h4>}
             {(pictures && pictures.length > 0) && pictures.map((p, i) =>
                 <div key={i}> 
