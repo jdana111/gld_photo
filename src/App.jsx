@@ -14,7 +14,8 @@ import './App.scss';
 import './Styling/Login.scss';
 import './Styling/FormElement.scss';
 import './Styling/Foundation.scss';
-
+import './Styling/ProgramSelect.scss';
+import './Styling/SearchTool.scss';
 function App() {
 
     const [authHeader, setAuthHeader] = useState(null);

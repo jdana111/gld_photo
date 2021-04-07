@@ -15,7 +15,7 @@ function PropertySelector({ authHeader, setProperty, program }) {
     useEffect(() => {
         if (!authHeader) {
             history.replace('login')
-        } 
+        }
         // eslint-disable-next-line
     }, [])
 
@@ -31,23 +31,41 @@ function PropertySelector({ authHeader, setProperty, program }) {
     }
 
     return (
-        <div>
-            <h3>Select Property</h3>
-            <InputGroup className="mb-3">
-                <FormControl type="text" placeholder="Search Term" value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
-                <InputGroup.Append>
-                    <Button type='submit' onClick={onSearch} variant="outline-secondary">Search</Button>
-                    <Button variant="outline-secondary" onClick={onReset}>Reset</Button>
-                    <Button variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)}>Active Only</Button>
-                </InputGroup.Append>
-            </InputGroup>
-            <div>
-                <ListGroup>
-                    {properties.map(property => (
-                        <ListGroup.Item key={property.id} onClick={() => setProperty(property)}>{property.attributes.propertyName}</ListGroup.Item>
-                    ))}
-                </ListGroup>
+        <div className="ev-base-container">
+            <div className="container">
+                <h3 className="ev-title">Select Property</h3>
             </div>
+            <div className="container">
+                <div className="row">
+                    <div className="card-body ev-card-search card">
+                        <InputGroup className="imput-group">
+                            <FormControl className="form-control ev-search-input" type="text" placeholder="Search Term" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                            <InputGroup.Append>
+                                <Button className="btn btn-outline-secondary ev-search-button" type='submit' onClick={onSearch} variant="outline-secondary">Search</Button>
+                                <Button className="btn btn-outline-secondary ev-search-button" variant="outline-secondary" onClick={onReset}>Reset</Button>
+                                <Button className="btn btn-outline-secondary ev-search-button" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)}>Active Only</Button>
+                            </InputGroup.Append>
+                        </InputGroup>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {Boolean(properties.length) && (
+                <div className="container ev-search-container">
+                    <div className="card ev-card-primary">
+                    <div class="ev-banner-title-search">
+                Results
+      
+                        </div>
+                        <ListGroup className="ev-clickable">
+                            {properties.map(property => (
+                                <ListGroup.Item key={property.id} onClick={() => setProperty(property)}>{property.attributes.propertyName}</ListGroup.Item>
+                            ))}
+                        </ListGroup>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

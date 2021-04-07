@@ -29,17 +29,25 @@ function ProgramSelector({ authHeader, setProgram, city }) {
     }, [authHeader])
 
     return (
-        <div>
-            { city && <img src={city.attributes.logoMain} alt="City logo"/> }
-            <h3>
-                Select Program
+        <div className="body">
+            <div className="container mt-5">
+                <h3 className="ev-title-program-select">
+                    Select Photo Database
             </h3>
-            <ListGroup>
-                {programs.map((p, i) => (
-                    <ListGroup.Item key={p.id} onClick={() => setProgram(p)}>{p.attributes.programName}</ListGroup.Item>
-                ))}
-            </ListGroup>
-        </div >
+            </div>
+            {city && <img className="ev-image-center ev-image-program-select" src={city.attributes.logoMain} alt="City logo" />}
+            <div className="justify-content-center d-flex">
+                <div className="col-9 col-sm-7 col-md-6">
+                    <br>
+                    </br>
+                        <ListGroup className="ev-list-program-select ev-clickable">
+                            {programs.map((p, i) => (
+                                <ListGroup.Item key={p.id} onClick={() => setProgram(p)}>{p.attributes.programName}</ListGroup.Item>
+                            ))}
+                        </ListGroup>
+            </div>
+                </div>
+            </div >
     );
 }
 

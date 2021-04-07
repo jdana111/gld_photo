@@ -1,0 +1,49 @@
+.ev-title-program-select {
+    text-align: center !important;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+.ev-list-program-select {
+    text-align: center;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+.ev-listbox-program-select {
+    width: 58.333%
+}
+
+// LOGO ////////////////////////////////////////////////////////////////////////////////////////////////
+
+.ev-image-program-select {
+    height: auto;
+    margin-top: 0.5rem;
+}
+
+@media screen and (max-width: 543px) {
+    img.ev-image-program-select {
+        width: 200px;
+    }
+    .ev-title-program-select {
+        font-size: 1.25rem;
+    }
+}
+@media screen and (min-width: 544px) and (max-width: 991px) {
+    img.ev-image-program-select {
+        width: 250px;
+    }
+    .ev-title-program-select {
+        font-size: 1.5rem;
+    }
+}
+@media screen and (min-width: 992px) {
+    img.ev-image-program-select {
+        width: 300px;
+    }
+    .ev-title-program-select {
+        font-size: 1.75rem;
+    }
+}
+
+
