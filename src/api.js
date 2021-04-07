@@ -27,11 +27,11 @@ export const login = (loginName, password) => {
     return new Promise(function(resolve, reject) {
         getClient().post('/api/login/', data)
             .then(response => {
-                resolve(response)
+                resolve([true, response])
             })
             .catch(error => {
                 console.warn(error)
-                reject(error)
+                resolve([false, error])
             })
     })
 }

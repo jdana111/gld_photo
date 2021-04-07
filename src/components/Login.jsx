@@ -10,11 +10,14 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [err, setErr] = useState("");
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        try {
-            const response = await login(username, password)
+        const [success, response] = await login(username, password)
+        if (!success) {
+            setErr(response.response.data)
+        } else {
             const city = await getCity(response.headers.authorization, CHANGE_THIS_CITY_ID)
             localStorage.setItem('authToken', response.headers.authorization)
             localStorage.setItem('userId', response.data.id)
@@ -23,8 +26,6 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
             setUser(response.data)
             setAuthHeader(response.headers.authorization)
             onLogin(true)
-        } catch (error) {
-            onLogin(false)
         }
     }
 
@@ -48,6 +49,7 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
                                 <Form.Label className="ev-label-form" >Password</Form.Label>
                                 <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                             </Form.Group>
+                            { err }
                             <Button className="ev-button ev-button-login btn" variant="primary" type="submit">
                                 Submit
                             </Button>
