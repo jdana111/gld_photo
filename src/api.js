@@ -62,6 +62,19 @@ export const getCity = (authHeader, cityId) => {
     })
 }
 
+export const getUser = (authHeader, userId) => {
+    return new Promise(function(resolve, reject) {
+        getClient().get(`/api/users/${userId}/`, { headers: { 'Authorization': authHeader } })
+            .then(response => {
+                resolve(response.data.data)
+            })
+            .catch(error => {
+                console.warn(error)
+                reject(error)
+            })
+    })
+}
+
 export const getProperties = (authHeader, searchString, programId, activeOnly) => {
     const config = {
         params: {

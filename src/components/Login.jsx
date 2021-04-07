@@ -17,6 +17,8 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
             const response = await login(username, password)
             const city = await getCity(response.headers.authorization, CHANGE_THIS_CITY_ID)
             localStorage.setItem('authToken', response.headers.authorization)
+            localStorage.setItem('userId', response.data.id)
+            console.log(response)
             setCity(city)
             setUser(response.data)
             setAuthHeader(response.headers.authorization)
@@ -48,7 +50,7 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
                             </Form.Group>
                             <Button className="ev-button ev-button-login btn" variant="primary" type="submit">
                                 Submit
-                    </Button>
+                            </Button>
                         </Form>
                     </div>
                 </div>

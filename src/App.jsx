@@ -6,7 +6,7 @@ import ProgramSelector from './components/ProgramSelector'
 import PropertySelector from './components/PropertySelector'
 import PhotoUpload from './components/PhotoUpload'
 
-import { getCity } from './api'
+import { getCity, getUser, getuser } from './api'
 import { usePosition } from './utils';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -43,10 +43,13 @@ function App() {
                 //     setProperty(property)
                 // }
                 const localToken = localStorage.getItem('authToken')
-                if (localToken) {
+                const userId = localStorage.getItem('userId')
+                if (localToken && userId) {
                     setLoading(true)
                     const city = await getCity(localToken, 1)
+                    const user = await getUser(localToken, userId)
                     setCity(city)
+                    setUser(user)
                     setAuthHeader(localToken)
                     setLoading(false)
                     return
@@ -84,6 +87,16 @@ function App() {
         }
     }
 
+    const logout = () => {
+        setUser(null)
+        setCity(null)
+        setProgram(null)
+        setProperty(null)
+        setAuthHeader(null)
+        localStorage.setItem('authToken', null)
+        history.push('/login')
+    }
+
     const onSelectProgram = (program) => {
         setProgram(program)
         history.push('/property')
@@ -115,6 +128,7 @@ function App() {
                     <Redirect to="/login"/>
                 </Switch>
                 <div onClick={grabStuff}/>
+                <div onClick={logout}>logout</div>
             </div>
         );
     }
