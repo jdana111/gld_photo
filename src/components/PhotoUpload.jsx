@@ -48,8 +48,10 @@ function PhotoUpload({ property, authHeader }) {
                     data.append('file', pic, pic.name);
                     data.append('caption', captions[index] || '')
                     if (exifData && exifData.GPSLatitude && exifData.GPSLongitude) {
-                        data.append('latitude', exifData.GPSLatitude)
-                        data.append('longitude', exifData.GPSLongitude)
+                        const latitude = exifData.GPSLatitude[0] + (exifData.GPSLatitude[1] / 60) + (exifData.GPSLatitude[2] / 3600)
+                        const longitude = exifData.GPSLongitude[0] + (exifData.GPSLongitude[1] / 60) + (exifData.GPSLongitude[2] / 3600)
+                        data.append('latitude', latitude)
+                        data.append('longitude', longitude)
                     } else if (exifData && exifData.CreateDate) {
                         // set phone gps here
                         const coords = getCoordsForTime(exifData.CreateDate)
