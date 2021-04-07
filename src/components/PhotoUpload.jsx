@@ -9,7 +9,7 @@ import PhotoPreview from './PhotoPreview'
 import { submitPhoto } from '../api'
 import { usePosition } from '../utils'
 
-function PhotoUpload({ property, authHeader }) {
+function PhotoUpload({ property, authHeader, user }) {
 
     const [pictures, setPictures] = useState([]);
     const [batchCount, setBatchCount] = useState(0);
@@ -63,6 +63,7 @@ function PhotoUpload({ property, authHeader }) {
                         data.append('longitude', undefined)
                     }
                     data.append('property_id', property.id)
+                    data.append('user_id', user.id)
             
                     const p = submitPhoto(data, authHeader)
                     promises.push(p)

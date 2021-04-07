@@ -110,7 +110,7 @@ function App() {
                         <PropertySelector authHeader={authHeader} setProperty={onSelectProperty} program={program}/>
                     </Route>
                     <Route path="/upload" >
-                        <PhotoUpload authHeader={authHeader} property={property}/>
+                        <PhotoUpload authHeader={authHeader} property={property} user={user}/>
                     </Route>
                     <Redirect to="/login"/>
                 </Switch>
