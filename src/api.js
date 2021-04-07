@@ -27,11 +27,11 @@ export const login = (loginName, password) => {
     return new Promise(function(resolve, reject) {
         getClient().post('/api/login/', data)
             .then(response => {
-                resolve(response)
+                resolve([true, response])
             })
             .catch(error => {
                 console.warn(error)
-                reject(error)
+                resolve([false, error])
             })
     })
 }
@@ -52,6 +52,19 @@ export const getPrograms = (authHeader) => {
 export const getCity = (authHeader, cityId) => {
     return new Promise(function(resolve, reject) {
         getClient().get(`/api/cities/${cityId}/`, { headers: { 'Authorization': authHeader } })
+            .then(response => {
+                resolve(response.data.data)
+            })
+            .catch(error => {
+                console.warn(error)
+                reject(error)
+            })
+    })
+}
+
+export const getUser = (authHeader, userId) => {
+    return new Promise(function(resolve, reject) {
+        getClient().get(`/api/users/${userId}/`, { headers: { 'Authorization': authHeader } })
             .then(response => {
                 resolve(response.data.data)
             })
