@@ -1,0 +1,71 @@
+/*----------------------------------------------------------------------------------------------------------*/
+// GENERAL COMMENTS:
+// 1) This file is named navbar-env.scss to clearly differentiate it from the Bootstrap navbar.scss file.
+
+.ev-navbar-env {
+  background-color: inherit !important;
+}
+
+@media screen and (min-width: 576px) {
+  .ev-navbar-env {
+    .container {
+      padding-left: 15px;
+    }
+  }
+}
+
+.ev-navbar-brand {
+  height: 55px;
+  padding-left: 60px;
+  line-height: 17px;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  background: url(/assets/images/city01/logo-small.png) no-repeat top left;
+  background-position: 0 center;
+}
+
+strong:hover,
+span:hover,
+a:hover {
+  text-decoration: none;
+}
+
+// Was .content in app.scss
+.ev-navbar-menu-items {
+  width: min-content;
+  flex: 1;
+  .list {
+    justify-content: flex-end;
+  }
+  a {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Open Sans", sans-serif;
+    text-decoration: none;
+    @media (max-width: 991px) {
+      padding: 3px 6px;
+      display: inline-block;
+      position: relative;
+      min-width: 40px;
+      height: 35px;
+      vertical-align: top;
+    }
+  }
+  i {
+    @media (min-width: 992px) {
+      padding-left: 12px;
+      padding-right: 3px;
+    }
+    @media (max-width: 991px) {
+      padding-right: 0 !important;
+      padding-left: 0 !important;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

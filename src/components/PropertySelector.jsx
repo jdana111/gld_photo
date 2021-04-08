@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, ListGroup, InputGroup, FormControl } from 'react-bootstrap'
+import { Button, ListGroup, InputGroup, FormControl, Navbar, Form, Nav } from 'react-bootstrap'
 
 import { getProperties } from '../api'
 
-function PropertySelector({ authHeader, setProperty, program }) {
+function PropertySelector({ authHeader, setProperty, program, city }) {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [properties, setProperties] = useState([]);
@@ -33,6 +33,27 @@ function PropertySelector({ authHeader, setProperty, program }) {
 
     return (
         <div className="ev-base-container">
+            <Navbar bg="dark" expand="lg">
+                <Navbar.Brand href="#home">
+                    {city && <img src={city.attributes.logoMain} alt="City logo" />}
+                    <span class="d-none d-md-block fn-lg" 
+                    // {{program-colors 'nsd'}}
+                    >
+        City of Golden
+        {/* <strong {{program-colors 'np'}}>
+          {{programName}}
+        </strong> */}
+        <br />
+        <span class="project-name font-fine">
+          Environmental Services
+        </span>
+      </span>
+                </Navbar.Brand>
+                <Nav className="ev-navbar-menu-items">
+                    <Nav.Link href="#home">Home</Nav.Link>
+                    <Nav.Link href="#link">Link</Nav.Link>
+                </Nav>
+            </Navbar>
             <div className="container">
                 <h3 className="ev-title">Select Property</h3>
             </div>
@@ -55,8 +76,8 @@ function PropertySelector({ authHeader, setProperty, program }) {
             {Boolean(properties.length) && (
                 <div className="container ev-search-container">
                     <div className="card ev-card-primary">
-                    <div class="ev-banner-title-search">
-                Results
+                        <div class="ev-banner-title-search">
+                            Results
                         </div>
                         <ListGroup className="ev-clickable">
                             {properties.map(property => (
