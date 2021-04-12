@@ -6,7 +6,7 @@ import ProgramSelector from './components/ProgramSelector'
 import PropertySelector from './components/PropertySelector'
 import PhotoUpload from './components/PhotoUpload'
 
-import { getCity, getUser, getuser } from './api'
+import { getCity, getUser } from './api'
 import { usePosition } from './utils';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
