@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Row } from 'react-bootstrap'
+import { Form, Button, Row } from 'react-bootstrap'
 
 import { login, getCity } from '../api'
 import logo from '../e-icon-large.png';
