@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, ListGroup, InputGroup, FormControl } from 'react-bootstrap'
+import { Button, ListGroup, InputGroup, FormControl, Navbar, Nav } from 'react-bootstrap'
 
 import { getProperties } from '../api'
 
-function PropertySelector({ authHeader, setProperty, program }) {
+function PropertySelector({ authHeader, setProperty, program, city, onLogout }) {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [properties, setProperties] = useState([]);
@@ -32,6 +32,19 @@ function PropertySelector({ authHeader, setProperty, program }) {
 
     return (
         <div className="ev-base-container">
+            <Navbar style={{backgroundColor: program? program.attributes.navbarBackgroundColor : 'black'}}>
+                <Navbar.Brand href="/program" style={{color: program? program.attributes.navbarFontColor : 'black'}}>
+                <img
+                    alt=""
+                    src={city.attributes.logoSmall}
+                    className="d-inline-block align-top"
+                />{' '}
+                City of Golden blah blah blah
+                </Navbar.Brand>
+                <Nav className="ml-auto">
+                    <Nav.Item style={{color: 'white'}} onClick={onLogout}>Logout</Nav.Item>
+                </Nav>
+            </Navbar>
             <div className="container">
                 <h3 className="ev-title">Select Property</h3>
             </div>
