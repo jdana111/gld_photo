@@ -21,6 +21,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
 
     const onSearch = (event) => {
         event.preventDefault()
+        if (!program) return;
         getProperties(authHeader, searchTerm, program.id, activeOnly)
             .then(properties => setProperties(properties))
     }
@@ -69,7 +70,6 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                     <div className="card ev-card-primary">
                     <div class="ev-banner-title-search">
                 Results
-      
                         </div>
                         <ListGroup className="ev-clickable">
                             {properties.map(property => (
