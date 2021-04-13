@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ImageUploader from "react-images-upload";
 import { useHistory } from 'react-router-dom';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Navbar, Nav } from 'react-bootstrap';
 import exifr from 'exifr'
 import FormData from 'form-data'
 
@@ -9,7 +9,7 @@ import PhotoPreview from './PhotoPreview'
 import { submitPhoto } from '../api'
 import { usePosition } from '../utils'
 
-function PhotoUpload({ property, authHeader, user }) {
+function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
 
     const [pictures, setPictures] = useState([]);
     const [batchCount, setBatchCount] = useState(0);
@@ -88,29 +88,41 @@ function PhotoUpload({ property, authHeader, user }) {
 
     return (
         <div className="PhotoUpload">
-            <br></br>
+            <Navbar style={{backgroundColor: program? program.attributes.navbarBackgroundColor : 'black'}}>
+                <Navbar.Brand href="/program" style={{color: program? program.attributes.navbarFontColor : 'black'}}>
+                <img
+                    alt=""
+                    src={city.attributes.logoSmall}
+                    className="d-inline-block align-top"
+                />{' '}
+                City of Golden blah blah blah
+                </Navbar.Brand>
+                <Nav className="ml-auto">
+                    <Nav.Item style={{color: 'white'}} onClick={onLogout}>Logout</Nav.Item>
+                </Nav>
+            </Navbar>
             {property && <h4>{property.attributes.propertyName}</h4>}
             {(pictures && pictures.length > 0) && pictures.map((p, i) =>
                 <div key={i}> 
                     <PhotoPreview
                         picture={p}
                         index={i}
-                        key={i}
+                        key={p.name}
                         authHeader={authHeader}
                         property={property}
-                        caption={captions[i] || ''}
+                        caption={captions[p.name] || ''}
                         setCaption={(newCaption) => {
                             setCaptions(old => ({
                                 ...old,
-                                [i]: newCaption
+                                [p.name]: newCaption
                             }))
                         }}
                         onMatch={() => {
                             setCaptions(old => {
                                 const val = old[i]
                                 const newCaptions = {}
-                                pictures.forEach((p, index) => {
-                                    newCaptions[index] = val
+                                pictures.forEach((p) => {
+                                    newCaptions[p.name] = val
                                 })
                                 return newCaptions
                             })
@@ -140,7 +152,7 @@ function PhotoUpload({ property, authHeader, user }) {
             )}
             { loading &&  (
                 <div>
-                    <Spinner animation="border" role="status" style={{width: '100px', height: '100px'}}>
+                    <Spinner animation="border" role="status" style={{width: '40px', height: '40px', margin: '40px'}}>
                         <span className="sr-only">Loading...</span>
                     </Spinner>
                 </div>

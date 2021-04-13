@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, ListGroup, InputGroup, FormControl, Navbar, Form, Nav } from 'react-bootstrap'
+import { Button, ListGroup, InputGroup, FormControl, Navbar, Nav } from 'react-bootstrap'
 
 import { getProperties } from '../api'
 
-function PropertySelector({ authHeader, setProperty, program, city }) {
+function PropertySelector({ authHeader, setProperty, program, city, onLogout }) {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [properties, setProperties] = useState([]);
@@ -33,7 +33,22 @@ function PropertySelector({ authHeader, setProperty, program, city }) {
 
     return (
         <div className="ev-base-container">
-            <div className="d-flex">
+            <Navbar style={{backgroundColor: program? program.attributes.navbarBackgroundColor : 'black'}}>
+                <Navbar.Brand href="/program" style={{color: program? program.attributes.navbarFontColor : 'black'}}>
+                <img
+                    alt=""
+                    src={city.attributes.logoSmall}
+                    className="d-inline-block align-top"
+                />{' '}
+                City of Golden blah blah blah
+                </Navbar.Brand>
+                <Nav className="ml-auto">
+                    <Nav.Item style={{color: 'white'}} onClick={onLogout}>Logout</Nav.Item>
+                </Nav>
+            </Navbar>
+
+
+            {/* <div className="d-flex">
                 <Navbar bg="dark" expand="lg">
                     <Navbar.Brand href="#home">
                         {city && <img src={city.attributes.logoMain} alt="City logo" />}
@@ -41,9 +56,6 @@ function PropertySelector({ authHeader, setProperty, program, city }) {
                         // {{program-colors 'nsd'}}
                         >
                             City of Golden
-        {/* <strong {{program-colors 'np'}}>
-          {{programName}}
-        </strong> */}
                             <br />
                             <span class="project-name font-fine">
                                 Environmental Services
@@ -54,8 +66,8 @@ function PropertySelector({ authHeader, setProperty, program, city }) {
                         <Nav.Link href="#home">Home</Nav.Link>
                         <Nav.Link href="#link">Link</Nav.Link>
                     </Nav>
-                </Navbar>
-            </div>
+                </Navbar> */}
+
             <div className="container">
                 <h3 className="ev-title">Select Property</h3>
             </div>
