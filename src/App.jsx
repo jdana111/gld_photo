@@ -122,10 +122,10 @@ function App() {
                         <ProgramSelector authHeader={authHeader} setProgram={onSelectProgram} city={city}/>
                     </Route>
                     <Route path="/property" >
-                        <PropertySelector authHeader={authHeader} setProperty={onSelectProperty} program={program}/>
+                        <PropertySelector authHeader={authHeader} setProperty={onSelectProperty} program={program} city={city} onLogout={logout}/>
                     </Route>
                     <Route path="/upload" >
-                        <PhotoUpload authHeader={authHeader} property={property} user={user}/>
+                        <PhotoUpload authHeader={authHeader} property={property} user={user} program={program} city={city} onLogout={logout}/>
                     </Route>
                     <Redirect to="/login"/>
                 </Switch>
