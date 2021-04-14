@@ -39,7 +39,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                     alt=""
                     src={city.attributes.logoSmall}
                     className="d-inline-block align-top"
-                />{' '}
+                />
                 City of Golden blah blah blah
                 </Navbar.Brand>
                 <Nav className="ml-auto">
