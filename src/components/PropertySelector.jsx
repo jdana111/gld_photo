@@ -72,7 +72,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                 <h3 className="ev-title">Select Property</h3>
             </div>
             <div className="container">
-                <div className="row">
+                <div className="row px-3">
                     <div className="card-body ev-card-search card">
                         <InputGroup className="imput-group">
                             <FormControl className="form-control ev-search-input" type="text" placeholder="Search Term" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
