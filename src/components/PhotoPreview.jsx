@@ -29,13 +29,14 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch }
  
     return (
         <div key={index}>
-            { picture.name }
             <img src={ "" } alt="" className="photo-preview" id={picture.name}></img>
+            <div> { picture.name } </div>
             <div>latitude: {coords[0]}, longitude: {coords[1]}</div>
             <div style={{display: 'flex'}}>
-
-            <input type='text' className="form-control" onChange={ e => setCaption(e.target.value) } value={caption}/>
-            <button type="button" onClick={ onMatch } className="btn btn-primary">Duplicate Caption</button>
+                <div className="input-group px-5">
+            <input type='text' className="form-control ev-input" onChange={ e => setCaption(e.target.value) } value={caption}/>
+            <button type="button" onClick={ onMatch } className="btn ev-button">Duplicate Caption</button>
+            </div>
             </div>
         </div>
     )

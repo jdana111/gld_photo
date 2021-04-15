@@ -16,7 +16,13 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
         event.preventDefault()
         const [success, response] = await login(username, password)
         if (!success) {
-            setErr(response.response.data)
+            console.log(response.response.data)
+            const errVal = response.response.data
+            if (typeof errVal === 'object') {
+                setErr(response.response.data.error)
+            } else if (typeof errVal === 'string') {
+                setErr(response.response.data)
+            }
         } else {
             const city = await getCity(response.headers.authorization, CHANGE_THIS_CITY_ID)
             localStorage.setItem('authToken', response.headers.authorization)

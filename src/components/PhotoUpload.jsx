@@ -127,7 +127,8 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                                 return newCaptions
                             })
                         }} />
-                    <button onClick={() => {
+                    <br></br>
+                    <button className="btn ev-button" onClick={() => {
                       exifr.parse(p).then(exifdata => {
                           if (exifdata.CreateDate) {
                             const coords = getCoordsForTime(exifdata.CreateDate)
