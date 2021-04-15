@@ -130,7 +130,6 @@ function App() {
                     <Redirect to="/login"/>
                 </Switch>
                 <div onClick={grabStuff}/>
-                <div onClick={logout}>logout</div>
             </div>
         );
     }

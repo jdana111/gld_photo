@@ -47,6 +47,9 @@
     .ev-title-login {
         font-size: 1.25rem;
     }
+    .ev-title-login-line2 {
+        font-size: 1.25rem;
+    }
 }
 @media screen and (min-width: 544px) and (max-width: 991px) {
     img.ev-image-login {
@@ -55,12 +58,18 @@
     .ev-title-login {
         font-size: 1.5rem;
     }
+    .ev-title-login-line2 {
+        font-size: 1.5rem;
+    }
 }
 @media screen and (min-width: 992px) {
     img.ev-image-login {
         width: 100px;
     }
     .ev-title-login {
+        font-size: 1.5rem;
+    }
+    .ev-title-login-line2 {
         font-size: 1.5rem;
     }
 }
