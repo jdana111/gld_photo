@@ -18,6 +18,7 @@ import './Styling/ProgramSelect.scss';
 import './Styling/SearchTool.scss';
 import './Styling/Banner.scss';
 import './Styling/PhotoPreview.scss';
+import './Styling/NavbarEV.scss';
 
 function App() {
 

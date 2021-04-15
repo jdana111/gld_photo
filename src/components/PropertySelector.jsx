@@ -33,17 +33,27 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
 
     return (
         <div className="ev-base-container">
-            <Navbar style={{backgroundColor: program? program.attributes.navbarBackgroundColor : 'black'}}>
-                <Navbar.Brand href="/program" style={{color: program? program.attributes.navbarFontColor : 'black'}}>
-                <img
-                    alt=""
-                    src={city.attributes.logoSmall}
-                    className="d-inline-block align-top"
-                />
-                City of Golden blah blah blah
+            <Navbar style={{ backgroundColor: program ? program.attributes.navbarBackgroundColor : 'black' }}>
+                <Navbar.Brand className="ev-navbar-brand fn-lg d-flex align-items-center ember-view" href="/program">
+                    {/* <img
+                        alt=""
+                        src={city.attributes.logoSmall}
+                        className="d-inline-block align-top"
+                    /> */}
+                    <span class="d-none d-md-block fn-lg">
+                        City of Golden
+                        <strong style={{ color: program ? program.attributes.navbarFontColor : 'black' }}>
+                            Construction
+                        </strong>
+                        <br />
+                         <span class="font-fine">
+                            Environmental Services
+                         </span>
+                    </span>
+
                 </Navbar.Brand>
                 <Nav className="ml-auto">
-                    <Nav.Item style={{color: 'white'}} onClick={onLogout}>Logout</Nav.Item>
+                    <Nav.Item style={{ color: 'white' }} onClick={onLogout}>Logout</Nav.Item>
                 </Nav>
             </Navbar>
 
