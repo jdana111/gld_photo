@@ -43,7 +43,8 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
                         <img className="ev-image-center ev-image-login" src={logo} alt="" />
                     </Row>
                     <Row>
-                        <h5 className="ev-title-login">Environmental Services Login</h5>
+                        <h5 className="ev-title-login px-2">Environmental Services Login</h5>
+                        <h5 className="ev-title-login-line2 px-2">Photo App</h5>
                     </Row>
                     <div class="card-body">
                         <Form className="ev-form-login" onSubmit={handleSubmit}>
@@ -55,7 +56,7 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
                                 <Form.Label className="ev-label-form" >Password</Form.Label>
                                 <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                             </Form.Group>
-                            { err }
+                            {err}
                             <Button className="ev-button ev-button-login btn" variant="primary" type="submit">
                                 Submit
                             </Button>
