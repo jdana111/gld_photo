@@ -18,7 +18,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
         }
         // eslint-disable-next-line
     }, [])
-
+    console.log(program)
     const onSearch = (event) => {
         event.preventDefault()
         if (!program) return;
@@ -40,13 +40,19 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                         src={city.attributes.logoSmall}
                         className="d-inline-block align-top"
                     /> */}
+                    <span class="hidden-md-up">
+                        {program ? program.attributes.programName : ''}
+                    </span>
                     <span class="d-none d-md-block fn-lg">
                         City of Golden
                         <strong style={{ color: program ? program.attributes.navbarFontColor : 'black' }}>
-                            Construction
+                            <span> 
+
+                            {program ? program.attributes.programName : ''}
+                            </span>
                         </strong>
                         <br />
-                         <span class="font-fine">
+                         <span className="font-fine">
                             Environmental Services
                          </span>
                     </span>
@@ -101,7 +107,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                 <div className="container ev-search-container">
                     <div className="card ev-card-primary">
                         <div class="ev-banner-title-search">
-                            Results
+                            Showing Results for "{searchTerm}" 
                         </div>
                         <ListGroup className="ev-clickable">
                             {properties.map(property => (
