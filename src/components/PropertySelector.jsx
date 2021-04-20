@@ -40,26 +40,24 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                         src={city.attributes.logoSmall}
                         className="d-inline-block align-top"
                     /> */}
-                    <span class="hidden-md-up">
+                    <span style={{ color: program ? program.attributes.navbarFontColor : 'black' }} class="d-block d-sm-none">
                         {program ? program.attributes.programName : ''}
                     </span>
-                    <span class="d-none d-md-block fn-lg">
+                    <span class="d-none d-sm-block fn-lg ev-nav-font">
                         City of Golden
                         <strong style={{ color: program ? program.attributes.navbarFontColor : 'black' }}>
-                            <span> 
-
+                            <span> </span>
                             {program ? program.attributes.programName : ''}
-                            </span>
                         </strong>
                         <br />
-                         <span className="font-fine">
+                         <span className="font-fine ev-nav-font">
                             Environmental Services
                          </span>
                     </span>
 
                 </Navbar.Brand>
                 <Nav className="ml-auto">
-                    <Nav.Item style={{ color: 'white' }} onClick={onLogout}>Logout</Nav.Item>
+                    <Nav.Item className="ev-nav-font" onClick={onLogout}>Logout</Nav.Item>
                 </Nav>
             </Navbar>
 
