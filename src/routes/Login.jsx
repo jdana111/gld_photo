@@ -55,11 +55,7 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
                                 <Form.Label className="ev-label-form" >Password</Form.Label>
                                 <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                             </Form.Group>
-<<<<<<< HEAD:src/routes/Login.jsx
                             { err }
-=======
-                            {err}
->>>>>>> @{-1}:src/components/Login.jsx
                             <Button className="ev-button ev-button-login btn" variant="primary" type="submit">
                                 Submit
                             </Button>
