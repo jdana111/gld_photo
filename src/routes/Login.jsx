@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Row } from 'react-bootstrap'
+import { Form, Button, Row } from 'react-bootstrap'
 
 import { login, getCity } from '../api'
 import logo from '../e-icon-large.png';
@@ -16,7 +16,12 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
         event.preventDefault()
         const [success, response] = await login(username, password)
         if (!success) {
-            setErr(response.response.data)
+            const errVal = response.response.data
+            if (typeof errVal === 'object') {
+                setErr(response.response.data.error)
+            } else if (typeof errVal === 'string') {
+                setErr(response.response.data)
+            }
         } else {
             const city = await getCity(response.headers.authorization, CHANGE_THIS_CITY_ID)
             localStorage.setItem('authToken', response.headers.authorization)
@@ -37,7 +42,8 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
                         <img className="ev-image-center ev-image-login" src={logo} alt="" />
                     </Row>
                     <Row>
-                        <h5 className="ev-title-login">Environmental Services Login</h5>
+                        <h5 className="ev-title-login px-2">Environmental Services Login</h5>
+                        <h5 className="ev-title-login-line2 px-2">Photo App</h5>
                     </Row>
                     <div class="card-body">
                         <Form className="ev-form-login" onSubmit={handleSubmit}>
@@ -49,7 +55,11 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
                                 <Form.Label className="ev-label-form" >Password</Form.Label>
                                 <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                             </Form.Group>
+<<<<<<< HEAD:src/routes/Login.jsx
                             { err }
+=======
+                            {err}
+>>>>>>> @{-1}:src/components/Login.jsx
                             <Button className="ev-button ev-button-login btn" variant="primary" type="submit">
                                 Submit
                             </Button>

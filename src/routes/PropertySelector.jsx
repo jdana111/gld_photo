@@ -21,6 +21,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
 
     const onSearch = (event) => {
         event.preventDefault()
+        if (!program) return;
         getProperties(authHeader, searchTerm, program.id, activeOnly)
             .then(properties => setProperties(properties))
     }
@@ -38,7 +39,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                     alt=""
                     src={city.attributes.logoSmall}
                     className="d-inline-block align-top"
-                />{' '}
+                />
                 City of Golden blah blah blah
                 </Navbar.Brand>
                 <Nav className="ml-auto">
@@ -49,7 +50,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                 <h3 className="ev-title">Select Property</h3>
             </div>
             <div className="container">
-                <div className="row">
+                <div className="row px-3">
                     <div className="card-body ev-card-search card">
                         <InputGroup className="imput-group">
                             <FormControl className="form-control ev-search-input" type="text" placeholder="Search Term" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
@@ -67,9 +68,8 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
             {Boolean(properties.length) && (
                 <div className="container ev-search-container">
                     <div className="card ev-card-primary">
-                    <div class="ev-banner-title-search">
-                Results
-      
+                        <div class="ev-banner-title-search">
+                            Results
                         </div>
                         <ListGroup className="ev-clickable">
                             {properties.map(property => (

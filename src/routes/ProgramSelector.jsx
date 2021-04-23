@@ -31,23 +31,22 @@ function ProgramSelector({ authHeader, setProgram, city }) {
     return (
         <div className="body">
             <div className="container mt-5">
-                <h3 className="ev-title-program-select">
-                    Select Photo Database
-            </h3>
+                <h5 className="ev-title-login">Environmental Services</h5>
+                <h5 className="ev-title-login-line2">Photo App</h5>
             </div>
             {city && <img className="ev-image-center ev-image-program-select" src={city.attributes.logoMain} alt="City logo" />}
             <div className="justify-content-center d-flex">
                 <div className="col-9 col-sm-7 col-md-6">
                     <br>
                     </br>
-                        <ListGroup className="ev-list-program-select ev-clickable">
-                            {programs.map((p, i) => (
-                                <ListGroup.Item key={p.id} onClick={() => setProgram(p)}>{p.attributes.programName}</ListGroup.Item>
-                            ))}
-                        </ListGroup>
-            </div>
+                    <ListGroup className="ev-list-program-select ev-clickable ev-light-table">
+                        {programs.map((p, i) => (
+                            <ListGroup.Item key={p.id} onClick={() => setProgram(p)}>{p.attributes.programName}</ListGroup.Item>
+                        ))}
+                    </ListGroup>
                 </div>
-            </div >
+            </div>
+        </div >
     );
 }
 
