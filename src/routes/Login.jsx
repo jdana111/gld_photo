@@ -16,8 +16,10 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
         event.preventDefault()
         const [success, response] = await login(username, password)
         if (!success) {
-            const errVal = response.response.data
-            if (typeof errVal === 'object') {
+            const errVal = response.response ? response.response.data : undefined
+            if (!errVal) {
+                setErr("Something went wrong.")
+            } else if (typeof errVal === 'object') {
                 setErr(response.response.data.error)
             } else if (typeof errVal === 'string') {
                 setErr(response.response.data)
