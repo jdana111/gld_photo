@@ -55,9 +55,8 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     } else if (exifData && exifData.CreateDate) {
                         // set phone gps here
                         const coords = getCoordsForTime(exifData.CreateDate)
-                        console.log(coords)
-                        data.append('latitude', undefined)
-                        data.append('longitude', undefined)
+                        data.append('latitude', coords.latitude)
+                        data.append('longitude', coords.longitude)
                     } else {
                         data.append('latitude', undefined)
                         data.append('longitude', undefined)
@@ -128,14 +127,6 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                                 return newCaptions
                             })
                         }} />
-                    <button onClick={() => {
-                        exifr.parse(p).then(exifdata => {
-                            if (exifdata.CreateDate) {
-                                const coords = getCoordsForTime(exifdata.CreateDate)
-                                setDebugString(JSON.stringify(coords))
-                            }
-                        })
-                    }}>MATCH COORDS</button>
                 </div>
             )}
             { Boolean(property) && (
