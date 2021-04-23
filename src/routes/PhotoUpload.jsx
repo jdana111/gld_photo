@@ -5,7 +5,7 @@ import { Spinner, Navbar, Nav } from 'react-bootstrap';
 import exifr from 'exifr'
 import FormData from 'form-data'
 
-import PhotoPreview from './PhotoPreview'
+import PhotoPreview from '../components/PhotoPreview'
 import { submitPhoto } from '../api'
 import { usePosition } from '../utils'
 
@@ -17,7 +17,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [captions, setCaptions] = useState({});
     const [debugString, setDebugString] = useState('');
 
-    const {position, testOnChange, loadTestData, getCoordsForTime} = usePosition()
+    const { position, testOnChange, loadTestData, getCoordsForTime } = usePosition()
 
     const history = useHistory()
 
@@ -55,16 +55,15 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     } else if (exifData && exifData.CreateDate) {
                         // set phone gps here
                         const coords = getCoordsForTime(exifData.CreateDate)
-                        console.log(coords)
-                        data.append('latitude', undefined)
-                        data.append('longitude', undefined)
+                        data.append('latitude', coords.latitude)
+                        data.append('longitude', coords.longitude)
                     } else {
                         data.append('latitude', undefined)
                         data.append('longitude', undefined)
                     }
                     data.append('property_id', property.id)
                     data.append('user_id', user.id)
-            
+
                     const p = submitPhoto(data, authHeader)
                     promises.push(p)
                 })
@@ -88,22 +87,23 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
 
     return (
         <div className="PhotoUpload">
-            <Navbar style={{backgroundColor: program? program.attributes.navbarBackgroundColor : 'black'}}>
-                <Navbar.Brand href="/program" style={{color: program? program.attributes.navbarFontColor : 'black'}}>
-                <img
-                    alt=""
-                    src={city.attributes.logoSmall}
-                    className="d-inline-block align-top"
-                />{' '}
+            <Navbar style={{ backgroundColor: program ? program.attributes.navbarBackgroundColor : 'black' }}>
+                <Navbar.Brand href="/program" style={{ color: program ? program.attributes.navbarFontColor : 'black' }}>
+                    <img
+                        alt=""
+                        src={city.attributes.logoSmall}
+                        className="d-inline-block align-top"
+                    />{' '}
                 City of Golden blah blah blah
                 </Navbar.Brand>
                 <Nav className="ml-auto">
-                    <Nav.Item style={{color: 'white'}} onClick={onLogout}>Logout</Nav.Item>
+                    <Nav.Item style={{ color: 'white' }} onClick={onLogout}>Logout</Nav.Item>
                 </Nav>
             </Navbar>
+            <br/>
             {property && <h4>{property.attributes.propertyName}</h4>}
             {(pictures && pictures.length > 0) && pictures.map((p, i) =>
-                <div key={i}> 
+                <div key={i}>
                     <PhotoPreview
                         picture={p}
                         index={i}
@@ -127,32 +127,25 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                                 return newCaptions
                             })
                         }} />
-                    <br></br>
-                    <button className="btn ev-button" onClick={() => {
-                      exifr.parse(p).then(exifdata => {
-                          if (exifdata.CreateDate) {
-                            const coords = getCoordsForTime(exifdata.CreateDate)
-                            setDebugString(JSON.stringify(coords))
-                          }
-                      })
-                    }}>MATCH COORDS</button>
                 </div>
             )}
             { Boolean(property) && (
                 <div>
                     <ImageUploader
+                        className="tacos"
                         key={batchCount}
                         withIcon={true}
                         onChange={onDrop}
                         imgExtension={[".jpg", ".jpeg"]}
                         maxFileSize={5242880}
+                        buttonClassName="btn ev-button"
                     />
                     <button type="button" onClick={submit} disabled={pictures.length === 0} className='btn btn-primary'>Submit</button>
                 </div>
             )}
-            { loading &&  (
+            { loading && (
                 <div>
-                    <Spinner animation="border" role="status" style={{width: '40px', height: '40px', margin: '40px'}}>
+                    <Spinner animation="border" role="status" style={{ width: '40px', height: '40px', margin: '40px' }}>
                         <span className="sr-only">Loading...</span>
                     </Spinner>
                 </div>

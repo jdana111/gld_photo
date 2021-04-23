@@ -29,6 +29,7 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch }
  
     return (
         <div key={index}>
+            { picture.name }
             <img src={ "" } alt="" className="photo-preview" id={picture.name}></img>
             <div> { picture.name } </div>
             <div>latitude: {coords[0]}, longitude: {coords[1]}</div>

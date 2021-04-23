@@ -313,12 +313,14 @@ p.show {
 //.btn is used Bootstrap
 
 .ev-button {
-  color: #6c757d;
-  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  background-color: transparent;
-  background-image: none;
-  border-color: #6c757d;
-  border-radius: 0;
+  border: 1px solid transparent !important;
+  color: #6c757d !important;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: #6c757d !important;
+  border-radius: 0 !important;
+  font-weight: 400 !important;
   &:hover,
   &:active {
     color: white;

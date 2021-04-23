@@ -46,28 +46,6 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                     <Nav.Item style={{color: 'white'}} onClick={onLogout}>Logout</Nav.Item>
                 </Nav>
             </Navbar>
-
-
-            {/* <div className="d-flex">
-                <Navbar bg="dark" expand="lg">
-                    <Navbar.Brand href="#home">
-                        {city && <img src={city.attributes.logoMain} alt="City logo" />}
-                        <span class="d-none d-md-block fn-lg"
-                        // {{program-colors 'nsd'}}
-                        >
-                            City of Golden
-                            <br />
-                            <span class="project-name font-fine">
-                                Environmental Services
-                         </span>
-                        </span>
-                    </Navbar.Brand>
-                    <Nav className="ev-navbar-menu-items">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
-                    </Nav>
-                </Navbar> */}
-
             <div className="container">
                 <h3 className="ev-title">Select Property</h3>
             </div>
