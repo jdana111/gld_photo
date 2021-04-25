@@ -3,12 +3,15 @@ import { useHistory } from 'react-router-dom';
 import { Button, ListGroup, InputGroup, FormControl, Navbar, Nav } from 'react-bootstrap'
 
 import { getProperties } from '../api'
+import { useMediaQuery } from '../utils'
 
 function PropertySelector({ authHeader, setProperty, program, city, onLogout }) {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [properties, setProperties] = useState([]);
     const [activeOnly, setActiveOnly] = useState(false);
+
+    const isBig = useMediaQuery('(min-width: 800px)');
 
     const history = useHistory()
 
@@ -31,6 +34,41 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
         setActiveOnly(false)
     }
 
+
+    let form
+    if (isBig) {
+        form = (
+            <div className="row px-3">
+                <div className="card-body ev-card-search card">
+                    <InputGroup>
+                        <FormControl className="form-control ev-search-input" type="text" placeholder="Search Term" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                        <InputGroup.Append>
+                            <Button className="btn btn-outline-secondary ev-search-button" type='submit' onClick={onSearch} variant="outline-secondary">Search</Button>
+                            <Button className="btn btn-outline-secondary ev-search-button" variant="outline-secondary" onClick={onReset}>Reset</Button>
+                            <Button className="btn btn-outline-secondary ev-search-button" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)}>Active Only</Button>
+                        </InputGroup.Append>
+                    </InputGroup>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        )
+    } else {
+        form = (
+            <div className="row px-3">
+                <div className="card-body ev-card-search card">
+                        <FormControl className="form-control ev-search-input" type="text" placeholder="Search Term" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                            <Button className="btn btn-outline-secondary ev-search-button-sm" type='submit' onClick={onSearch} variant="outline-secondary">Search</Button>
+                            <Button className="btn btn-outline-secondary ev-search-button-sm" variant="outline-secondary" onClick={onReset}>Reset</Button>
+                            <Button className="btn btn-outline-secondary ev-search-button-sm" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)}>Active Only</Button>
+
+                    <div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className="ev-base-container">
             <Navbar style={{ backgroundColor: program ? program.attributes.navbarBackgroundColor : 'black' }}>
@@ -50,7 +88,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                             {program ? program.attributes.programName : ''}
                         </strong>
                         <br />
-                         <span className="font-fine ev-nav-font">
+                        <span className="font-fine ev-nav-font">
                             Environmental Services
                          </span>
                     </span>
@@ -83,29 +121,16 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                 </Navbar> */}
 
             <div className="container">
-                <h3 className="ev-title">Select Property</h3>
+                <h3 className="py-2 ev-title">Select Property</h3>
             </div>
             <div className="container">
-                <div className="row px-3">
-                    <div className="card-body ev-card-search card">
-                        <InputGroup className="imput-group">
-                            <FormControl className="form-control ev-search-input" type="text" placeholder="Search Term" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
-                            <InputGroup.Append>
-                                <Button className="btn btn-outline-secondary ev-search-button" type='submit' onClick={onSearch} variant="outline-secondary">Search</Button>
-                                <Button className="btn btn-outline-secondary ev-search-button" variant="outline-secondary" onClick={onReset}>Reset</Button>
-                                <Button className="btn btn-outline-secondary ev-search-button" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)}>Active Only</Button>
-                            </InputGroup.Append>
-                        </InputGroup>
-                        <div>
-                        </div>
-                    </div>
-                </div>
+                {form}
             </div>
             {Boolean(properties.length) && (
                 <div className="container ev-search-container">
                     <div className="card ev-card-primary">
                         <div class="ev-banner-title-search">
-                            Showing Results for "{searchTerm}" 
+                            Showing Results for "{searchTerm}"
                         </div>
                         <ListGroup className="ev-clickable">
                             {properties.map(property => (
