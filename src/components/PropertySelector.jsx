@@ -11,7 +11,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
     const [properties, setProperties] = useState([]);
     const [activeOnly, setActiveOnly] = useState(false);
 
-    const isBig = useMediaQuery('(min-width: 800px)');
+    const isBig = useMediaQuery('(min-width: 500px)');
 
     const history = useHistory()
 
@@ -35,6 +35,8 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
     }
 
 
+    
+
     let form
     if (isBig) {
         form = (
@@ -46,6 +48,13 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                             <Button className="btn btn-outline-secondary ev-search-button" type='submit' onClick={onSearch} variant="outline-secondary">Search</Button>
                             <Button className="btn btn-outline-secondary ev-search-button" variant="outline-secondary" onClick={onReset}>Reset</Button>
                             <Button className="btn btn-outline-secondary ev-search-button" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)}>Active Only</Button>
+                            {/* <span>
+                        { activeOnly ? (
+                             <Button class="btn btn-outline-secondary ev-search-button">Show Inactive</Button>
+                        ) : (
+                            <Button class="btn btn-outline-secondary ev-search-button" style={{ color: program ? program.attributes.navbarBackgroundColor : 'black' }}>Active & Inactive</Button>
+                        )}
+                        </span> */}
                         </InputGroup.Append>
                     </InputGroup>
                     <div>
@@ -129,7 +138,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
             {Boolean(properties.length) && (
                 <div className="container ev-search-container">
                     <div className="card ev-card-primary">
-                        <div class="ev-banner-title-search">
+                        <div className="ev-banner-title-search" style={{backgroundColor: program ? program.attributes.navbarBackgroundColor : 'white' }}>
                             Showing Results for "{searchTerm}"
                         </div>
                         <ListGroup className="ev-clickable">

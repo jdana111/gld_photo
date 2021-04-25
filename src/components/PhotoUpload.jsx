@@ -157,7 +157,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     </Spinner>
                 </div>
             )}
-            <button onClick={() => console.log(pictures)}>HI THERE</button>
+            {/* <button onClick={() => console.log(pictures)}>HI THERE</button>
             <button onClick={() => testOnChange()}>ADD SHTUFF</button>
             <button onClick={() => loadTestData()}>SET DATA</button>
             <button onClick={() => {
@@ -166,7 +166,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             }}>LOG POSITION STACK</button>
             <div>
                 DEBUG HERE
-            </div>
+            </div> */}
             <div>{debugString}</div>
         </div>
     );
