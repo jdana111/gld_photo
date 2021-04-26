@@ -16,8 +16,10 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
         event.preventDefault()
         const [success, response] = await login(username, password)
         if (!success) {
-            const errVal = response.response.data
-            if (typeof errVal === 'object') {
+            const errVal = response.response ? response.response.data : undefined
+            if (!errVal) {
+                setErr("Something went wrong.")
+            } else if (typeof errVal === 'object') {
                 setErr(response.response.data.error)
             } else if (typeof errVal === 'string') {
                 setErr(response.response.data)
@@ -53,7 +55,7 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
                                 <Form.Label className="ev-label-form" >Password</Form.Label>
                                 <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                             </Form.Group>
-                            {err}
+                            { err }
                             <Button className="ev-button ev-button-login btn" variant="primary" type="submit">
                                 Submit
                             </Button>

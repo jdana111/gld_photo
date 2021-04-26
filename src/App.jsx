@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
 
-import Login from './components/Login'
-import ProgramSelector from './components/ProgramSelector'
-import PropertySelector from './components/PropertySelector'
-import PhotoUpload from './components/PhotoUpload'
+import Login from './routes/Login'
+import ProgramSelector from './routes/ProgramSelector'
+import PropertySelector from './routes/PropertySelector'
+import PhotoUpload from './routes/PhotoUpload'
 
 import { getCity, getUser } from './api'
 import { usePosition } from './utils';
@@ -21,7 +21,6 @@ import './Styling/PhotoPreview.scss';
 import './Styling/NavbarEV.scss';
 
 function App() {
-
     const [authHeader, setAuthHeader] = useState(null);
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null)
@@ -132,6 +131,7 @@ function App() {
                     <Redirect to="/login"/>
                 </Switch>
                 <div onClick={grabStuff}/>
+                <div onClick={logout}>logout</div>
             </div>
         );
     }

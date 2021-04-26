@@ -5,7 +5,7 @@ import { Spinner, Navbar, Nav, Button } from 'react-bootstrap';
 import exifr from 'exifr'
 import FormData from 'form-data'
 
-import PhotoPreview from './PhotoPreview'
+import PhotoPreview from '../components/PhotoPreview'
 import { submitPhoto } from '../api'
 import { usePosition } from '../utils'
 
@@ -17,7 +17,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [captions, setCaptions] = useState({});
     const [debugString, setDebugString] = useState('');
 
-    const {position, testOnChange, loadTestData, getCoordsForTime} = usePosition()
+    const { position, testOnChange, loadTestData, getCoordsForTime } = usePosition()
 
     const history = useHistory()
 
@@ -58,7 +58,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     const pic = pictures[index]
                     let data = new FormData();
                     data.append('file', pic, pic.name);
-                    data.append('caption', captions[index] || '')
+                    data.append('caption', captions[pic.name] || '')
                     if (exifData && exifData.GPSLatitude && exifData.GPSLongitude) {
                         const latitude = exifData.GPSLatitude[0] + (exifData.GPSLatitude[1] / 60) + (exifData.GPSLatitude[2] / 3600)
                         const longitude = exifData.GPSLongitude[0] + (exifData.GPSLongitude[1] / 60) + (exifData.GPSLongitude[2] / 3600)
@@ -67,15 +67,17 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     } else if (exifData && exifData.CreateDate) {
                         // set phone gps here
                         const coords = getCoordsForTime(exifData.CreateDate)
-                        data.append('latitude', undefined)
-                        data.append('longitude', undefined)
+                        setDebugString(`uploaded these coords ${JSON.stringify(coords)}`)
+                        data.append('latitude', coords.latitude)
+                        data.append('longitude', coords.longitude)
                     } else {
+                        setDebugString(`no create date, :${JSON.stringify(exifData)}`)
                         data.append('latitude', undefined)
                         data.append('longitude', undefined)
                     }
                     data.append('property_id', property.id)
                     data.append('user_id', user.id)
-            
+
                     const p = submitPhoto(data, authHeader)
                     promises.push(p)
                 })
@@ -98,24 +100,24 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
 
     return (
         <div className="PhotoUpload">
-            <Navbar style={{backgroundColor: program? program.attributes.navbarBackgroundColor : 'black'}}>
-                <Navbar.Brand href="/program" style={{color: program? program.attributes.navbarFontColor : 'black'}}>
-                <img
-                    alt=""
-                    src={city.attributes.logoSmall}
-                    className="d-inline-block align-top"
-                />{' '}
+            <Navbar style={{ backgroundColor: program ? program.attributes.navbarBackgroundColor : 'black' }}>
+                <Navbar.Brand href="/program" style={{ color: program ? program.attributes.navbarFontColor : 'black' }}>
+                    <img
+                        alt=""
+                        src={city.attributes.logoSmall}
+                        className="d-inline-block align-top"
+                    />{' '}
                 City of Golden blah blah blah
                 </Navbar.Brand>
                 <Nav className="ml-auto">
-                    <Nav.Item style={{color: 'white'}} onClick={onLogout}>Logout</Nav.Item>
+                    <Nav.Item style={{ color: 'white' }} onClick={onLogout}>Logout</Nav.Item>
                 </Nav>
             </Navbar>
             <div className="container">
             {property && <h3 className="pt-2 ev-title">{property.attributes.propertyName}</h3>}
             </div>
             {(pictures && pictures.length > 0) && pictures.map((p, i) =>
-                <div key={i}> 
+                <div key={i}>
                     <PhotoPreview
                         picture={p}
                         index={i}
@@ -153,18 +155,20 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             { Boolean(property) && (
                 <div>
                     <ImageUploader
+                        className="tacos"
                         key={batchCount}
                         withIcon={true}
                         onChange={onDrop}
                         imgExtension={[".jpg", ".jpeg"]}
                         maxFileSize={5242880}
+                        buttonClassName="btn ev-button"
                     />
                     <Button type="button" onClick={submit} disabled={pictures.length === 0} className="ev-button btn">Submit</Button>
                 </div>
             )}
-            { loading &&  (
+            { loading && (
                 <div>
-                    <Spinner animation="border" role="status" style={{width: '40px', height: '40px', margin: '40px'}}>
+                    <Spinner animation="border" role="status" style={{ width: '40px', height: '40px', margin: '40px' }}>
                         <span className="sr-only">Loading...</span>
                     </Spinner>
                 </div>
