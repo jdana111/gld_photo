@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ImageUploader from "react-images-upload";
 import { useHistory } from 'react-router-dom';
-import { Spinner, Navbar, Nav } from 'react-bootstrap';
+import { Spinner, Navbar, Nav, Button } from 'react-bootstrap';
 import exifr from 'exifr'
 import FormData from 'form-data'
 
@@ -25,8 +25,20 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
         if (!authHeader) {
             history.replace('login')
         }
-        // eslint-disable-next-line
+
+        const element = document.querySelector('.chooseFileButton')
+        if (element) {
+            element.style.borderRadius = '0';
+            element.style.color = '#6c757d';
+            element.style.backgroundColor = 'transparent';
+            element.style.borderColor = '#6c757d';
+            element.style.borderWidth = '1px';
+            element.style.borderStyle = 'solid';
+            element.style.fontFamily = 'Arial';
+            element.style.fontSize = '16px';
+        }
     }, [])
+
 
     const onDrop = (newPictures, dataUrls) => {
         setPictures(newPictures);
@@ -55,7 +67,6 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     } else if (exifData && exifData.CreateDate) {
                         // set phone gps here
                         const coords = getCoordsForTime(exifData.CreateDate)
-                        console.log(coords)
                         data.append('latitude', undefined)
                         data.append('longitude', undefined)
                     } else {
@@ -78,7 +89,6 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             .catch(err => {
                 setLoading(false)
                 setDebugString(JSON.stringify(err))
-                console.log("ERROR WITH GPS PARSE OR UPLOAD", err)
             })
     }
 
@@ -101,7 +111,9 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     <Nav.Item style={{color: 'white'}} onClick={onLogout}>Logout</Nav.Item>
                 </Nav>
             </Navbar>
-            {property && <h4>{property.attributes.propertyName}</h4>}
+            <div className="container">
+            {property && <h3 className="pt-2 ev-title">{property.attributes.propertyName}</h3>}
+            </div>
             {(pictures && pictures.length > 0) && pictures.map((p, i) =>
                 <div key={i}> 
                     <PhotoPreview
@@ -128,14 +140,14 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                             })
                         }} />
                     <br></br>
-                    <button className="btn ev-button" onClick={() => {
+                    {/* <button className="btn ev-button" onClick={() => {
                       exifr.parse(p).then(exifdata => {
                           if (exifdata.CreateDate) {
                             const coords = getCoordsForTime(exifdata.CreateDate)
                             setDebugString(JSON.stringify(coords))
                           }
                       })
-                    }}>MATCH COORDS</button>
+                    }}>MATCH COORDS</button> */}
                 </div>
             )}
             { Boolean(property) && (
@@ -147,7 +159,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         imgExtension={[".jpg", ".jpeg"]}
                         maxFileSize={5242880}
                     />
-                    <button type="button" onClick={submit} disabled={pictures.length === 0} className='btn btn-primary'>Submit</button>
+                    <Button type="button" onClick={submit} disabled={pictures.length === 0} className="ev-button btn">Submit</Button>
                 </div>
             )}
             { loading &&  (

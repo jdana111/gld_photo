@@ -21,7 +21,6 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
         }
         // eslint-disable-next-line
     }, [])
-    console.log(program)
     const onSearch = (event) => {
         event.preventDefault()
         if (!program) return;
@@ -130,9 +129,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                 </Navbar> */}
 
             <div className="container">
-                <h3 className="py-2 ev-title">Select Property</h3>
-            </div>
-            <div className="container">
+                <h3 className="pt-2 ev-title">Select Property</h3>
                 {form}
             </div>
             {Boolean(properties.length) && (
