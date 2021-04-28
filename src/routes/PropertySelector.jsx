@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, ListGroup, InputGroup, FormControl, Navbar, Nav } from 'react-bootstrap'
+import { Button, ListGroup, InputGroup, FormControl } from 'react-bootstrap'
 
+import { Navbar } from '../components/Navbar'
 import { getProperties } from '../api'
 import { useMediaQuery } from '../utils'
 
@@ -32,9 +33,6 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
         setSearchTerm('')
         setActiveOnly(false)
     }
-
-
-    
 
     let form
     if (isBig) {
@@ -79,33 +77,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
 
     return (
         <div className="ev-base-container">
-            <Navbar style={{ backgroundColor: program ? program.attributes.navbarBackgroundColor : 'black' }}>
-                <Navbar.Brand className="ev-navbar-brand fn-lg d-flex align-items-center ember-view" href="/program">
-                    {/* <img
-                        alt=""
-                        src={city.attributes.logoSmall}
-                        className="d-inline-block align-top"
-                    /> */}
-                    <span style={{ color: program ? program.attributes.navbarFontColor : 'black' }} class="d-block d-sm-none">
-                        {program ? program.attributes.programName : ''}
-                    </span>
-                    <span class="d-none d-sm-block fn-lg ev-nav-font">
-                        City of Golden
-                        <strong style={{ color: program ? program.attributes.navbarFontColor : 'black' }}>
-                            <span> </span>
-                            {program ? program.attributes.programName : ''}
-                        </strong>
-                        <br />
-                        <span className="font-fine ev-nav-font">
-                            Environmental Services
-                         </span>
-                    </span>
-
-                </Navbar.Brand>
-                <Nav className="ml-auto">
-                    <Nav.Item className="ev-nav-font" onClick={onLogout}>Logout</Nav.Item>
-                </Nav>
-            </Navbar>
+            <Navbar city={city} program={program} onLogout={onLogout}/>
             <div className="container">
                 <h3 className="pt-2 ev-title">Select Property</h3>
                 {form}
