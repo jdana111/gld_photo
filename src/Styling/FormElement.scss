@@ -330,6 +330,16 @@ p.show {
   }
 }
 
+.ev-button-enabled {
+  
+}
+
+.ev-button:disabled {
+  background-color: #DCDCDC;
+  border-color:  #919191;
+  color:#919191;
+}
+
 .btn {
   border-radius: 0;
 }

@@ -31,8 +31,7 @@ function ProgramSelector({ authHeader, setProgram, city }) {
     return (
         <div className="body">
             <div className="container mt-5">
-                <h5 className="ev-title-login">Environmental Services</h5>
-                <h5 className="ev-title-login-line2">Photo App</h5>
+            <h5 className="ev-title-login px-2">Environmental Services Photo / Geolocation App</h5>
             </div>
             {city && <img className="ev-image-center ev-image-program-select" src={city.attributes.logoMain} alt="City logo" />}
             <div className="justify-content-center d-flex">

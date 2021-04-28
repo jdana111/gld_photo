@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import ImageUploader from "react-images-upload";
 import { useHistory } from 'react-router-dom';
-import { Spinner, Navbar, Nav } from 'react-bootstrap';
+import { Spinner, Nav, Button } from 'react-bootstrap';
 import exifr from 'exifr'
 import FormData from 'form-data'
 
 import PhotoPreview from '../components/PhotoPreview'
+import { Navbar } from '../components/Navbar'
 import { submitPhoto } from '../api'
 import { usePosition } from '../utils'
 
@@ -25,8 +26,20 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
         if (!authHeader) {
             history.replace('login')
         }
-        // eslint-disable-next-line
-    }, [])
+
+        const element = document.querySelector('.chooseFileButton')
+        if (element) {
+            element.style.borderRadius = '0';
+            element.style.color = '#6c757d';
+            element.style.backgroundColor = 'transparent';
+            element.style.borderColor = '#6c757d';
+            element.style.borderWidth = '1px';
+            element.style.borderStyle = 'solid';
+            element.style.fontFamily = 'Arial';
+            element.style.fontSize = '16px';
+        }
+    }, [authHeader, history])
+
 
     const onDrop = (newPictures, dataUrls) => {
         setPictures(newPictures);
@@ -79,7 +92,6 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             .catch(err => {
                 setLoading(false)
                 setDebugString(JSON.stringify(err))
-                console.log("ERROR WITH GPS PARSE OR UPLOAD", err)
             })
     }
 
@@ -89,21 +101,10 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
 
     return (
         <div className="PhotoUpload">
-            <Navbar style={{ backgroundColor: program ? program.attributes.navbarBackgroundColor : 'black' }}>
-                <Navbar.Brand href="/program" style={{ color: program ? program.attributes.navbarFontColor : 'black' }}>
-                    <img
-                        alt=""
-                        src={city.attributes.logoSmall}
-                        className="d-inline-block align-top"
-                    />{' '}
-                City of Golden blah blah blah
-                </Navbar.Brand>
-                <Nav className="ml-auto">
-                    <Nav.Item style={{ color: 'white' }} onClick={onLogout}>Logout</Nav.Item>
-                </Nav>
-            </Navbar>
-            <br/>
-            {property && <h4>{property.attributes.propertyName}</h4>}
+            <Navbar program={program} onLogout={onLogout}/>
+            <div className="container">
+            {property && <h3 className="pt-2 ev-title">{property.attributes.propertyName}</h3>}
+            </div>
             {(pictures && pictures.length > 0) && pictures.map((p, i) =>
                 <div key={i}>
                     <PhotoPreview
@@ -129,6 +130,15 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                                 return newCaptions
                             })
                         }} />
+                    <br></br>
+                    {/* <button className="btn ev-button" onClick={() => {
+                      exifr.parse(p).then(exifdata => {
+                          if (exifdata.CreateDate) {
+                            const coords = getCoordsForTime(exifdata.CreateDate)
+                            setDebugString(JSON.stringify(coords))
+                          }
+                      })
+                    }}>MATCH COORDS</button> */}
                 </div>
             )}
             { Boolean(property) && (
@@ -142,7 +152,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         maxFileSize={5242880}
                         buttonClassName="btn ev-button"
                     />
-                    <button type="button" onClick={submit} disabled={pictures.length === 0} className='btn btn-primary'>Submit</button>
+                    <Button type="button" onClick={submit} disabled={pictures.length === 0} className="ev-button btn">Submit</Button>
                 </div>
             )}
             { loading && (
@@ -152,7 +162,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     </Spinner>
                 </div>
             )}
-            <button onClick={() => console.log(pictures)}>HI THERE</button>
+            {/* <button onClick={() => console.log(pictures)}>HI THERE</button>
             <button onClick={() => testOnChange()}>ADD SHTUFF</button>
             <button onClick={() => loadTestData()}>SET DATA</button>
             <button onClick={() => {
@@ -161,7 +171,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             }}>LOG POSITION STACK</button>
             <div>
                 DEBUG HERE
-            </div>
+            </div> */}
             <div>{debugString}</div>
         </div>
     );

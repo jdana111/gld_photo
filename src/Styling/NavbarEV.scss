@@ -2,6 +2,14 @@
 // GENERAL COMMENTS:
 // 1) This file is named navbar-env.scss to clearly differentiate it from the Bootstrap navbar.scss file.
 
+
+.navbar-container {
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .ev-navbar-env {
   background-color: inherit !important;
 }
@@ -24,6 +32,7 @@
   font-family: "Open Sans", sans-serif;
   background: url(/assets/images/city01/logo-small.png) no-repeat top left;
   background-position: 0 center;
+  text-align:left;
 }
 
 strong:hover,
@@ -67,5 +76,22 @@ a:hover {
       top: 50%;
       transform: translate(-50%, -50%);
     }
+  }
+}
+
+.ev-navbar-nav {
+  align-self: center;
+}
+.ev-nav-font {
+  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  svg {
+    height: 1.2rem;
+    width: 1.2rem;
   }
 }
