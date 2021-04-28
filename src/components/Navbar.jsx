@@ -2,7 +2,7 @@ import React from 'react'
 import { Navbar as BSNavbar, Nav, Container, Row } from 'react-bootstrap'
 import { FaSignOutAlt } from 'react-icons/fa'
 
-export function Navbar({ program, city, onLogout }) {
+export function Navbar({ program, onLogout }) {
 
 
     return (

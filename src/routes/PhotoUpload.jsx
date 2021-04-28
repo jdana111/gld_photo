@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import ImageUploader from "react-images-upload";
 import { useHistory } from 'react-router-dom';
-import { Spinner, Navbar, Nav, Button } from 'react-bootstrap';
+import { Spinner, Nav, Button } from 'react-bootstrap';
 import exifr from 'exifr'
 import FormData from 'form-data'
 
 import PhotoPreview from '../components/PhotoPreview'
+import { Navbar } from '../components/Navbar'
 import { submitPhoto } from '../api'
 import { usePosition } from '../utils'
 
@@ -37,7 +38,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             element.style.fontFamily = 'Arial';
             element.style.fontSize = '16px';
         }
-    }, [])
+    }, [authHeader, history])
 
 
     const onDrop = (newPictures, dataUrls) => {
@@ -100,19 +101,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
 
     return (
         <div className="PhotoUpload">
-            <Navbar style={{ backgroundColor: program ? program.attributes.navbarBackgroundColor : 'black' }}>
-                <Navbar.Brand href="/program" style={{ color: program ? program.attributes.navbarFontColor : 'black' }}>
-                    <img
-                        alt=""
-                        src={city.attributes.logoSmall}
-                        className="d-inline-block align-top"
-                    />{' '}
-                City of Golden blah blah blah
-                </Navbar.Brand>
-                <Nav className="ml-auto">
-                    <Nav.Item style={{ color: 'white' }} onClick={onLogout}>Logout</Nav.Item>
-                </Nav>
-            </Navbar>
+            <Navbar program={program} onLogout={onLogout}/>
             <div className="container">
             {property && <h3 className="pt-2 ev-title">{property.attributes.propertyName}</h3>}
             </div>
