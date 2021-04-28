@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ImageUploader from "react-images-upload";
 import { useHistory } from 'react-router-dom';
-import { Spinner, Nav, Button } from 'react-bootstrap';
+import { Spinner, Button } from 'react-bootstrap';
 import exifr from 'exifr'
 import FormData from 'form-data'
 
@@ -18,6 +18,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [captions, setCaptions] = useState({});
     const [debugString, setDebugString] = useState('');
 
+    // eslint-disable-next-line
     const { position, testOnChange, loadTestData, getCoordsForTime } = usePosition()
 
     const history = useHistory()

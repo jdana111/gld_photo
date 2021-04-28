@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar as BSNavbar, Nav, Container, Row } from 'react-bootstrap'
+import { Navbar as BSNavbar, Nav, Container } from 'react-bootstrap'
 import { FaSignOutAlt } from 'react-icons/fa'
 
 export function Navbar({ program, onLogout }) {
