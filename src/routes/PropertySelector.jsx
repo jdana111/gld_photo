@@ -79,7 +79,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
         <div className="ev-base-container">
             <Navbar city={city} program={program} onLogout={onLogout}/>
             <div className="container">
-                <h3 className="pt-2 ev-title">Select Property</h3>
+                <h3 className="pt-2 ev-title">Select {program ? program.attributes.propertyAlias : 'propety'}</h3>
                 {form}
             </div>
             {Boolean(properties.length) && (
