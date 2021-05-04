@@ -46,6 +46,23 @@
   cursor: default;
 }
 
+.ev-icons {
+  height: fit-content;
+  padding: 6px;
+  min-width: 40px;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  height: 35px;
+  vertical-align: top;
+  i {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    // position: absolute;
+    left: 50%;
+    top: 50%;
+  }
+}
 /*----------------------------------------------------------------------------------------------------------*\
     #LAYOUT
   \*----------------------------------------------------------------------------------------------------------*/
@@ -127,8 +144,8 @@ body {
   cursor: pointer;
 }
 
-  img.ev-photo-preview {
-    @media (max-width: 575px) {
+img.ev-photo-preview {
+  @media (max-width: 575px) {
     width: 75px;
   }
   @media (min-width: 576px) and (max-width: 991px) {
@@ -137,5 +154,4 @@ body {
   @media (min-width: 992px) {
     width: 150px;
   }
-
 }

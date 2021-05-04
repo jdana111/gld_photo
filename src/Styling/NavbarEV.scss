@@ -42,19 +42,11 @@ a:hover {
 }
 
 // Was .content in app.scss
-.ev-navbar-menu-items {
-  width: min-content;
-  flex: 1;
-  .list {
-    justify-content: flex-end;
-  }
-  a {
+.ev-icons-nav {
     color: #ffffff;
     font-size: 16px;
     font-weight: 400;
-    font-family: "Open Sans", sans-serif;
-    text-decoration: none;
-    @media (max-width: 991px) {
+    @media (max-width: 575px) {
       padding: 3px 6px;
       display: inline-block;
       position: relative;
@@ -62,13 +54,12 @@ a:hover {
       height: 35px;
       vertical-align: top;
     }
-  }
   i {
-    @media (min-width: 992px) {
+    @media (min-width: 576px) {
       padding-left: 12px;
       padding-right: 3px;
     }
-    @media (max-width: 991px) {
+    @media (max-width: 575px) {
       padding-right: 0 !important;
       padding-left: 0 !important;
       position: absolute;

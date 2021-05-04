@@ -32,7 +32,9 @@ export function Navbar({ program, onLogout }) {
                     </BSNavbar.Brand>
                     <Nav className="ml-auto ev-navbar-nav">
                         <Nav.Item className="ev-nav-font" onClick={onLogout}>
-                            <FaSignOutAlt/>
+                            <div className="ev-icons-nav">
+                                <FaSignOutAlt />
+                            </div>
                             <span className="d-none d-sm-block ml-2">
                                 Logout
                             </span>
