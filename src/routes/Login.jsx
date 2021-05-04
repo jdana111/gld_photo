@@ -45,7 +45,7 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
                     <Row>
                     <h5 className="ev-title-login px-2">Environmental Services Photo / Geolocation App</h5>
                     </Row>
-                    <div class="card-body">
+                    <div className="card-body">
                         <Form className="ev-form-login" onSubmit={handleSubmit}>
                             <Form.Group>
                                 <Form.Label className="ev-label-form">Login</Form.Label>

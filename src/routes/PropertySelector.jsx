@@ -89,7 +89,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                     <span style={{ color: program ? program.attributes.navbarFontColor : 'black' }} class="d-block d-sm-none">
                         {program ? program.attributes.programName : ''}
                     </span>
-                    <span class="d-none d-sm-block fn-lg ev-nav-font">
+                    <span className="d-none d-sm-block fn-lg ev-nav-font">
                         City of Golden
                         <strong style={{ color: program ? program.attributes.navbarFontColor : 'black' }}>
                             <span> </span>
