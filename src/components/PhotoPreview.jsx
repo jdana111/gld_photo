@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import exifr from 'exifr'
+import { FaClone } from 'react-icons/fa'
 
 const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch }) => {
 
@@ -29,14 +30,16 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch }
  
     return (
         <div key={index}>
-            { picture.name }
-            <img src={ "" } alt="" className="photo-preview pb-3 pt-1" id={picture.name}></img>
+            <img src={ "" } alt="" className="ev-photo-preview pb-3 pt-1" id={picture.name}></img>
             <div> { picture.name } </div>
             <div>latitude: {coords[0]}, longitude: {coords[1]}</div>
             <div className="container pt-3" style={{display: 'flex'}}>
                 <div className="input-group">
             <input type='text' className="form-control ev-input" onChange={ e => setCaption(e.target.value) } value={caption}/>
-            <button type="button" onClick={ onMatch } className="btn ev-button">Duplicate Caption</button>
+            <div className="ev-icons ev-clickable" onClick={ onMatch }>
+            <FaClone/>
+            </div>
+            {/* <button type="button" onClick={ onMatch } className="btn ev-button">Duplicate Caption</button> */}
             </div>
             </div>
         </div>
