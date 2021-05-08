@@ -78,24 +78,24 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
     return (
         <div className="ev-base-container">
             <Navbar city={city} program={program} onLogout={onLogout}/>
-            <div className="container">
+            <div className="container ev-page-container">
                 <h3 className="pt-2 ev-title">Select {program ? program.attributes.propertyAlias : 'property'}</h3>
                 {form}
-            </div>
-            {Boolean(properties.length) && (
-                <div className="container ev-search-container">
-                    <div className="card ev-card-primary">
-                        <div className="ev-banner-title-search" style={{backgroundColor: program ? program.attributes.navbarBackgroundColor : 'white' }}>
-                            Showing Results for "{searchTerm}"
-                        </div>
-                        <ListGroup className="ev-clickable">
-                            {properties.map(property => (
-                                <ListGroup.Item key={property.id} onClick={() => setProperty(property)}>{property.attributes.propertyName}</ListGroup.Item>
-                            ))}
-                        </ListGroup>
-                    </div>
                 </div>
-            )}
+                {Boolean(properties.length) && (
+                    <div className="container ev-search-container">
+                        <div className="card ev-card-primary">
+                            <div className="ev-banner-title-search" style={{backgroundColor: program ? program.attributes.navbarBackgroundColor : 'white' }}>
+                                Showing Results for "{searchTerm}"
+                            </div>
+                            <ListGroup className="ev-clickable">
+                                {properties.map(property => (
+                                    <ListGroup.Item key={property.id} onClick={() => setProperty(property)}>{property.attributes.propertyName}</ListGroup.Item>
+                                ))}
+                            </ListGroup>
+                        </div>
+                    </div>
+                )}
         </div>
     );
 }

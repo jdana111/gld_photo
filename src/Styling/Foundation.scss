@@ -82,6 +82,10 @@ body {
   padding-bottom: 20px;
 }
 
+.ev-page-container {
+  padding-top: 71px;
+}
+
 .ev-padding-top-large {
   padding-top: 12px;
 }
@@ -124,6 +128,12 @@ body {
   background-color: #e9e9e9;
 }
 
+.ev-photo-preview-container {
+  background-color: #fff;
+  padding: 5px 0 14px 0;
+  margin-bottom: 6px;
+}
+
 /*----------------------------------------------------------------------------------------------------------*\
     #IMAGES, LINKS, AND LOGOS
   \*----------------------------------------------------------------------------------------------------------*/
@@ -145,6 +155,7 @@ body {
 }
 
 img.ev-photo-preview {
+  margin-top: 10px;
   @media (max-width: 575px) {
     width: 75px;
   }
