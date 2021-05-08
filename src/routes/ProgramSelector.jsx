@@ -35,9 +35,8 @@ function ProgramSelector({ authHeader, setProgram, city }) {
             </div>
             {city && <img className="ev-image-center ev-image-program-select" src={city.attributes.logoMain} alt="City logo" />}
             <div className="justify-content-center d-flex">
-                <div className="col-9 col-sm-7 col-md-6">
-                    <br>
-                    </br>
+                <div className="col-4">
+                    <br></br>
                     <ListGroup className="ev-list-program-select ev-clickable ev-light-table">
                         {programs.map((p, i) => (
                             <ListGroup.Item key={p.id} onClick={() => setProgram(p)}>{p.attributes.programName}</ListGroup.Item>
