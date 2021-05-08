@@ -19,7 +19,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [debugString, setDebugString] = useState('');
 
     // eslint-disable-next-line
-    const { position, testOnChange, loadTestData, getCoordsForTime } = usePosition()
+    const { getCoordsForTime } = usePosition()
 
     const history = useHistory()
 
@@ -101,7 +101,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     }
 
     return (
-        <div className="PhotoUpload">
+        <div className="ev-photo-upload">
             <Navbar program={program} onLogout={onLogout}/>
             <div className="container">
             {property && <h3 className="pt-2 ev-title">{property.attributes.propertyName}</h3>}
@@ -132,14 +132,13 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                             })
                         }} />
                     <br></br>
-                    {/* <button className="btn ev-button" onClick={() => {
-                      exifr.parse(p).then(exifdata => {
-                          if (exifdata.CreateDate) {
-                            const coords = getCoordsForTime(exifdata.CreateDate)
-                            setDebugString(JSON.stringify(coords))
-                          }
-                      })
-                    }}>MATCH COORDS</button> */}
+                </div>
+            )}
+            { loading && (
+                <div className="ev-loader">
+                    <Spinner animation="border" role="status" style={{ width: '40px', height: '40px', margin: '40px' }}>
+                        <span className="sr-only">Loading...</span>
+                    </Spinner>
                 </div>
             )}
             { Boolean(property) && (
@@ -154,13 +153,6 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         buttonClassName="btn ev-button"
                     />
                     <Button type="button" onClick={submit} disabled={pictures.length === 0} className="ev-button btn">Submit</Button>
-                </div>
-            )}
-            { loading && (
-                <div>
-                    <Spinner animation="border" role="status" style={{ width: '40px', height: '40px', margin: '40px' }}>
-                        <span className="sr-only">Loading...</span>
-                    </Spinner>
                 </div>
             )}
             {/* <button onClick={() => console.log(pictures)}>HI THERE</button>

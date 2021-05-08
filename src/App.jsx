@@ -6,7 +6,7 @@ import ProgramSelector from './routes/ProgramSelector'
 import PropertySelector from './routes/PropertySelector'
 import PhotoUpload from './routes/PhotoUpload'
 
-import { getCity, getUser } from './api'
+import { getCity, getUser, getProperties, getPrograms } from './api'
 import { usePosition } from './utils';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,6 +18,10 @@ import './Styling/ProgramSelect.scss';
 import './Styling/SearchTool.scss';
 import './Styling/Banner.scss';
 import './Styling/NavbarEV.scss';
+import './Styling/Upload.scss';
+
+const DEBUG_PHOTO = true
+// const DEBUG_PHOTO = process.env.DEBUG_PHOTO || false
 
 function App() {
     const [authHeader, setAuthHeader] = useState(null);
@@ -50,6 +54,16 @@ function App() {
                     setLoading(true)
                     const city = await getCity(localToken, 1)
                     const user = await getUser(localToken, userId)
+                    if (DEBUG_PHOTO) {
+                        const programs = getPrograms(localToken)
+                        const selectedProgram = programs[0]
+                        setProgram(selectedProgram)
+                        const properties = getProperties(localToken, 'zzz', selectedProgram.id, false)
+                        if (properties && properties.length) {
+                            const selectedProperty = properties[0]
+                            setProperty(selectedProperty)
+                        }
+                    }
                     setCity(city)
                     setUser(user)
                     setAuthHeader(localToken)
