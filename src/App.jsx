@@ -18,6 +18,7 @@ import './Styling/ProgramSelect.scss';
 import './Styling/SearchTool.scss';
 import './Styling/Banner.scss';
 import './Styling/NavbarEV.scss';
+import './Styling/PhotoUpload.scss';
 
 const DEBUG_PHOTO = true
 // const DEBUG_PHOTO = process.env.DEBUG_PHOTO || false

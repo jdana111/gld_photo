@@ -140,7 +140,6 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                 { Boolean(property) && (
                     <div>
                         <ImageUploader
-                            className="tacos"
                             key={batchCount}
                             withIcon={true}
                             onChange={onDrop}
