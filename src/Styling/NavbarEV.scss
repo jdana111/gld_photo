@@ -2,6 +2,12 @@
 // GENERAL COMMENTS:
 // 1) This file is named navbar-env.scss to clearly differentiate it from the Bootstrap navbar.scss file.
 
+.navbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
 
 .navbar-container {
   padding: 0 1rem;

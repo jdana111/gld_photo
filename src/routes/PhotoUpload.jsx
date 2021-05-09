@@ -19,7 +19,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [debugString, setDebugString] = useState('');
 
     // eslint-disable-next-line
-    const { position, testOnChange, loadTestData, getCoordsForTime } = usePosition()
+    const { getCoordsForTime } = usePosition()
 
     const history = useHistory()
 
@@ -101,16 +101,14 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     }
 
     return (
-        <div className="PhotoUpload">
+        <div className="ev-base-container">
             <Navbar program={program} onLogout={onLogout}/>
-            <div className="container">
+            <div className="container ev-page-container">
             {property && <h3 className="pt-2 ev-title">{property.attributes.propertyName}</h3>}
-            </div>
-            {(pictures && pictures.length > 0) && pictures.map((p, i) =>
-                <div key={i}>
+                {(pictures && pictures.length > 0) && pictures.map((p, i) =>
                     <PhotoPreview
                         picture={p}
-                        index={i}
+                        index={p.name}
                         key={p.name}
                         authHeader={authHeader}
                         property={property}
@@ -123,7 +121,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         }}
                         onMatch={() => {
                             setCaptions(old => {
-                                const val = old[i]
+                                const val = old[p.name]
                                 const newCaptions = {}
                                 pictures.forEach((p) => {
                                     newCaptions[p.name] = val
@@ -131,49 +129,40 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                                 return newCaptions
                             })
                         }} />
-                    <br></br>
-                    {/* <button className="btn ev-button" onClick={() => {
-                      exifr.parse(p).then(exifdata => {
-                          if (exifdata.CreateDate) {
-                            const coords = getCoordsForTime(exifdata.CreateDate)
-                            setDebugString(JSON.stringify(coords))
-                          }
-                      })
-                    }}>MATCH COORDS</button> */}
-                </div>
-            )}
-            { Boolean(property) && (
+                )}
+                { loading && (
+                    <div className="ev-loader">
+                        <Spinner animation="border" role="status" style={{ width: '40px', height: '40px', margin: '40px' }}>
+                            <span className="sr-only">Loading...</span>
+                        </Spinner>
+                    </div>
+                )}
+                { Boolean(property) && (
+                    <div>
+                        <ImageUploader
+                            key={batchCount}
+                            withIcon={true}
+                            onChange={onDrop}
+                            imgExtension={[".jpg", ".jpeg"]}
+                            maxFileSize={5242880}
+                            label="Max file size: 5mb, accepted: jpg"
+                            buttonClassName="btn ev-button"
+                        />
+                        <Button type="button" onClick={submit} disabled={pictures.length === 0} className="ev-button btn mt-3">Submit</Button>
+                    </div>
+                )}
+                {/* <button onClick={() => console.log(pictures)}>HI THERE</button>
+                <button onClick={() => testOnChange()}>ADD SHTUFF</button>
+                <button onClick={() => loadTestData()}>SET DATA</button>
+                <button onClick={() => {
+                    console.log(position)
+                    setDebugString(JSON.stringify(position))
+                }}>LOG POSITION STACK</button>
                 <div>
-                    <ImageUploader
-                        className="tacos"
-                        key={batchCount}
-                        withIcon={true}
-                        onChange={onDrop}
-                        imgExtension={[".jpg", ".jpeg"]}
-                        maxFileSize={5242880}
-                        buttonClassName="btn ev-button"
-                    />
-                    <Button type="button" onClick={submit} disabled={pictures.length === 0} className="ev-button btn">Submit</Button>
-                </div>
-            )}
-            { loading && (
-                <div>
-                    <Spinner animation="border" role="status" style={{ width: '40px', height: '40px', margin: '40px' }}>
-                        <span className="sr-only">Loading...</span>
-                    </Spinner>
-                </div>
-            )}
-            {/* <button onClick={() => console.log(pictures)}>HI THERE</button>
-            <button onClick={() => testOnChange()}>ADD SHTUFF</button>
-            <button onClick={() => loadTestData()}>SET DATA</button>
-            <button onClick={() => {
-                console.log(position)
-                setDebugString(JSON.stringify(position))
-            }}>LOG POSITION STACK</button>
-            <div>
-                DEBUG HERE
-            </div> */}
-            <div>{debugString}</div>
+                    DEBUG HERE
+                </div> */}
+                <div>{debugString}</div>
+            </div>
         </div>
     );
 }
