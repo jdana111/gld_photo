@@ -35,7 +35,7 @@ function ProgramSelector({ authHeader, setProgram, city }) {
             </div>
             {city && <img className="ev-image-center ev-image-program-select" src={city.attributes.logoMain} alt="City logo" />}
             <div className="justify-content-center d-flex">
-                <div className="col-4">
+                <div className="col-7 col-md-4">
                     <br></br>
                     <ListGroup className="ev-list-program-select ev-clickable ev-light-table">
                         {programs.map((p, i) => (
