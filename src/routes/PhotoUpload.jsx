@@ -78,6 +78,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         data.append('latitude', coords.latitude)
                         data.append('longitude', coords.longitude)
                     } else {
+                        setDebugString(`Could not find coordinates for photo: ${pic.name}`)
                         data.append('latitude', undefined)
                         data.append('longitude', undefined)
                     }
