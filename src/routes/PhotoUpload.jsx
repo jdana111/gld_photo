@@ -166,14 +166,14 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                 <div>
                 DEBUG HERE
             </div> */}
-                <button onClick={() => {
+                {/* <button onClick={() => {
                     console.log(position)
                     setDebugString(JSON.stringify(position))
                 }}>LOG POSITION STACK</button>
                 <button onClick={() => {
                     console.log(getMostRecentPosition())
                     setDebugString(position.length + " " + position.lastIndex + " " + getMostRecentPosition())
-                }}>LOG most recent</button>
+                }}>LOG most recent</button> */}
                 <div>{debugString}</div>
             </div>
         </div>
