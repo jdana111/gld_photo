@@ -56,6 +56,15 @@ export const usePosition = () => {
     setError(error.message);
   };
 
+  const getMostRecentPosition = () => {
+    if (position.length) {
+      const final = position[position.lastIndex]
+      return final
+    } else {
+      return null
+    }
+  }
+
   const getCoordsForTime = (dt) => {
     let bestDelta = 10000000000
     let bestDeltaCoords = null
@@ -78,7 +87,7 @@ export const usePosition = () => {
     return () => geo.clearWatch(watcher);
   }, []);
 
-  return { position, error, testOnChange, loadTestData, getCoordsForTime };
+  return { position, error, testOnChange, loadTestData, getCoordsForTime, getMostRecentPosition };
 }
 
 export function useMediaQuery(query) {
