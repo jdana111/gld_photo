@@ -72,7 +72,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         // setDebugString(`uploaded these coords ${JSON.stringify(coords)}`)
                         data.append('latitude', coords.latitude)
                         data.append('longitude', coords.longitude)
-                    } else if(getMostRecentPosition()) {
+                    } else if (getMostRecentPosition()) {
                         // setDebugString(`no create date, :${JSON.stringify(exifData)}`)
                         const coords = getMostRecentPosition()
                         data.append('latitude', coords.latitude)
@@ -166,6 +166,9 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     console.log(position)
                     setDebugString(JSON.stringify(position))
                 }}>LOG POSITION STACK</button>
+                <button onClick={() => {
+                    console.log(getMostRecentPosition())
+                }}>LOG most recent</button>
                 <div>{debugString}</div>
             </div>
         </div>
