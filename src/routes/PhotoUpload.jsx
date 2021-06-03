@@ -70,6 +70,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         // set phone gps here
                         const coords = getCoordsForTime(exifData.CreateDate)
                         // setDebugString(`uploaded these coords ${JSON.stringify(coords)}`)
+                        setDebugString(`Create date: Assigning coords:${coords}`)
                         data.append('latitude', coords.latitude)
                         data.append('longitude', coords.longitude)
                     } else if (getMostRecentPosition()) {
