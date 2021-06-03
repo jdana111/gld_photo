@@ -73,8 +73,8 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         data.append('latitude', coords.latitude)
                         data.append('longitude', coords.longitude)
                     } else if (getMostRecentPosition()) {
-                        // setDebugString(`no create date, :${JSON.stringify(exifData)}`)
                         const coords = getMostRecentPosition()
+                        setDebugString(`Assigning coords:${coords}`)
                         data.append('latitude', coords.latitude)
                         data.append('longitude', coords.longitude)
                     } else {
