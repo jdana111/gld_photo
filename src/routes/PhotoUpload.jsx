@@ -149,7 +149,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                             onChange={onDrop}
                             imgExtension={[".jpg", ".jpeg"]}
                             maxFileSize={5242880 * 3}
-                            label="Max file size: 5mb, accepted: jpg"
+                            label="Max file size: 15mb, accepted: jpg"
                             buttonClassName="btn ev-button"
                         />
                         <Button type="button" onClick={submit} disabled={pictures.length === 0} className="ev-button btn mt-3">Submit</Button>
