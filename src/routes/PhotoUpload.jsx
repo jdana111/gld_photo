@@ -86,8 +86,8 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     data.append('property_id', property.id)
                     data.append('user_id', user.id)
 
-                    console.log(data.values())
-                    setDebugString(JSON.stringify(data.values()))
+                    console.log(data)
+                    // setDebugString(JSON.stringify(data.values()))
 
                     const p = submitPhoto(data, authHeader)
                     promises.push(p)
