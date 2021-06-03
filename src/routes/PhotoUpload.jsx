@@ -148,7 +148,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                             withIcon={true}
                             onChange={onDrop}
                             imgExtension={[".jpg", ".jpeg"]}
-                            maxFileSize={5242880}
+                            maxFileSize={5242880 * 3}
                             label="Max file size: 5mb, accepted: jpg"
                             buttonClassName="btn ev-button"
                         />
