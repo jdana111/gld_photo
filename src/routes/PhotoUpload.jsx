@@ -19,7 +19,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [debugString, setDebugString] = useState('');
 
     // eslint-disable-next-line
-    const { getCoordsForTime, getMostRecentPosition } = usePosition()
+    const { getCoordsForTime, getMostRecentPosition, position } = usePosition()
 
     const history = useHistory()
 
@@ -159,13 +159,13 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                 {/* <button onClick={() => console.log(pictures)}>HI THERE</button>
                 <button onClick={() => testOnChange()}>ADD SHTUFF</button>
                 <button onClick={() => loadTestData()}>SET DATA</button>
+                <div>
+                DEBUG HERE
+            </div> */}
                 <button onClick={() => {
                     console.log(position)
                     setDebugString(JSON.stringify(position))
                 }}>LOG POSITION STACK</button>
-                <div>
-                    DEBUG HERE
-                </div> */}
                 <div>{debugString}</div>
             </div>
         </div>
