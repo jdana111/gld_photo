@@ -58,7 +58,7 @@ export const usePosition = () => {
 
   const getMostRecentPosition = () => {
     if (position.length) {
-      const final = position[position.lastIndex]
+      const final = position.slice(-1)
       return final
     } else {
       return null
