@@ -146,7 +146,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     <div>
                         <ImageUploader
                             key={batchCount}
-                            withIcon={true}
+                            withIcon={true} 
                             onChange={onDrop}
                             imgExtension={[".jpg", ".jpeg"]}
                             maxFileSize={5242880 * 3}
