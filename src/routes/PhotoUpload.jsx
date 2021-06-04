@@ -19,7 +19,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [debugString, setDebugString] = useState('');
 
     // eslint-disable-next-line
-    const { getCoordsForTime } = usePosition()
+    const { getCoordsForTime, getMostRecentPosition, position } = usePosition()
 
     const history = useHistory()
 
@@ -69,16 +69,25 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     } else if (exifData && exifData.CreateDate) {
                         // set phone gps here
                         const coords = getCoordsForTime(exifData.CreateDate)
-                        setDebugString(`uploaded these coords ${JSON.stringify(coords)}`)
+                        // setDebugString(`uploaded these coords ${JSON.stringify(coords)}`)
+                        setDebugString(`Create date: Assigning coords:${JSON.stringify(coords)}`)
+                        data.append('latitude', coords.latitude)
+                        data.append('longitude', coords.longitude)
+                    } else if (getMostRecentPosition()) {
+                        const coords = getMostRecentPosition()
+                        setDebugString(`Assigning coords:${JSON.stringify(coords)}`)
                         data.append('latitude', coords.latitude)
                         data.append('longitude', coords.longitude)
                     } else {
-                        setDebugString(`no create date, :${JSON.stringify(exifData)}`)
+                        setDebugString(`Could not find coordinates for photo: ${pic.name}`)
                         data.append('latitude', undefined)
                         data.append('longitude', undefined)
                     }
                     data.append('property_id', property.id)
                     data.append('user_id', user.id)
+
+                    console.log(data)
+                    // setDebugString(JSON.stringify(data.values()))
 
                     const p = submitPhoto(data, authHeader)
                     promises.push(p)
@@ -141,11 +150,11 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     <div>
                         <ImageUploader
                             key={batchCount}
-                            withIcon={true}
+                            withIcon={true} 
                             onChange={onDrop}
                             imgExtension={[".jpg", ".jpeg"]}
-                            maxFileSize={5242880}
-                            label="Max file size: 5mb, accepted: jpg"
+                            maxFileSize={5242880 * 3}
+                            label="Max file size: 15mb, accepted: jpg"
                             buttonClassName="btn ev-button"
                         />
                         <Button type="button" onClick={submit} disabled={pictures.length === 0} className="ev-button btn mt-3">Submit</Button>
@@ -154,13 +163,17 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                 {/* <button onClick={() => console.log(pictures)}>HI THERE</button>
                 <button onClick={() => testOnChange()}>ADD SHTUFF</button>
                 <button onClick={() => loadTestData()}>SET DATA</button>
-                <button onClick={() => {
+                <div>
+                DEBUG HERE
+            </div> */}
+                {/* <button onClick={() => {
                     console.log(position)
                     setDebugString(JSON.stringify(position))
                 }}>LOG POSITION STACK</button>
-                <div>
-                    DEBUG HERE
-                </div> */}
+                <button onClick={() => {
+                    console.log(getMostRecentPosition())
+                    setDebugString(position.length + " " + position.lastIndex + " " + getMostRecentPosition())
+                }}>LOG most recent</button> */}
                 <div>{debugString}</div>
             </div>
         </div>
