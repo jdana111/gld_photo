@@ -30,13 +30,13 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch }
  
     return (
         <div className="ev-photo-preview-container">
-            <img src={ "" } alt="" className="ev-photo-preview pb-3 pt-1" id={index}></img>
+            <img src={ "" } alt="" className="ev-photo-preview mb-1 mt-3" id={index}></img>
             <div> { picture.name } </div>
-            <div>latitude: {coords[0]}, longitude: {coords[1]}</div>
-            <div className="container pt-3" style={{display: 'flex'}}>
+            <div className="ev-latlong" >latitude: {coords[0]}, longitude: {coords[1]}</div>
+            <div className="container mt-3" style={{display: 'flex'}}>
                 <div className="input-group">
-            <input type='text' className="form-control ev-input" onChange={ e => setCaption(e.target.value) } value={caption}/>
-            <div className="ev-icons ev-clickable" onClick={ onMatch }>
+            <input type='text' className="form-control ev-input mb-2" placeholder="Details" onChange={ e => setCaption(e.target.value) } value={caption}/>
+            <div className="ev-icons ev-clickable pl-2" onClick={ onMatch }>
             <FaClone/>
             </div>
             {/* <button type="button" onClick={ onMatch } className="btn ev-button">Duplicate Caption</button> */}
