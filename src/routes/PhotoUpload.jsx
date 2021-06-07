@@ -57,6 +57,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             .then((exifDatas) => {
                 const promises = []
                 exifDatas.forEach((exifData, index) => {
+                    console.log(exifData)
                     const pic = pictures[index]
                     let data = new FormData();
                     data.append('file', pic, pic.name);
@@ -66,11 +67,11 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         const longitude = exifData.GPSLongitude[0] + (exifData.GPSLongitude[1] / 60) + (exifData.GPSLongitude[2] / 3600)
                         data.append('latitude', latitude)
                         data.append('longitude', longitude)
-                    } else if (exifData && exifData.CreateDate) {
-                        // set phone gps here
-                        const coords = getCoordsForTime(exifData.CreateDate)
+                    } else if (exifData && (exifData.CreateDate || exifData.DateTimeOriginal || exifData.ModifyDate)) {
+                        const d = exifData.CreateDate || exifData.DateTimeOriginal || exifData.ModifyDate
+                        const coords = getCoordsForTime(d)
                         // setDebugString(`uploaded these coords ${JSON.stringify(coords)}`)
-                        setDebugString(`Create date: Assigning coords:${JSON.stringify(coords)}`)
+                        setDebugString(`Date: Assigning coords:${JSON.stringify(coords)}\nCreateDate: ${exifData.CreateDate}\nDateTimeOriginal: ${exifData.DateTimeOriginal}\nModifyDate: ${exifData.ModifyDate}`)
                         data.append('latitude', coords.latitude)
                         data.append('longitude', coords.longitude)
                     } else if (getMostRecentPosition()) {
