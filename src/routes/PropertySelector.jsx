@@ -36,6 +36,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
 
     let form
     if (isBig) {
+        const bgColor = program ? activeOnly ? program.attributes.navbarFontColor : '#fff' : 'black' 
         form = (
             <div className="row px-3">
                 <div className="card-body ev-card-search card">
@@ -44,7 +45,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                         <InputGroup.Append>
                             <Button className="btn btn-outline-secondary ev-search-button" type='submit' onClick={onSearch} variant="outline-secondary">Search</Button>
                             <Button className="btn btn-outline-secondary ev-search-button" variant="outline-secondary" onClick={onReset}>Reset</Button>
-                            <Button className="btn btn-outline-secondary ev-search-button" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)}>Active Only</Button>
+                            <Button className="btn btn-outline-secondary ev-search-button" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)} style={{backgroundColor: bgColor}}>Active Only</Button>
                             {/* <span>
                         { activeOnly ? (
                              <Button class="btn btn-outline-secondary ev-search-button">Show Inactive</Button>
@@ -60,13 +61,14 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
             </div>
         )
     } else {
+        const bgColor = program ? activeOnly ? program.attributes.navbarFontColor : '#fff' : 'black'
         form = (
             <div className="row px-3">
                 <div className="card-body ev-card-search card">
                         <FormControl className="form-control ev-search-input" type="text" placeholder="Search Term" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
                             <Button className="btn btn-outline-secondary ev-search-button-sm" type='submit' onClick={onSearch} variant="outline-secondary">Search</Button>
                             <Button className="btn btn-outline-secondary ev-search-button-sm" variant="outline-secondary" onClick={onReset}>Reset</Button>
-                            <Button className="btn btn-outline-secondary ev-search-button-sm" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)}>Active Only</Button>
+                            <Button className="btn btn-outline-secondary ev-search-button-sm" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)} style={{backgroundColor: bgColor}}>Active Only</Button>
 
                     <div>
                     </div>
