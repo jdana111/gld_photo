@@ -31,7 +31,7 @@ function LoginModal({ setUser, setAuthHeader, onLogin, setCity }) {
             setCity(city)
             setUser(response.data)
             setAuthHeader(response.headers.authorization)
-            onLogin(true)
+            onLogin(true, response.headers.authorization)
         }
     }
 

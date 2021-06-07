@@ -43,6 +43,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
 
 
     const onDrop = (newPictures, dataUrls) => {
+        console.log(newPictures)
         setPictures(newPictures);
     };
 
@@ -60,33 +61,39 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     const pic = pictures[index]
                     let data = new FormData();
                     data.append('file', pic, pic.name);
-                    data.append('caption', captions[pic.name] || '')
+                    data.append('caption', captions[`${pic.name}${index}`] || '')
                     if (exifData && exifData.GPSLatitude && exifData.GPSLongitude) {
                         const latitude = exifData.GPSLatitude[0] + (exifData.GPSLatitude[1] / 60) + (exifData.GPSLatitude[2] / 3600)
                         const longitude = exifData.GPSLongitude[0] + (exifData.GPSLongitude[1] / 60) + (exifData.GPSLongitude[2] / 3600)
                         data.append('latitude', latitude)
                         data.append('longitude', longitude)
-                    } else if (exifData && exifData.CreateDate) {
-                        // set phone gps here
-                        const coords = getCoordsForTime(exifData.CreateDate)
-                        // setDebugString(`uploaded these coords ${JSON.stringify(coords)}`)
-                        setDebugString(`Create date: Assigning coords:${JSON.stringify(coords)}`)
+                    } else if (exifData && (exifData.CreateDate || exifData.DateTimeOriginal || exifData.ModifyDate) && getCoordsForTime(exifData.CreateDate || exifData.DateTimeOriginal || exifData.ModifyDate)) {
+                        const d = exifData.CreateDate || exifData.DateTimeOriginal || exifData.ModifyDate
+                        const coords = getCoordsForTime(d)
+                        console.log(`Exif date: ${d} Assigning coords:${JSON.stringify(coords)}\nCreateDate: ${exifData.CreateDate}\nDateTimeOriginal: ${exifData.DateTimeOriginal}\nModifyDate: ${exifData.ModifyDate}`)
+                        setDebugString(`Exif date: ${d} Assigning coords:${JSON.stringify(coords)}\nCreateDate: ${exifData.CreateDate}\nDateTimeOriginal: ${exifData.DateTimeOriginal}\nModifyDate: ${exifData.ModifyDate}`)
+                        data.append('latitude', coords.latitude)
+                        data.append('longitude', coords.longitude)
+                    } else if (pic.lastModified) {
+                        const d = new Date(pic.lastModified)
+                        const coords = getCoordsForTime(d)
+                        setDebugString(`File date: ${d} Assigning coords:${JSON.stringify(coords)}`)
                         data.append('latitude', coords.latitude)
                         data.append('longitude', coords.longitude)
                     } else if (getMostRecentPosition()) {
                         const coords = getMostRecentPosition()
-                        setDebugString(`Assigning coords:${JSON.stringify(coords)}`)
+                        setDebugString(`Assigning coords:${JSON.stringify(coords)}\n exifdata ${JSON.stringify(exifData)}`)
                         data.append('latitude', coords.latitude)
                         data.append('longitude', coords.longitude)
                     } else {
-                        setDebugString(`Could not find coordinates for photo: ${pic.name}`)
+                        setDebugString(`Could not find coordinates for photo: ${pic.name} \n exifdata ${JSON.stringify(exifData)}`)
                         data.append('latitude', undefined)
                         data.append('longitude', undefined)
                     }
                     data.append('property_id', property.id)
                     data.append('user_id', user.id)
 
-                    console.log(data)
+                    // console.log(data)
                     // setDebugString(JSON.stringify(data.values()))
 
                     const p = submitPhoto(data, authHeader)
@@ -95,13 +102,15 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                 return Promise.all(promises)
             })
             .then(results => {
+                setCaptions({})
                 setLoading(false)
                 setPictures([])
                 setBatchCount(old => old + 1)
             })
             .catch(err => {
                 setLoading(false)
-                setDebugString(JSON.stringify(err))
+                console.log(err)
+                setDebugString("ERROR: "+JSON.stringify(err))
             })
     }
 
@@ -117,23 +126,23 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                 {(pictures && pictures.length > 0) && pictures.map((p, i) =>
                     <PhotoPreview
                         picture={p}
-                        index={p.name}
-                        key={p.name}
+                        index={`${p.name}${i}`}
+                        key={`${p.name}${i}`}
                         authHeader={authHeader}
                         property={property}
-                        caption={captions[p.name] || ''}
+                        caption={captions[`${p.name}${i}`] || ''}
                         setCaption={(newCaption) => {
                             setCaptions(old => ({
                                 ...old,
-                                [p.name]: newCaption
+                                [`${p.name}${i}`]: newCaption
                             }))
                         }}
                         onMatch={() => {
                             setCaptions(old => {
-                                const val = old[p.name]
+                                const val = old[`${p.name}${i}`]
                                 const newCaptions = {}
-                                pictures.forEach((p) => {
-                                    newCaptions[p.name] = val
+                                pictures.forEach((p2, i2) => {
+                                    newCaptions[`${p2.name}${i2}`] = val
                                 })
                                 return newCaptions
                             })

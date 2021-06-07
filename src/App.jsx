@@ -22,6 +22,7 @@ import './Styling/PhotoUpload.scss';
 
 const DEBUG_PHOTO = true
 // const DEBUG_PHOTO = process.env.DEBUG_PHOTO || false
+const ALLOWED_PROGRAM_IDS = [1, 2, 3, 4]
 
 function App() {
     const [authHeader, setAuthHeader] = useState(null);
@@ -30,6 +31,7 @@ function App() {
     const [city, setCity] = useState(null)
     const [property, setProperty] = useState(null)
     const [program, setProgram] = useState(null)
+    const [programs, setPrograms] = useState([]);
 
     const history = useHistory()
 
@@ -95,9 +97,13 @@ function App() {
         getCity({ 'Authorization': authHeader })
     }
 
-    const onLogin = (success) => {
+    const onLogin = (success, header) => {
         if (success) {
             history.push('/program')
+            getPrograms(header).then(programs => {
+                console.log("set programs")
+                setPrograms(programs.filter(p => ALLOWED_PROGRAM_IDS.includes(parseInt(p.id))))
+            })
         } else {
             console.warn("CANT LOGIN")
         }
@@ -133,7 +139,7 @@ function App() {
                         <Login setUser={setUser} setAuthHeader={setAuthHeader} onLogin={onLogin} setCity={setCity}/>
                     </Route>
                     <Route path="/program">
-                        <ProgramSelector authHeader={authHeader} setProgram={onSelectProgram} city={city}/>
+                        <ProgramSelector authHeader={authHeader} setProgram={onSelectProgram} city={city} programs={programs}/>
                     </Route>
                     <Route path="/property" >
                         <PropertySelector authHeader={authHeader} setProperty={onSelectProperty} program={program} city={city} onLogout={logout}/>
