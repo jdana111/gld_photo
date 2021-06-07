@@ -1,32 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import { ListGroup } from 'react-bootstrap'
 
-import { getPrograms } from '../api'
+function ProgramSelector({ programs, setProgram, city }) {
+    // const [programs, setPrograms] = useState([]);
 
-const ALLOWED_PROGRAM_IDS = [1, 2, 3, 4]
-
-function ProgramSelector({ authHeader, setProgram, city }) {
-    const [programs, setPrograms] = useState([]);
-
-    const history = useHistory()
-
-    useEffect(() => {
-        if (!authHeader) {
-            history.replace('login')
-        }
-        // eslint-disable-next-line
-    }, [])
-
-    useEffect(() => {
-        if (!authHeader) {
-            console.warn('NOT AUTH HEADER')
-            return
-        }
-        getPrograms(authHeader).then(programs => {
-            setPrograms(programs.filter(p => ALLOWED_PROGRAM_IDS.includes(parseInt(p.id))))
-        })
-    }, [authHeader])
+    // useEffect(() => {
+    //     if (!authHeader) {
+    //         console.warn('NOT AUTH HEADER')
+    //         return
+    //     }
+    //     getPrograms(authHeader).then(programs => {
+    //         setPrograms(programs.filter(p => ALLOWED_PROGRAM_IDS.includes(parseInt(p.id))))
+    //     })
+    // }, [authHeader])
 
     return (
         <div className="body">

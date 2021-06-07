@@ -70,6 +70,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     } else if (exifData && (exifData.CreateDate || exifData.DateTimeOriginal || exifData.ModifyDate) && getCoordsForTime(exifData.CreateDate || exifData.DateTimeOriginal || exifData.ModifyDate)) {
                         const d = exifData.CreateDate || exifData.DateTimeOriginal || exifData.ModifyDate
                         const coords = getCoordsForTime(d)
+                        console.log(`Exif date: ${d} Assigning coords:${JSON.stringify(coords)}\nCreateDate: ${exifData.CreateDate}\nDateTimeOriginal: ${exifData.DateTimeOriginal}\nModifyDate: ${exifData.ModifyDate}`)
                         setDebugString(`Exif date: ${d} Assigning coords:${JSON.stringify(coords)}\nCreateDate: ${exifData.CreateDate}\nDateTimeOriginal: ${exifData.DateTimeOriginal}\nModifyDate: ${exifData.ModifyDate}`)
                         data.append('latitude', coords.latitude)
                         data.append('longitude', coords.longitude)
