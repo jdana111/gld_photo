@@ -134,7 +134,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         setCaption={(newCaption) => {
                             setCaptions(old => ({
                                 ...old,
-                                [p.name]: newCaption
+                                [`${p.name}${i}`]: newCaption
                             }))
                         }}
                         onMatch={() => {
@@ -142,7 +142,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                                 const val = old[p.name]
                                 const newCaptions = {}
                                 pictures.forEach((p) => {
-                                    newCaptions[p.name] = val
+                                    newCaptions[`${p.name}${i}`] = val
                                 })
                                 return newCaptions
                             })
