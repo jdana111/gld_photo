@@ -66,9 +66,10 @@ export const usePosition = () => {
   }
 
   const getCoordsForTime = (dt) => {
-    let bestDelta = 10000000000
+    let bestDelta = 100000000000000000000000000000000000000000000000
     let bestDeltaCoords = null
     position.forEach(pos => {
+      console.log(Math.abs(dt - pos.time))
       if (Math.abs(dt - pos.time) < bestDelta) {
         bestDelta = Math.abs(dt - pos.time)
         bestDeltaCoords = pos
