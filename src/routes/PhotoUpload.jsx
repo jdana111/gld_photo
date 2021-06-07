@@ -109,7 +109,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             })
             .catch(err => {
                 setLoading(false)
-                setDebugString(JSON.stringify(err))
+                setDebugString("ERROR: "+JSON.stringify(err))
             })
     }
 
