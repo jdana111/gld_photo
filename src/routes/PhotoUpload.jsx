@@ -61,7 +61,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     const pic = pictures[index]
                     let data = new FormData();
                     data.append('file', pic, pic.name);
-                    data.append('caption', captions[pic.name] || '')
+                    data.append('caption', captions[`${pic.name}${index}`] || '')
                     if (exifData && exifData.GPSLatitude && exifData.GPSLongitude) {
                         const latitude = exifData.GPSLatitude[0] + (exifData.GPSLatitude[1] / 60) + (exifData.GPSLatitude[2] / 3600)
                         const longitude = exifData.GPSLongitude[0] + (exifData.GPSLongitude[1] / 60) + (exifData.GPSLongitude[2] / 3600)
