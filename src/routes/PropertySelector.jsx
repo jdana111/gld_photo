@@ -88,7 +88,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                             <div className="ev-banner-title-search" style={{backgroundColor: program ? program.attributes.navbarBackgroundColor : 'white' }}>
                                 Showing Results for "{searchTerm}"
                             </div>
-                            <ListGroup className="ev-clickable">
+                            <ListGroup className="ev-clickable ev-program-list">
                                 {properties.map(property => (
                                     <ListGroup.Item key={property.id} onClick={() => setProperty(property)}>{property.attributes.propertyName}</ListGroup.Item>
                                 ))}

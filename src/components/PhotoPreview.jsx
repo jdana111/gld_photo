@@ -35,7 +35,7 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch }
             <div className="ev-latlong" >latitude: {coords[0]}, longitude: {coords[1]}</div>
             <div className="container mt-3" style={{display: 'flex'}}>
                 <div className="input-group">
-            <input type='text' className="form-control ev-input mb-2 " onChange={ e => setCaption(e.target.value) } value={caption}/>
+            <input type='text' className="form-control ev-input mb-2" placeholder="Details" onChange={ e => setCaption(e.target.value) } value={caption}/>
             <div className="ev-icons ev-clickable pl-2" onClick={ onMatch }>
             <FaClone/>
             </div>
