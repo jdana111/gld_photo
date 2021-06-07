@@ -141,8 +141,8 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                             setCaptions(old => {
                                 const val = old[`${p.name}${i}`]
                                 const newCaptions = {}
-                                pictures.forEach((p) => {
-                                    newCaptions[`${p.name}${i}`] = val
+                                pictures.forEach((p2, i2) => {
+                                    newCaptions[`${p2.name}${i2}`] = val
                                 })
                                 return newCaptions
                             })
