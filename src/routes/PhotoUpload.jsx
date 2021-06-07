@@ -76,11 +76,11 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         data.append('longitude', coords.longitude)
                     } else if (getMostRecentPosition()) {
                         const coords = getMostRecentPosition()
-                        setDebugString(`Assigning coords:${JSON.stringify(coords)}`)
+                        setDebugString(`Assigning coords:${JSON.stringify(coords)}\n exifdata ${JSON.stringify(exifData)}`)
                         data.append('latitude', coords.latitude)
                         data.append('longitude', coords.longitude)
                     } else {
-                        setDebugString(`Could not find coordinates for photo: ${pic.name}`)
+                        setDebugString(`Could not find coordinates for photo: ${pic.name} \n exifdata ${JSON.stringify(exifData)}`)
                         data.append('latitude', undefined)
                         data.append('longitude', undefined)
                     }
