@@ -125,8 +125,8 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                 {(pictures && pictures.length > 0) && pictures.map((p, i) =>
                     <PhotoPreview
                         picture={p}
-                        index={p.name}
-                        key={p.name}
+                        index={`${p.name}${i}`}
+                        key={`${p.name}${i}`}
                         authHeader={authHeader}
                         property={property}
                         caption={captions[p.name] || ''}

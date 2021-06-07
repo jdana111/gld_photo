@@ -9,7 +9,7 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch }
 
     useEffect(() => {
         const imageUrl = window.URL.createObjectURL(picture);
-        const img = document.getElementById(picture.name)
+        const img = document.getElementById(index)
         img.src = imageUrl
         return () => {
             URL.revokeObjectURL(imageUrl)
@@ -29,8 +29,8 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch }
     }, [])
  
     return (
-        <div key={index} className="ev-photo-preview-container">
-            <img src={ "" } alt="" className="ev-photo-preview pb-3 pt-1" id={picture.name}></img>
+        <div className="ev-photo-preview-container">
+            <img src={ "" } alt="" className="ev-photo-preview pb-3 pt-1" id={index}></img>
             <div> { picture.name } </div>
             <div>latitude: {coords[0]}, longitude: {coords[1]}</div>
             <div className="container pt-3" style={{display: 'flex'}}>
