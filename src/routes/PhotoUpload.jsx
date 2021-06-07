@@ -78,7 +78,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     } else if (pic.lastModified) {
                         const d = new Date(pic.lastModified)
                         const coords = getCoordsForTime(d)
-                        setDebugString(`File date: Assigning coords:${JSON.stringify(coords)}`)
+                        setDebugString(`File date: ${d} Assigning coords:${JSON.stringify(coords)}`)
                         data.append('latitude', coords.latitude)
                         data.append('longitude', coords.longitude)
                     } else if (getMostRecentPosition()) {
