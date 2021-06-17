@@ -9,8 +9,8 @@ import PhotoUpload from './routes/PhotoUpload'
 import { getCity, getUser, getProperties, getPrograms } from './api'
 import { usePosition } from './utils';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import './Styling/Login.scss';
 import './Styling/FormElement.scss';
 import './Styling/Foundation.scss';

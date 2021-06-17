@@ -7,7 +7,7 @@ import FormData from 'form-data'
 
 import PhotoPreview from '../components/PhotoPreview'
 import { Navbar } from '../components/Navbar'
-import { submitPhoto } from '../api'
+import { submitPhoto, getPropertyAssets } from '../api'
 import { usePosition } from '../utils'
 
 function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
@@ -16,7 +16,9 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [batchCount, setBatchCount] = useState(0);
     const [loading, setLoading] = useState(false);
     const [captions, setCaptions] = useState({});
+    const [assetChoices, setAssetChoices] = useState({});
     const [debugString, setDebugString] = useState('');
+    const [assets, setAssets] = useState([]);
 
     // eslint-disable-next-line
     const { getCoordsForTime, getMostRecentPosition, position } = usePosition()
@@ -27,6 +29,12 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
         if (!authHeader) {
             history.replace('login')
         }
+        if (!property) {
+            return
+        }
+        getPropertyAssets(authHeader, property.id).then(assets => [
+            setAssets(assets)
+        ])
 
         const element = document.querySelector('.chooseFileButton')
         if (element) {
@@ -39,6 +47,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             element.style.fontFamily = 'Arial';
             element.style.fontSize = '16px';
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authHeader, history])
 
 
@@ -130,11 +139,20 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         key={`${p.name}${i}`}
                         authHeader={authHeader}
                         property={property}
+                        program={program}
+                        assets={assets}
                         caption={captions[`${p.name}${i}`] || ''}
+                        assetChoiceId={assetChoices[`${p.name}${i}`] || ''}
                         setCaption={(newCaption) => {
                             setCaptions(old => ({
                                 ...old,
                                 [`${p.name}${i}`]: newCaption
+                            }))
+                        }}
+                        setChoice={(choice) => {
+                            setAssetChoices(old => ({
+                                ...old,
+                                [`${p.name}${i}`]: choice
                             }))
                         }}
                         onMatch={() => {
@@ -145,6 +163,17 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                                     newCaptions[`${p2.name}${i2}`] = val
                                 })
                                 return newCaptions
+                            })
+                        }}
+                        onMatchAsset={() => {
+                            console.log('match assets')
+                            setAssetChoices(old => {
+                                const val = old[`${p.name}${i}`]
+                                const newChoices = {}
+                                pictures.forEach((p2, i2) => {
+                                    newChoices[`${p2.name}${i2}`] = val
+                                })
+                                return newChoices
                             })
                         }} />
                 )}

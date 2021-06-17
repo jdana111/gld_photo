@@ -141,7 +141,98 @@ body {
   background-color: #fff;
   padding: 5px 0 14px 0;
   margin-top: 10px;
+}
 
+/*----------------------------------------------------------------------------------------------------------*\
+    # CHECKBOX
+  \*----------------------------------------------------------------------------------------------------------*/
+[type="checkbox"] {
+  &:not(:checked),
+  &:checked {
+    position: absolute;
+    left: -9999px;
+  }
+  &:not(:checked) + label,
+  &:checked + label {
+    position: relative;
+    padding-left: 32px;
+    padding-top: 6px;
+    cursor: pointer;
+  }
+  &:not(:checked) + label:before,
+  &:checked + label:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 23px;
+    height: 23px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+  }
+  &:not(:checked) + label:after,
+  &:checked + label:after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 4px;
+    height: 16px;
+    width: 16px;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNOSAyMS4wMzVsLTktOC42MzggMi43OTEtMi44NyA2LjE1NiA1Ljg3NCAxMi4yMS0xMi40MzYgMi44NDMgMi44MTd6Ii8+PC9zdmc+);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+  &:not(:checked) + label:after {
+    opacity: 0;
+  }
+  &:checked + label:after {
+    opacity: 1;
+  }
+  &:disabled {
+    &:not(:checked) + label:before {
+      box-shadow: none;
+      border-color: #bbb;
+      background-color: #ddd;
+    }
+    &:checked + label {
+      &:before {
+        box-shadow: none;
+        border-color: #bbb;
+        background-color: #ddd;
+      }
+      &:after {
+        color: #999;
+      }
+    }
+    + label {
+      color: #aaa;
+    }
+  }
+  &:checked:focus + label:before,
+  &:not(:checked):focus + label:before {
+    border: 2px solid #3071a9;
+  }
+}
+
+.mailingCheck {
+  flex: 1;
+  text-align: left;
+  padding: 0;
+}
+.assetDD {
+  flex: 1;
+  
+  button {
+    background-color: #e8e7e8;;
+    border: none;
+    width: calc(100% - 45px);
+    &:focus {
+      border: none !important;
+      background-color: #e8e7e8 !important;
+    }
+  }
 }
 
 /*----------------------------------------------------------------------------------------------------------*\
