@@ -48,7 +48,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             element.style.fontFamily = 'Arial';
             element.style.fontSize = '16px';
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authHeader, history])
 
 
@@ -127,7 +127,13 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             .catch(err => {
                 setLoading(false)
                 console.log(err)
-                setDebugString("ERROR: "+JSON.stringify(err))
+                const errStack = {}
+                Object.getOwnPropertyNames(err).forEach(function (key) {
+                    errStack[key] = err[key];
+                });
+
+             
+                setDebugString("ERROR: " + JSON.stringify(errStack))
             })
     }
 
@@ -137,9 +143,9 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
 
     return (
         <div className="ev-base-container">
-            <Navbar program={program} onLogout={onLogout}/>
+            <Navbar program={program} onLogout={onLogout} />
             <div className="container ev-page-container">
-            {property && <h3 className="pt-2 ev-title">{property.attributes.propertyName}</h3>}
+                {property && <h3 className="pt-2 ev-title">{property.attributes.propertyName}</h3>}
                 {(pictures && pictures.length > 0) && pictures.map((p, i) =>
                     <PhotoPreview
                         picture={p}
@@ -192,18 +198,18 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                             })
                         }} />
                 )}
-                { loading && (
+                {loading && (
                     <div className="ev-loader">
                         <Spinner animation="border" role="status" style={{ width: '40px', height: '40px', margin: '40px' }}>
                             <span className="sr-only">Loading...</span>
                         </Spinner>
                     </div>
                 )}
-                { Boolean(property) && (
+                {Boolean(property) && (
                     <div>
                         <ImageUploader
                             key={batchCount}
-                            withIcon={true} 
+                            withIcon={true}
                             onChange={onDrop}
                             imgExtension={[".jpg", ".jpeg"]}
                             maxFileSize={5242880 * 3}
