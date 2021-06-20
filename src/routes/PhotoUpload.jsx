@@ -7,7 +7,7 @@ import FormData from 'form-data'
 
 import PhotoPreview from '../components/PhotoPreview'
 import { Navbar } from '../components/Navbar'
-import { submitPhoto } from '../api'
+import { submitPhoto, getPropertyAssets } from '../api'
 import { usePosition } from '../utils'
 
 function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
@@ -16,7 +16,10 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [batchCount, setBatchCount] = useState(0);
     const [loading, setLoading] = useState(false);
     const [captions, setCaptions] = useState({});
+    const [assetChoices, setAssetChoices] = useState({});
+    const [mailingChoices, setMailingChoices] = useState({});
     const [debugString, setDebugString] = useState('');
+    const [assets, setAssets] = useState([]);
 
     // eslint-disable-next-line
     const { getCoordsForTime, getMostRecentPosition, position } = usePosition()
@@ -27,6 +30,12 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
         if (!authHeader) {
             history.replace('login')
         }
+        if (!property) {
+            return
+        }
+        getPropertyAssets(authHeader, property.id).then(assets => [
+            setAssets(assets)
+        ])
 
         const element = document.querySelector('.chooseFileButton')
         if (element) {
@@ -39,12 +48,18 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             element.style.fontFamily = 'Arial';
             element.style.fontSize = '16px';
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authHeader, history])
 
 
     const onDrop = (newPictures, dataUrls) => {
         console.log(newPictures)
         setPictures(newPictures);
+        const newChoices = newPictures.reduce((acc, p, i) => {
+            acc[`${p.name}${i}`] = true
+            return acc
+        }, {})
+        setMailingChoices(newChoices)
     };
 
     const submit = () => {
@@ -62,6 +77,8 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     let data = new FormData();
                     data.append('file', pic, pic.name);
                     data.append('caption', captions[`${pic.name}${index}`] || '')
+                    data.append('asset', assetChoices[`${pic.name}${index}`] || '')
+                    data.append('mailing', mailingChoices[`${pic.name}${index}`] || '')
                     if (exifData && exifData.GPSLatitude && exifData.GPSLongitude) {
                         const latitude = exifData.GPSLatitude[0] + (exifData.GPSLatitude[1] / 60) + (exifData.GPSLatitude[2] / 3600)
                         const longitude = exifData.GPSLongitude[0] + (exifData.GPSLongitude[1] / 60) + (exifData.GPSLongitude[2] / 3600)
@@ -130,11 +147,27 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         key={`${p.name}${i}`}
                         authHeader={authHeader}
                         property={property}
+                        program={program}
+                        assets={assets}
                         caption={captions[`${p.name}${i}`] || ''}
+                        mailing={mailingChoices[`${p.name}${i}`] || ''}
+                        assetChoiceId={assetChoices[`${p.name}${i}`] || ''}
                         setCaption={(newCaption) => {
                             setCaptions(old => ({
                                 ...old,
                                 [`${p.name}${i}`]: newCaption
+                            }))
+                        }}
+                        setChoice={(choice) => {
+                            setAssetChoices(old => ({
+                                ...old,
+                                [`${p.name}${i}`]: choice
+                            }))
+                        }}
+                        setMailing={(choice) => {
+                            setMailingChoices(old => ({
+                                ...old,
+                                [`${p.name}${i}`]: choice
                             }))
                         }}
                         onMatch={() => {
@@ -145,6 +178,17 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                                     newCaptions[`${p2.name}${i2}`] = val
                                 })
                                 return newCaptions
+                            })
+                        }}
+                        onMatchAsset={() => {
+                            console.log('match assets')
+                            setAssetChoices(old => {
+                                const val = old[`${p.name}${i}`]
+                                const newChoices = {}
+                                pictures.forEach((p2, i2) => {
+                                    newChoices[`${p2.name}${i2}`] = val
+                                })
+                                return newChoices
                             })
                         }} />
                 )}

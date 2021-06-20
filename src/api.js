@@ -98,6 +98,24 @@ export const getProperties = (authHeader, searchString, programId, activeOnly) =
     })
 }
 
+export const getPropertyAssets = (authHeader, propertyId) => {
+    const config = {
+        headers: {
+            'Authorization': authHeader
+        }
+    }
+    return new Promise(function(resolve, reject) {
+        getClient().get(`/api/properties/${propertyId}/assets/`, config)
+            .then(response => {
+                resolve(response.data.data)
+            })
+            .catch(error => {
+                console.warn(error)
+                reject(error)
+            })
+    })
+}
+
 
 export const submitPhoto = (data, authHeader) => {
     const config = {
