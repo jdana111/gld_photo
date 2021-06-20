@@ -16,6 +16,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [batchCount, setBatchCount] = useState(0);
     const [loading, setLoading] = useState(false);
     const [debug, setDebug] = useState(false);
+    console.log(debug)
     const [captions, setCaptions] = useState({});
     const [assetChoices, setAssetChoices] = useState({});
     const [mailingChoices, setMailingChoices] = useState({});
