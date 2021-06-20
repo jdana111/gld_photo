@@ -15,6 +15,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [pictures, setPictures] = useState([]);
     const [batchCount, setBatchCount] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [debug, setDebug] = useState(false);
     const [captions, setCaptions] = useState({});
     const [assetChoices, setAssetChoices] = useState({});
     const [mailingChoices, setMailingChoices] = useState({});
@@ -120,6 +121,8 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
             })
             .then(results => {
                 setCaptions({})
+                setAssetChoices({})
+                setMailingChoices({})
                 setLoading(false)
                 setPictures([])
                 setBatchCount(old => old + 1)
@@ -132,7 +135,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     errStack[key] = err[key];
                 });
 
-             
+
                 setDebugString("ERROR: " + JSON.stringify(errStack))
             })
     }
@@ -179,6 +182,9 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         onMatch={() => {
                             setCaptions(old => {
                                 const val = old[`${p.name}${i}`]
+                                if (val === 'debug') {
+                                    setDebug(true)
+                                }
                                 const newCaptions = {}
                                 pictures.forEach((p2, i2) => {
                                     newCaptions[`${p2.name}${i2}`] = val
@@ -225,14 +231,18 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                 <div>
                 DEBUG HERE
             </div> */}
-                {/* <button onClick={() => {
-                    console.log(position)
-                    setDebugString(JSON.stringify(position))
-                }}>LOG POSITION STACK</button>
-                <button onClick={() => {
-                    console.log(getMostRecentPosition())
-                    setDebugString(position.length + " " + position.lastIndex + " " + getMostRecentPosition())
-                }}>LOG most recent</button> */}
+                {debug && (
+                    <>
+                        <button onClick={() => {
+                            console.log(position)
+                            setDebugString(JSON.stringify(position))
+                        }}>LOG POSITION STACK</button>
+                        <button onClick={() => {
+                            console.log(getMostRecentPosition())
+                            setDebugString(position.length + " " + position.lastIndex + " " + getMostRecentPosition())
+                        }}>LOG most recent</button>
+                    </>
+                )}
                 <div>{debugString}</div>
             </div>
         </div>
