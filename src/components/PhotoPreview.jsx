@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import exifr from 'exifr'
 import { FaClone } from 'react-icons/fa'
-import { Dropdown, Form } from 'react-bootstrap'
+import { Dropdown } from 'react-bootstrap'
 import { useMediaQuery } from '../utils'
 
 const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch, setChoice, onMatchAsset, program, assets, assetChoiceId, setMailing, mailing }) => {
