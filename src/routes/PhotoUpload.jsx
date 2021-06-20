@@ -17,6 +17,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [loading, setLoading] = useState(false);
     const [captions, setCaptions] = useState({});
     const [assetChoices, setAssetChoices] = useState({});
+    const [mailingChoices, setMailingChoices] = useState({});
     const [debugString, setDebugString] = useState('');
     const [assets, setAssets] = useState([]);
 
@@ -54,6 +55,11 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const onDrop = (newPictures, dataUrls) => {
         console.log(newPictures)
         setPictures(newPictures);
+        const newChoices = newPictures.reduce((acc, p, i) => {
+            acc[`${p.name}${i}`] = true
+            return acc
+        }, {})
+        setMailingChoices(newChoices)
     };
 
     const submit = () => {
@@ -71,6 +77,8 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     let data = new FormData();
                     data.append('file', pic, pic.name);
                     data.append('caption', captions[`${pic.name}${index}`] || '')
+                    data.append('asset', assetChoices[`${pic.name}${index}`] || '')
+                    data.append('mailing', mailingChoices[`${pic.name}${index}`] || '')
                     if (exifData && exifData.GPSLatitude && exifData.GPSLongitude) {
                         const latitude = exifData.GPSLatitude[0] + (exifData.GPSLatitude[1] / 60) + (exifData.GPSLatitude[2] / 3600)
                         const longitude = exifData.GPSLongitude[0] + (exifData.GPSLongitude[1] / 60) + (exifData.GPSLongitude[2] / 3600)
@@ -142,6 +150,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         program={program}
                         assets={assets}
                         caption={captions[`${p.name}${i}`] || ''}
+                        mailing={mailingChoices[`${p.name}${i}`] || ''}
                         assetChoiceId={assetChoices[`${p.name}${i}`] || ''}
                         setCaption={(newCaption) => {
                             setCaptions(old => ({
@@ -151,6 +160,12 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         }}
                         setChoice={(choice) => {
                             setAssetChoices(old => ({
+                                ...old,
+                                [`${p.name}${i}`]: choice
+                            }))
+                        }}
+                        setMailing={(choice) => {
+                            setMailingChoices(old => ({
                                 ...old,
                                 [`${p.name}${i}`]: choice
                             }))

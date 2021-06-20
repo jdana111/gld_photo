@@ -5,13 +5,12 @@ import { Link } from 'react-router-dom'
 
 export function Navbar({ program, onLogout }) {
 
-
     return (
         <BSNavbar style={{ backgroundColor: program ? program.attributes.navbarBackgroundColor : 'black' }}>
             <Container>
                 <div className="navbar-container">
-                    <BSNavbar.Brand className="ev-navbar-brand fn-lg d-flex align-items-center ember-view">
-                        <Link to="/program">
+                    <Link to="/program">
+                        <BSNavbar.Brand className="ev-navbar-brand fn-lg d-flex align-items-center ember-view">
                             <span style={{ color: program ? program.attributes.navbarFontColor : 'black' }} className="d-block d-sm-none">
                                 {program ? program.attributes.programName : ''}
                             </span>
@@ -26,8 +25,8 @@ export function Navbar({ program, onLogout }) {
                                     Environmental Services
                                 </span>
                             </span>
-                        </Link>
-                    </BSNavbar.Brand>
+                        </BSNavbar.Brand>
+                    </Link>
                     <Nav className="ml-auto ev-navbar-nav">
                         <Nav.Item className="ev-nav-font" onClick={onLogout}>
                             <div className="ev-icons-nav">

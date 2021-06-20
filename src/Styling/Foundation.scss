@@ -222,15 +222,26 @@ body {
   padding: 0;
 }
 .assetDD {
-  flex: 1;
+  flex: 2;
+  width: inherit;
   
   button {
     background-color: #e8e7e8;;
     border: none;
     width: calc(100% - 45px);
+    position: relative;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     &:focus {
       border: none !important;
       background-color: #e8e7e8 !important;
+    }
+    &::after {
+      position: absolute;
+      right: 0.5em;
+      top: 1em;
     }
   }
 }

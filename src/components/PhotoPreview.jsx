@@ -4,10 +4,9 @@ import { FaClone } from 'react-icons/fa'
 import { Dropdown, Form } from 'react-bootstrap'
 import { useMediaQuery } from '../utils'
 
-const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch, setChoice, onMatchAsset, program, assets, assetChoiceId }) => {
+const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch, setChoice, onMatchAsset, program, assets, assetChoiceId, setMailing, mailing }) => {
 
     const [coords, setCoords] = useState([])
-    const [mailing, setMailing] = useState(true)
     const isBig = useMediaQuery('(min-width: 500px)');
 
     useEffect(() => {
@@ -34,6 +33,15 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch, 
     const assetChoice = assets.find(a => a.id === assetChoiceId)
     const assetDisplayText = assetChoice ? assetChoice.attributes.assetTypeName : program.attributes.assetAlias
 
+    const cb = (
+        <div onClick={() => setMailing(!mailing)} className="mr-3">
+            <input className="form-check-input mailingCheck" type="checkbox" checked={mailing} id={index} readOnly/>
+            <label className="form-check-label" htmlFor={index}>
+                Include in Next Mailing
+            </label>
+        </div>
+    )
+
     return (
         <div className="ev-photo-preview-container">
             <img src={""} alt="" className="ev-photo-preview mb-1 mt-3" id={index}></img>
@@ -41,25 +49,18 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch, 
             <div className="ev-latlong" >latitude: {coords[0]}, longitude: {coords[1]}</div>
             <div className="container mt-3" style={{ display: 'flex', 'flexDirection': 'column' }}>
                 <div className="input-group">
-                    <input type='text' className="form-control ev-input mb-2" placeholder="Details" onChange={e => setCaption(e.target.value)} value={caption} />
+                    <input type='text' className="form-control ev-input mb-2" placeholder="Caption" onChange={e => setCaption(e.target.value)} value={caption} />
                     <div className="ev-icons ev-clickable pl-2" onClick={onMatch}>
                         <FaClone />
                     </div>
-                    {/* <button type="button" onClick={ onMatch } className="btn ev-button">Duplicate Caption</button> */}
                 </div>
-                { !isBig && (
-                    <div className="input-group mb-2">
-                            <Form.Check type="checkbox" value={mailing} id="checkbox" label="Include in Next Mailing" className="mailingCheck"  onClick={e => setMailing(v => !v)}/>
-                    </div>
-                )}
+                { !isBig && cb }
                 <div className="input-group d-flex">
-                    { isBig && (
-                        <Form.Check type="checkbox" value={mailing} id="checkbox" label="Include in Next Mailing" className="mailingCheck" onClick={e => setMailing(v => !v)}/>
-                    )}
+                    { isBig && cb }
                     <Dropdown className="assetDD" onSelect={(eventKey) => {
                         setChoice(eventKey)
                     }}>
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        <Dropdown.Toggle variant="light" id="dropdown-basic">
                             { assetDisplayText }
                         </Dropdown.Toggle>
                         <div className="ev-icons ev-clickable pl-2" onClick={onMatchAsset}>
