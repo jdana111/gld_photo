@@ -15,16 +15,16 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [pictures, setPictures] = useState([]);
     const [batchCount, setBatchCount] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [debug, setDebug] = useState(false);
-    console.log(debug)
+    // const [debug, setDebug] = useState(false);
     const [captions, setCaptions] = useState({});
+    const [pictureCoords, setCoords] = useState({});
     const [assetChoices, setAssetChoices] = useState({});
     const [mailingChoices, setMailingChoices] = useState({});
     const [debugString, setDebugString] = useState('');
     const [assets, setAssets] = useState([]);
 
     // eslint-disable-next-line
-    const { getCoordsForTime, getMostRecentPosition, position } = usePosition()
+    const { getCoordsForTime, getMostRecentPosition, position, getCoordsForPic } = usePosition()
 
     const history = useHistory()
 
@@ -55,12 +55,20 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
 
 
     const onDrop = (newPictures, dataUrls) => {
-        console.log(newPictures)
         setPictures(newPictures);
         const newChoices = newPictures.reduce((acc, p, i) => {
             acc[`${p.name}${i}`] = true
             return acc
         }, {})
+        Promise.all(newPictures.map(getCoordsForPic))
+            .then((coordsArray) => {
+                const temp = {...pictureCoords}
+                coordsArray.forEach((coords, i) => {
+                    const pic = newPictures[i]
+                    temp[`${pic.name}${i}`] = coords
+                })
+                setCoords(temp)
+            })
         setMailingChoices(newChoices)
     };
 
@@ -81,34 +89,11 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     data.append('caption', captions[`${pic.name}${index}`] || '')
                     data.append('asset', assetChoices[`${pic.name}${index}`] || '')
                     data.append('mailing', mailingChoices[`${pic.name}${index}`] || '')
-                    if (exifData && exifData.GPSLatitude && exifData.GPSLongitude) {
-                        const latitude = exifData.GPSLatitude[0] + (exifData.GPSLatitude[1] / 60) + (exifData.GPSLatitude[2] / 3600)
-                        const longitude = exifData.GPSLongitude[0] + (exifData.GPSLongitude[1] / 60) + (exifData.GPSLongitude[2] / 3600)
-                        data.append('latitude', latitude)
-                        data.append('longitude', longitude)
-                    } else if (exifData && (exifData.CreateDate || exifData.DateTimeOriginal || exifData.ModifyDate) && getCoordsForTime(exifData.CreateDate || exifData.DateTimeOriginal || exifData.ModifyDate)) {
-                        const d = exifData.CreateDate || exifData.DateTimeOriginal || exifData.ModifyDate
-                        const coords = getCoordsForTime(d)
-                        console.log(`Exif date: ${d} Assigning coords:${JSON.stringify(coords)}\nCreateDate: ${exifData.CreateDate}\nDateTimeOriginal: ${exifData.DateTimeOriginal}\nModifyDate: ${exifData.ModifyDate}`)
-                        setDebugString(`Exif date: ${d} Assigning coords:${JSON.stringify(coords)}\nCreateDate: ${exifData.CreateDate}\nDateTimeOriginal: ${exifData.DateTimeOriginal}\nModifyDate: ${exifData.ModifyDate}`)
-                        data.append('latitude', coords.latitude)
-                        data.append('longitude', coords.longitude)
-                    } else if (pic.lastModified && position.length) {
-                        const d = new Date(pic.lastModified)
-                        const coords = getCoordsForTime(d)
-                        setDebugString(`File date: ${d} Assigning coords:${JSON.stringify(coords)}`)
-                        data.append('latitude', coords.latitude)
-                        data.append('longitude', coords.longitude)
-                    } else if (getMostRecentPosition()) {
-                        const coords = getMostRecentPosition()
-                        setDebugString(`Assigning coords:${JSON.stringify(coords)}\n exifdata ${JSON.stringify(exifData)}`)
-                        data.append('latitude', coords.latitude)
-                        data.append('longitude', coords.longitude)
-                    } else {
-                        setDebugString(`Could not find coordinates for photo: ${pic.name} \n exifdata ${JSON.stringify(exifData)}`)
-                        data.append('latitude', undefined)
-                        data.append('longitude', undefined)
-                    }
+                    
+                    const c = pictureCoords[`${pic.name}${index}`]
+                    data.append('latitude', c.latitude)
+                    data.append('longitude', c.longitude)
+                    
                     data.append('property_id', property.id)
                     data.append('user_id', user.id)
 
@@ -162,6 +147,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         caption={captions[`${p.name}${i}`] || ''}
                         mailing={mailingChoices[`${p.name}${i}`] || ''}
                         assetChoiceId={assetChoices[`${p.name}${i}`] || ''}
+                        picCoords={pictureCoords[`${p.name}${i}`] || ''}
                         setCaption={(newCaption) => {
                             setCaptions(old => ({
                                 ...old,
@@ -183,9 +169,6 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         onMatch={() => {
                             setCaptions(old => {
                                 const val = old[`${p.name}${i}`]
-                                if (val === 'debug') {
-                                    setDebug(true)
-                                }
                                 const newCaptions = {}
                                 pictures.forEach((p2, i2) => {
                                     newCaptions[`${p2.name}${i2}`] = val
@@ -194,7 +177,6 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                             })
                         }}
                         onMatchAsset={() => {
-                            console.log('match assets')
                             setAssetChoices(old => {
                                 const val = old[`${p.name}${i}`]
                                 const newChoices = {}

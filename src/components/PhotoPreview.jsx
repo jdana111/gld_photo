@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import exifr from 'exifr'
+import React, { useEffect } from 'react';
 import { FaClone } from 'react-icons/fa'
 import { Dropdown } from 'react-bootstrap'
 import { useMediaQuery } from '../utils'
 
-const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch, setChoice, onMatchAsset, program, assets, assetChoiceId, setMailing, mailing }) => {
+const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch, setChoice, onMatchAsset, program, assets, assetChoiceId, setMailing, mailing, picCoords }) => {
 
-    const [coords, setCoords] = useState([])
     const isBig = useMediaQuery('(min-width: 500px)');
 
     useEffect(() => {
@@ -18,17 +16,6 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch, 
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [picture.name])
-
-    useEffect(() => {
-        exifr.parse(picture).then(exifdata => {
-            if (exifdata && exifdata.GPSLongitude && exifdata.GPSLatitude) {
-                const latitude = exifdata.GPSLatitude[0] + (exifdata.GPSLatitude[1] / 60) + (exifdata.GPSLatitude[2] / 3600)
-                const longitude = exifdata.GPSLongitude[0] + (exifdata.GPSLongitude[1] / 60) + (exifdata.GPSLongitude[2] / 3600)
-                setCoords([latitude.toFixed(3), longitude.toFixed(3)])
-            }
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     const assetChoice = assets.find(a => a.id === assetChoiceId)
     const assetDisplayText = assetChoice ? assetChoice.attributes.assetTypeName : program.attributes.assetAlias
@@ -46,7 +33,7 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch, 
         <div className="ev-photo-preview-container">
             <img src={""} alt="" className="ev-photo-preview mb-1 mt-3" id={index}></img>
             <div> {picture.name} </div>
-            <div className="ev-latlong" >latitude: {coords[0]}, longitude: {coords[1]}</div>
+            <div className="ev-latlong" >latitude: {picCoords.latitude}, longitude: {picCoords.longitude}</div>
             <div className="container mt-3" style={{ display: 'flex', 'flexDirection': 'column' }}>
                 <div className="input-group">
                     <input type='text' className="form-control ev-input mb-2" placeholder="Caption" onChange={e => setCaption(e.target.value)} value={caption} />
