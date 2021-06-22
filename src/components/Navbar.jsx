@@ -3,7 +3,7 @@ import { Navbar as BSNavbar, Nav, Container } from 'react-bootstrap'
 import { FaSignOutAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-export function Navbar({ program, onLogout }) {
+export function Navbar({ program, onLogout, onDebugClick }) {
 
     return (
         <BSNavbar style={{ backgroundColor: program ? program.attributes.navbarBackgroundColor : 'black' }}>
@@ -28,6 +28,8 @@ export function Navbar({ program, onLogout }) {
                         </BSNavbar.Brand>
                     </Link>
                     <Nav className="ml-auto ev-navbar-nav">
+                        <Nav.Item className="ev-nav-font space" onClick={() => onDebugClick && onDebugClick() }>
+                        </Nav.Item>
                         <Nav.Item className="ev-nav-font" onClick={onLogout}>
                             <div className="ev-icons-nav">
                                 <FaSignOutAlt />

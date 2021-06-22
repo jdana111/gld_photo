@@ -15,7 +15,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [pictures, setPictures] = useState([]);
     const [batchCount, setBatchCount] = useState(0);
     const [loading, setLoading] = useState(false);
-    // const [debug, setDebug] = useState(false);
+    const [debug, setDebug] = useState(false);
     const [captions, setCaptions] = useState({});
     const [pictureCoords, setCoords] = useState({});
     const [assetChoices, setAssetChoices] = useState({});
@@ -24,7 +24,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
     const [assets, setAssets] = useState([]);
 
     // eslint-disable-next-line
-    const { getCoordsForTime, getMostRecentPosition, position, getCoordsForPic } = usePosition()
+    const { getMostRecentPosition, position, getCoordsForPic } = usePosition()
 
     const history = useHistory()
 
@@ -132,7 +132,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
 
     return (
         <div className="ev-base-container">
-            <Navbar program={program} onLogout={onLogout} />
+            <Navbar program={program} onLogout={onLogout} onDebugClick={() => setDebug(true)}/>
             <div className="container ev-page-container">
                 {property && <h3 className="pt-2 ev-title">{property.attributes.propertyName}</h3>}
                 {(pictures && pictures.length > 0) && pictures.map((p, i) =>
@@ -208,13 +208,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                         <Button type="button" onClick={submit} disabled={pictures.length === 0} className="ev-button btn mt-3">Submit</Button>
                     </div>
                 )}
-                {/* <button onClick={() => console.log(pictures)}>HI THERE</button>
-                <button onClick={() => testOnChange()}>ADD SHTUFF</button>
-                <button onClick={() => loadTestData()}>SET DATA</button>
-                <div>
-                DEBUG HERE
-            </div> */}
-                {/* {debug && ( */}
+                {debug && (
                     <>
                         <button onClick={() => {
                             console.log(position)
@@ -225,7 +219,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                             setDebugString(position.length + " " + position.lastIndex + " " + getMostRecentPosition())
                         }}>LOG most recent</button>
                     </>
-                {/* )} */}
+                )}
                 <div>{debugString}</div>
             </div>
         </div>

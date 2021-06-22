@@ -91,4 +91,10 @@ a:hover {
     height: 1.2rem;
     width: 1.2rem;
   }
+
+  &.space {
+    width: 100px;
+    margin-right: 80px;
+    cursor: inherit;
+  }
 }
