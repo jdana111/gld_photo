@@ -47,7 +47,7 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch, 
                     <Dropdown className="assetDD" onSelect={(eventKey) => {
                         setChoice(eventKey)
                     }}>
-                        <Dropdown.Toggle variant="light" id="dropdown-basic">
+                        <Dropdown.Toggle variant="light" className="form-control ev-input blah mb-2">
                             { assetDisplayText }
                         </Dropdown.Toggle>
                         <div className="ev-icons ev-clickable pl-2" onClick={onMatchAsset}>
