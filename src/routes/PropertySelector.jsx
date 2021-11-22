@@ -10,7 +10,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
 
     const [searchTerm, setSearchTerm] = useState("");
     const [properties, setProperties] = useState([]);
-    const [activeOnly, setActiveOnly] = useState(false);
+    const [activeOnly, setActiveOnly] = useState(true);
 
     const isBig = useMediaQuery('(min-width: 500px)');
 
@@ -36,7 +36,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
 
     let form
     if (isBig) {
-        const bgColor = program ? activeOnly ? program.attributes.navbarFontColor : '#fff' : 'black' 
+        const bgColor = program ? activeOnly ? program.attributes.navbarFontColor : '#fff' : 'black'
         form = (
             <div className="row px-3">
                 <div className="card-body ev-card-search card">
@@ -45,7 +45,7 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
                         <InputGroup.Append>
                             <Button className="btn btn-outline-secondary ev-search-button" type='submit' onClick={onSearch} variant="outline-secondary">Search</Button>
                             <Button className="btn btn-outline-secondary ev-search-button" variant="outline-secondary" onClick={onReset}>Reset</Button>
-                            <Button className="btn btn-outline-secondary ev-search-button" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)} style={{backgroundColor: bgColor}}>Active Only</Button>
+                            <Button className="btn btn-outline-secondary ev-search-button" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)} style={{ backgroundColor: bgColor }}>Active Only</Button>
                             {/* <span>
                         { activeOnly ? (
                              <Button class="btn btn-outline-secondary ev-search-button">Show Inactive</Button>
@@ -65,13 +65,10 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
         form = (
             <div className="row px-3">
                 <div className="card-body ev-card-search card">
-                        <FormControl className="form-control ev-search-input" type="text" placeholder="Search Term" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
-                            <Button className="btn btn-outline-secondary ev-search-button-sm" type='submit' onClick={onSearch} variant="outline-secondary">Search</Button>
-                            <Button className="btn btn-outline-secondary ev-search-button-sm" variant="outline-secondary" onClick={onReset}>Reset</Button>
-                            <Button className="btn btn-outline-secondary ev-search-button-sm" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)} style={{backgroundColor: bgColor}}>Active Only</Button>
-
-                    <div>
-                    </div>
+                    <FormControl className="form-control ev-search-input" type="text" placeholder="Search Term" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                    <Button className="btn btn-outline-secondary ev-search-button-sm" type='submit' onClick={onSearch} variant="outline-secondary">Search</Button>
+                    <Button className="btn btn-outline-secondary ev-search-button-sm" variant="outline-secondary" onClick={onReset}>Reset</Button>
+                    <Button className="btn btn-outline-secondary ev-search-button-sm" variant={activeOnly ? "primary" : "outline-secondary"} onClick={() => setActiveOnly(old => !old)} style={{ backgroundColor: bgColor }}>Active Only</Button>
                 </div>
             </div>
         )
@@ -79,25 +76,25 @@ function PropertySelector({ authHeader, setProperty, program, city, onLogout }) 
 
     return (
         <div className="ev-base-container">
-            <Navbar city={city} program={program} onLogout={onLogout}/>
+            <Navbar city={city} program={program} onLogout={onLogout} />
             <div className="container ev-page-container">
                 <h3 className="pt-2 ev-title">Select {program ? program.attributes.propertyAlias : 'property'}</h3>
                 {form}
-                </div>
-                {Boolean(properties.length) && (
-                    <div className="container ev-search-container">
-                        <div className="card ev-card-primary">
-                            <div className="ev-banner-title-search" style={{backgroundColor: program ? program.attributes.navbarBackgroundColor : 'white' }}>
-                                Showing Results for "{searchTerm}"
-                            </div>
-                            <ListGroup className="ev-clickable ev-program-list">
-                                {properties.map(property => (
-                                    <ListGroup.Item key={property.id} onClick={() => setProperty(property)}>{property.attributes.propertyName}</ListGroup.Item>
-                                ))}
-                            </ListGroup>
+            </div>
+            {Boolean(properties.length) && (
+                <div className="container ev-search-container">
+                    <div className="card ev-card-primary">
+                        <div className="ev-banner-title-search" style={{ backgroundColor: program ? program.attributes.navbarBackgroundColor : 'white' }}>
+                            Showing Results for "{searchTerm}"
                         </div>
+                        <ListGroup className="ev-clickable ev-program-list">
+                            {properties.map(property => (
+                                <ListGroup.Item key={property.id} onClick={() => setProperty(property)}>{property.attributes.propertyName}</ListGroup.Item>
+                            ))}
+                        </ListGroup>
                     </div>
-                )}
+                </div>
+            )}
         </div>
     );
 }

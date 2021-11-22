@@ -101,7 +101,7 @@ function App() {
         if (success) {
             history.push('/program')
             getPrograms(header).then(programs => {
-                console.log("set programs")
+                // console.log("set programs")
                 setPrograms(programs.filter(p => ALLOWED_PROGRAM_IDS.includes(parseInt(p.id))))
             })
         } else {

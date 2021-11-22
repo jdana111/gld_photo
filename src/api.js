@@ -12,7 +12,7 @@ const axiosOptions = {
 }
 
 const middlewareOptions = {
-    preservedKeys: ['filter[search][searchString]']
+    preservedKeys: ['filter[search][searchString]', 'filter[search][activeOnly]']
 }
 
 const getClient = () => applyCaseMiddleware(axios.create(axiosOptions), middlewareOptions)
