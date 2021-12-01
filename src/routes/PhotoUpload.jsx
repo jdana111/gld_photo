@@ -87,7 +87,7 @@ function PhotoUpload({ property, authHeader, user, program, city, onLogout }) {
                     let data = new FormData();
                     data.append('file', pic, pic.name);
                     data.append('caption', captions[`${pic.name}${index}`] || '')
-                    data.append('asset', assetChoices[`${pic.name}${index}`] || '')
+                    data.append('asset_id', assetChoices[`${pic.name}${index}`] || '')
                     data.append('mailing', mailingChoices[`${pic.name}${index}`] || '')
                     
                     const c = pictureCoords[`${pic.name}${index}`]
