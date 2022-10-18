@@ -22,7 +22,7 @@ import './Styling/PhotoUpload.scss';
 
 const DEBUG_PHOTO = true
 // const DEBUG_PHOTO = process.env.DEBUG_PHOTO || false
-const ALLOWED_PROGRAM_IDS = [1, 2, 3, 4]
+const ALLOWED_PROGRAM_IDS = [1, 2, 3, 4, 5]
 
 function App() {
     const [authHeader, setAuthHeader] = useState(null);
