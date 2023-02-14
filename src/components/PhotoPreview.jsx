@@ -55,7 +55,7 @@ const PhotoPreview = ({ picture, index, phoneGps, caption, setCaption, onMatch, 
                         </div>
                         <Dropdown.Menu>
                             { assets.map(a => (
-                                <Dropdown.Item key={a.id} eventKey={a.id}>{a.attributes.assetTypeName}</Dropdown.Item>
+                                <Dropdown.Item key={a.id} eventKey={a.id}>{a.attributes.assetTypeName + (a.attributes.location ? " (" + a.attributes.location + ")": "") }</Dropdown.Item>
                             ))}
                         </Dropdown.Menu>
                     </Dropdown>
