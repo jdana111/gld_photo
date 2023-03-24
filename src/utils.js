@@ -82,8 +82,14 @@ export const usePosition = () => {
     const getCoordsForPic = async (pic) => {
         return exifr.parse(pic)
             .then((exifData) => {
-                let coords = null
+                let coords = {
+                    latitude: undefined,
+                    longitude: undefined
+                }
                 if (exifData && exifData.GPSLatitude && exifData.GPSLongitude) {
+                    if (isNaN(exifData.GPSLatitude[0]) || isNaN(exifData.GPSLongitude[0])) {
+                        return coords
+                    }
                     const latitude = exifData.GPSLatitude[0] + (exifData.GPSLatitude[1] / 60) + (exifData.GPSLatitude[2] / 3600)
                     const longitude = exifData.GPSLongitude[0] + (exifData.GPSLongitude[1] / 60) + (exifData.GPSLongitude[2] / 3600)
                     coords = { latitude, longitude }
@@ -95,12 +101,7 @@ export const usePosition = () => {
                     coords = getCoordsForTime(d)
                 } else if (getMostRecentPosition()) {
                     coords = getMostRecentPosition()
-                } else {
-                    coords = {
-                        latitude: undefined,
-                        longitude: undefined
-                    }
-                }
+                } 
                 return coords
             })
             .catch(err => {
